@@ -101,7 +101,7 @@ module.exports = {
         modifyVars: {
           'primary-color': '#7546c9',
           'link-color': '#7546c9',
-          'border-radius-base': '2px',
+          // 'border-radius-base': '2px',
         },
         javascriptEnabled: true
       }

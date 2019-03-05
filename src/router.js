@@ -12,7 +12,6 @@ export default new Router({
     {
       path: '/',
       redirect: '/index',
-      name: 'home',
       component: Layout,
       children: [
         {
@@ -45,6 +44,11 @@ export default new Router({
           path: '/login',
           name: 'login',
           component: () => import(/* webpackChunkName: "login" */ '@/views/user/Login.vue')
+        },
+        {
+          path: '/register',
+          name: 'register',
+          component: () => import(/* webpackChunkName: "login" */ '@/views/user/Register.vue')
         }
       ]
     }
