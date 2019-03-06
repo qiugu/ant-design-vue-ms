@@ -164,7 +164,7 @@ export default {
         customActiveKey,
         Login
       } = this
-
+    
       state.loginBtn = true
 
       const validateFieldsKey = customActiveKey === 'tab1' ? ['username', 'password'] : ['mobile', 'captcha']
@@ -175,7 +175,8 @@ export default {
           const loginParams = { ...values }
           delete loginParams.username
           loginParams[!state.loginType ? 'email' : 'username'] = values.username
-          loginParams.password = md5(values.password)
+          // loginParams.password = md5(values.password)//密码加密
+          loginParams.password = values.password
           Login(loginParams)
             .then((res) => this.loginSuccess(res))
             .catch(err => this.requestFailed(err))

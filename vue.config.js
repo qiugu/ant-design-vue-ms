@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack')
 
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -101,7 +102,7 @@ module.exports = {
         modifyVars: {
           'primary-color': '#7546c9',
           'link-color': '#7546c9',
-          // 'border-radius-base': '2px',
+          'border-radius-base': '4px',
         },
         javascriptEnabled: true
       }
@@ -117,8 +118,7 @@ module.exports = {
     port: 3002,
     open: true
   },
-  
+  transpileDependencies: [],
   // 第三方插件的选项
   pluginOptions: {}
-  
 }

@@ -5,6 +5,7 @@ import store from './store'
 // import {Button,Col,Row,Layout,Menu,Icon,Input,Form,Tag} from 'ant-design-vue'
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.less'
+import './permission'
 
 // Vue.component(Button.name,Button)
 // Vue.component(Row.name,Row)
@@ -22,8 +23,10 @@ import 'ant-design-vue/dist/antd.less'
 // Vue.component(Input.TextArea.name,Input.TextArea)
 Vue.config.productionTip = false
 Vue.use(Antd)
-new Vue({
-  router,
-  store,
-  render: h => h(App)
-}).$mount('#app')
+setTimeout(() => {
+  new Vue({
+    router,
+    store,
+    render: h => h(App)
+  }).$mount('#app')
+},1000)
