@@ -18,8 +18,8 @@
             <span>{{item.title}}</span>
           </a-menu-item>
           <a-sub-menu :key="item.key" v-else>
+            <span slot="title"><a-icon :type="item.icon" /><span>{{item.title}}</span></span>
             <a-menu-item v-for="child in item.children" :key="child.key">
-              <a-icon :type="child.icon"/>
               <span>{{child.title}}</span>
             </a-menu-item>
           </a-sub-menu>
@@ -47,10 +47,13 @@ export default {
       collapsed: false,
       keyArr: ['about'],
       menus: [
-        {title: 'nav1',icon: 'user',key: 'about'},
-        {title: 'nav2',icon: 'video-camera',key: 'home'},
-        {title: 'nav3',icon: 'upload'},
-        {title: 'nav4',icon: 'lock'}
+        {title: '仪表盘',icon: 'dashboard',key: 'about'},
+        {title: '表单页',icon: 'video-camera',key: 'home'},
+        {title: '表格页',icon: 'area-chart',children: [
+          {title: '子菜单一',icon: 'user',key: 'name'},
+          {title: '子菜单二',icon: 'setting',key: 'set'}
+        ]},
+        {title: '个人中心',icon: 'lock'}
       ]
     }
   },
