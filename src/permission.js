@@ -8,7 +8,7 @@ import notification from 'ant-design-vue/es/notification'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['login', 'register'] // no redirect whitelist
+const whiteList = ['login', 'register','index'] // no redirect whitelist
 
 router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
