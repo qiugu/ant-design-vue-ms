@@ -13,7 +13,6 @@ const productionGzipExtensions = ['js', 'css']
 
 module.exports = {
   publicPath: '', //基本路径
-  outputDir: 'dist',
   productionSourceMap: false,
   assetsDir: 'static',
   filenameHashing: true,
@@ -31,11 +30,6 @@ module.exports = {
     }
   },
   chainWebpack: config => {
-    config.resolve.alias
-      .set('@', resolve('src'))
-      .set('assets', resolve('src/assets'))
-      .set('components', resolve('src/components'))
-      .set('views', resolve('src/views'))
     const svgRule = config.module.rule('svg')
     svgRule.uses.clear()
     svgRule

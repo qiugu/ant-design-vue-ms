@@ -11,28 +11,29 @@
           <h2 v-if="!collapsed">Ant Design Admin</h2>
         </a>
       </div>
-      <a-menu theme="dark" mode="inline" v-model="keyArr"  @click="goPage">
-        <template v-for="item in menus">
-          <a-menu-item :key="item.key" v-if="!item.children">
-            <a-icon :type="item.icon"/>
-            <span>{{item.title}}</span>
-          </a-menu-item>
-          <a-sub-menu :key="item.key" v-else>
-            <span slot="title"><a-icon :type="item.icon" /><span>{{item.title}}</span></span>
-            <a-menu-item v-for="child in item.children" :key="child.key">
-              <span>{{child.title}}</span>
-            </a-menu-item>
-          </a-sub-menu>
-        </template>
-      </a-menu>
+      <side-menu></side-menu>
     </a-layout-sider>
     <a-layout>
-      <a-layout-header style="background: #fff; padding: 0">
+      <a-layout-header class="header-wrap">
         <a-icon
           class="trigger"
           :type="collapsed ? 'menu-unfold' : 'menu-fold'"
           @click="()=> collapsed = !collapsed"
         />
+        <div class="user-wrapper">
+          <a-badge count="15">
+            <a-icon type="bell" style="font-size: 16px;"></a-icon>
+          </a-badge>
+          <a-dropdown v-model="visible" placement="topRight">
+            <span><a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />秋谷晚叶</span>
+            <a-menu slot="overlay" @click="handleMenuClick">
+              <a-menu-item key="1"><a-icon type="user"/>个人中心</a-menu-item>
+              <a-menu-item key="2"><a-icon type="setting"/>账户设置</a-menu-item>
+              <a-menu-divider />
+              <a-menu-item key="3"><a-icon type="logout"/>退出登录</a-menu-item>
+            </a-menu>
+          </a-dropdown>
+        </div>
       </a-layout-header>
       <a-layout-content :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: 'auto' }">
         <router-view/>
@@ -41,36 +42,39 @@
   </a-layout>
 </template>
 <script>
+import SideMenu from '@/components/SideMenu.vue'
 export default {
+  components: {SideMenu},
   data(){
     return {
       collapsed: false,
-      keyArr: ['about'],
-      menus: [
-        {title: '仪表盘',icon: 'dashboard',key: 'about'},
-        {title: '表单页',icon: 'video-camera',key: 'home'},
-        {title: '表格页',icon: 'area-chart',children: [
-          {title: '子菜单一',icon: 'user',key: 'name'},
-          {title: '子菜单二',icon: 'setting',key: 'set'}
-        ]},
-        {title: '个人中心',icon: 'lock'}
-      ]
+      visible: false
     }
   },
   methods: {
-    goPage(item) {
-      this.keyArr = [item.key]
-      this.$router.push({name: item.key})
+    handleMenuClick (val) {
+      console.log(val);
     }
   },
-  mounted() {
-     this.keyArr = [this.$router.currentRoute.name]
-  }
+  mounted() {}
 }
 </script>
 <style lang="scss" scoped>
 #components-layout-demo-custom-trigger {
   height: 100%;
+  .header-wrap {
+    background: #fff; 
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    .user-wrapper {
+      width: 180px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 24px;
+    }
+  }
   .trigger {
     font-size: 18px;
     line-height: 64px;
