@@ -95,15 +95,15 @@
     <a-form-item
       v-bind="formItemLayout"
       label="Upload"
-      extra="longgggggggggggggggggggggggggggggggggg"
     >
       <a-upload
+        accept=".jpg,.jpeg,.png"
         v-decorator="['upload', {
           valuePropName: 'fileList',
           getValueFromEvent: normFile,
         }]"
         name="logo"
-        action="/upload.do"
+        action="https://api.uat.iyuedian.com/iyd-imall-manage/imall/v1/upload"
         list-type="picture"
       >
         <a-button>
@@ -112,7 +112,7 @@
       </a-upload>
     </a-form-item>
 
-    <a-form-item v-bind="formItemLayout" label="Dragger">
+    <!-- <a-form-item v-bind="formItemLayout" label="Dragger">
       <div class="dropbox">
         <a-upload-dragger
           v-decorator="['dragger', {
@@ -129,7 +129,7 @@
           <p class="ant-upload-hint">Support for a single or bulk upload.</p>
         </a-upload-dragger>
       </div>
-    </a-form-item>
+    </a-form-item> -->
 
     <a-form-item :wrapper-col="{ span: 12, offset: 6 }">
       <a-button type="primary" html-type="submit">Submit</a-button>
@@ -141,8 +141,8 @@
 export default {
   data: () => ({
     formItemLayout: {
-      labelCol: { span: 6 },
-      wrapperCol: { span: 14 }
+      labelCol: { span: 8 },
+      wrapperCol: { span: 12 }
     }
   }),
   beforeCreate() {
@@ -152,6 +152,7 @@ export default {
     handleSubmit(e) {
       e.preventDefault();
       this.form.validateFields((err, values) => {
+        console.log(values);
         if (!err) {
           console.log("Received values of form: ", values);
         }
