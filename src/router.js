@@ -37,7 +37,15 @@ export default new Router({
           path: '/pattern',
           name: 'pattern',
           component: () => import(/* webpackChunkName: "home" */ './views/DesignPattern.vue')
-        }
+        },
+        {
+          path: '/map',
+          name: 'map',
+          component: () => import(/* webpackChunkName: "home" */ './views/DataMap.vue'),
+          meta: {
+            title: '地图组件'
+          }
+        },
       ]
     },  
     {
