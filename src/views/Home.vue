@@ -27,6 +27,8 @@ export default {
       count: 0
     }
   },
+  mounted () {
+  },
   methods: {
     clickHandler () {
       this.msg = math.add(math.bignumber(0.135),math.bignumber(0.2)).toString();
@@ -36,8 +38,6 @@ export default {
       this.msg = math.round(dig,2);
       console.log(math.add(0.1,0.2))
     }
-  },
-  mounted () {
   }
 }
 </script>
