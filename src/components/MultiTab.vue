@@ -34,9 +34,7 @@ export default {
     },
     add() {},
     remove(key) {
-      if (this.panes.length > 1) {
-        this.$store.commit('DELETE_TAB',key);
-      }
+      this.panes.length > 1 && this.$store.commit('DELETE_TAB',key);
     }
   }
 };

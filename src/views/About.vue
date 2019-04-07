@@ -148,7 +148,19 @@ export default {
   beforeCreate() {
     this.form = this.$form.createForm(this);
   },
+  mounted () {
+    // this.initData();
+  },
   methods: {
+    initData () {
+      fetch("http://localhost:8080/book/hello",{
+        method: 'post'
+      })
+              .then(res => res.json())
+              .then(res => {
+                console.log(res);
+              })
+    },
     handleSubmit(e) {
       e.preventDefault();
       this.form.validateFields((err, values) => {
