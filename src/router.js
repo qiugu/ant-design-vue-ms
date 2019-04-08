@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Layout from './views/Layout.vue'
+import BasicLayout from '@/components/layouts/BasicLayout.vue'
 import UserLayout from '@/components/layouts/UserLayout.vue'
 
 Vue.use(Router)
@@ -12,7 +12,7 @@ export default new Router({
     {
       path: '/',
       redirect: '/index',
-      component: Layout,
+      component: BasicLayout,
       children: [
         {
           path: '/index',

@@ -3,6 +3,7 @@
     <img alt="Vue logo" src="../assets/logo.png">
     <a-button type="primary" icon="search" @click="clickHandler" @dblclick="dblclickHandler">button</a-button>
     <HelloWorld :msg="msg"/>
+    <span v-text="msg"></span>
   </div>
 </template>
 
