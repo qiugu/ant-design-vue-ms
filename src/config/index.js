@@ -20,7 +20,8 @@ import {
     Rate,
     Upload,
     InputNumber,
-    Slider
+    Slider,
+    DatePicker
 } from 'ant-design-vue';
 
 Vue.use(Button)
@@ -44,3 +45,4 @@ Vue.use(Rate)
 Vue.use(Upload)
 Vue.use(InputNumber)
 Vue.use(Slider)
+Vue.use(DatePicker)
