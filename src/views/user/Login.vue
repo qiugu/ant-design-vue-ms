@@ -109,6 +109,7 @@
 
 <script>
 import {timeFix} from '@/utils/util.js'
+import {mapActions} from 'vuex'
 
 export default {
   data () {
@@ -116,7 +117,7 @@ export default {
       customActiveKey: 'tab1',
       loginBtn: false,
       // login type: 0 email, 1 username, 2 telephone
-      loginType: 0,
+      loginType: 0, 
       requiredTwoStepCaptcha: false,
       stepCaptchaVisible: false,
       form: this.$form.createForm(this),
@@ -140,7 +141,7 @@ export default {
     // this.requiredTwoStepCaptcha = true
   },
   methods: {
-    // ...mapActions(['Login', 'Logout']),
+    ...mapActions(['Login']),
     // handler
     handleUsernameOrEmail (rule, value, callback) {
       const { state } = this
