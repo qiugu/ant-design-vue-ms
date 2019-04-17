@@ -106,7 +106,8 @@ module.exports = {
   // 配置 webpack-dev-server 行为。
   devServer: {
     port: 3002,
-    open: true
+    open: true,
+    proxy: 'https://www.easy-mock.com/mock/5cb691e3e3926e3006389081/qgms'
   },
   transpileDependencies: [],
   // 第三方插件的选项
