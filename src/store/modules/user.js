@@ -3,7 +3,9 @@ import { login, getInfo } from '@/api/api'
 const user = {
     state: {
         username: sessionStorage.getItem("username"),
-        token: sessionStorage.getItem("token")
+        token: sessionStorage.getItem("token"),
+        roles: [],
+        menus: []
     },
     mutations: {
         SET_USER: (state, data) => {
@@ -11,26 +13,48 @@ const user = {
         },
         SET_TOKEN: (state, data) => {
             state.token = data.token
+        },
+        SET_ROLES: (state, data) => {
+            state.roles = data;
+        },
+        SET_MENUS: (state, data) => {
+            state.menus = data;
         }
     },
     actions: {
         // 登录
         Login({ commit }, userInfo) {
-            login(userInfo).then(res => {
-                const result = res.data.resultData
-                Vue.ls.set('ACCESS_TOKEN', result.ACCESS_TOKEN, 60 * 1000)
-                commit('SET_TOKEN', result.ACCESS_TOKEN)
-            }).catch(error => {
-                console.log(error)
+            return new Promise((resolve, reject) => {
+                login(userInfo).then(res => {
+                    const result = res.data.resultData
+                    Vue.ls.set('ACCESS_TOKEN', result.ACCESS_TOKEN, 60 * 1000)
+                    sessionStorage.setItem('loginName', result.loginName)
+                    commit('SET_TOKEN', result.ACCESS_TOKEN)
+                    commit('SET_USER', result.loginName)
+                    resolve(res);
+                })
             })
         },
         //获取用户角色信息
         GetInfo({ commit }) {
-            getInfo().then(res => {
-                console.log(res)
-                if (res.data.status === 200) {
-                    sessionStorage.setItem('roles', JSON.stringify(res.data.resultData.roles))
-                }
+            return new Promise((resolve, reject) => {
+                getInfo().then(res => {
+                    if (res.data.status === 200) {
+                        commit('SET_ROLES', res.data.resultData.roles)
+                        commit('SET_MENUS', res.data.resultData.menus)
+                        sessionStorage.setItem('roles', JSON.stringify(res.data.resultData.roles))
+                    }
+                    resolve(res);
+                })
+            })
+        },
+        Logout({ commit }) {
+            return new Promise((resolve, reject) => {
+                Vue.ls.remove('ACCESS_TOKEN')
+                sessionStorage.removeItem('roles')
+                commit('SET_TOKEN', '')
+                commit('SET_USER', '')
+                resolve();
             })
         }
     }

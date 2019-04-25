@@ -5,7 +5,7 @@ import store from './store'
 import './permission'
 import '@babel/polyfill'
 import '@/config'
-import '@/utils/http'
+import http from '@/utils/http'
 import VueStorage from 'vue-ls'
 
 Vue.use(VueStorage, {
@@ -14,6 +14,7 @@ Vue.use(VueStorage, {
   storage: 'session', // storage name session, local, memory
 })
 Vue.config.productionTip = false
+Vue.prototype.$http = http
 new Vue({
   router,
   store,

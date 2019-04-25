@@ -64,11 +64,15 @@ export const constRouterMap = [
         ]
     },
     {
+        path: '/not_found',
+        name: 'not_found',
+        component: () => import(/* webpackChunkName: "not_found" */ '@/views/NotFound.vue')
+    },
+    {
         path: '*',
         redirect: '/not_found',
-        component: () => import(/* webpackChunkName: "not_found" */ '@/views/NotFound.vue'),
         hidden: true
-    }
+    },
 ]
 
 export const asyncRouterMap = [
@@ -82,16 +86,20 @@ export const asyncRouterMap = [
                 name: 'controls',
                 component: () => import(/* webpackChunkName: "controls" */ '@/views/Controls.vue'),
                 meta: {
-                    title: '权限设置'
+                    title: '权限设置',
+                    permission: ['admin']
                 }
             }
         ]
     },
     {
+        path: '/not_found',
+        name: 'not_found',
+        component: () => import(/* webpackChunkName: "not_found" */ '@/views/NotFound.vue')
+    },
+    {
         path: '*',
-        redirect: '/not_found',
-        component: () => import(/* webpackChunkName: "not_found" */ '@/views/NotFound.vue'),
-        hidden: true
+        redirect: '/not_found'
     }
 ]
 
