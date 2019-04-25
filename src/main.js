@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import App from './App.vue'
-import router from './router'
+import router from '@/router'
 import store from './store'
-// import {Button,Col,Row,Layout,Menu,Icon,Input,Form,Tag} from 'ant-design-vue'
 import './permission'
 import '@babel/polyfill'
 import '@/config'
+import '@/utils/http'
 import VueStorage from 'vue-ls'
 
-Vue.use(VueStorage,{
+Vue.use(VueStorage, {
   namespace: 'ms__', // key prefix
   name: 'ls', // name variable Vue.[ls] or this.[$ls],
   storage: 'session', // storage name session, local, memory
