@@ -68,15 +68,10 @@ export default {
   methods: {
     handleMenuClick({ key }) {
       console.log(key);
-      let action = new Map([
-        ['user',this.getPersonalCenter],
-        ['setting',this.accountSetting],
-        ['logout',this.logout]
-      ])
-      action.get(key)()
+      this[key]();
     },
-    getPersonalCenter () {},
-    accountSetting () {},
+    user () {},
+    setting () {},
     logout () {
       this.$store.dispatch('Logout')
       .then(() => {

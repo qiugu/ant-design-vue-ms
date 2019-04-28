@@ -25,6 +25,10 @@ export default {
   watch: {
     panes: function(val) {
       this.panes = val;
+    },
+    activeKey (newPath) {
+      console.log(newPath)
+      this.$router.push({path: newPath});
     }
   },
   methods: {
@@ -35,6 +39,9 @@ export default {
     add() {},
     remove(key) {
       this.panes.length > 1 && this.$store.commit('DELETE_TAB',key);
+    },
+    tabClick (key) {
+      console.log(key)
     }
   }
 };

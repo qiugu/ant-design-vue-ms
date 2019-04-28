@@ -35,10 +35,10 @@ export default {
   watch: {
     $route: function(val) {
       let arrTab = this.$store.state.multiTab,
-        len = arrTab.length,
+        name = this.$route.name,
         toRoute = this.$route.meta.title;
       if (!arrTab.some(item => item.title === toRoute)) {
-        this.$store.commit("ADD_TAB", { title: toRoute, key: len });
+        this.$store.commit("ADD_TAB", { title: toRoute, key: name });
       }
     }
   },
@@ -48,7 +48,7 @@ export default {
     if (!arrTab.some(item => item.title === this.$route.meta.title)) {
       this.$store.commit("ADD_TAB", {
         title: this.$route.meta.title,
-        key: "0"
+        key: this.$route.name
       });
     }
   },
