@@ -22,7 +22,9 @@ import {
     InputNumber,
     Slider,
     DatePicker,
-    notification
+    notification,
+    Progress,
+    Popover
 } from 'ant-design-vue';
 
 Vue.use(Button)
@@ -47,5 +49,7 @@ Vue.use(Upload)
 Vue.use(InputNumber)
 Vue.use(Slider)
 Vue.use(DatePicker)
+Vue.use(Progress)
+Vue.use(Popover)
 
 Vue.prototype.$notification = notification
