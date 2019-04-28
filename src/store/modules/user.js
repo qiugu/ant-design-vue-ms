@@ -50,10 +50,11 @@ const user = {
         },
         Logout({ commit }) {
             return new Promise((resolve, reject) => {
-                Vue.ls.remove('ACCESS_TOKEN')
-                sessionStorage.removeItem('roles')
-                commit('SET_TOKEN', '')
-                commit('SET_USER', '')
+                console.log(1111)
+                Vue.ls.remove('ACCESS_TOKEN');
+                sessionStorage.clear();
+                commit('SET_TOKEN', '');
+                commit('SET_USER', '');
                 resolve();
             })
         }

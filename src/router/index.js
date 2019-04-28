@@ -67,12 +67,7 @@ export const constRouterMap = [
         path: '/not_found',
         name: 'not_found',
         component: () => import(/* webpackChunkName: "not_found" */ '@/views/NotFound.vue')
-    },
-    {
-        path: '*',
-        redirect: '/not_found',
-        hidden: true
-    },
+    }
 ]
 
 export const asyncRouterMap = [
@@ -91,11 +86,6 @@ export const asyncRouterMap = [
                 }
             }
         ]
-    },
-    {
-        path: '/not_found',
-        name: 'not_found',
-        component: () => import(/* webpackChunkName: "not_found" */ '@/views/NotFound.vue')
     },
     {
         path: '*',
