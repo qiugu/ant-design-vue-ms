@@ -55,6 +55,7 @@ const user = {
                 sessionStorage.clear();
                 commit('SET_TOKEN', '');
                 commit('SET_USER', '');
+                commit('SET_ROLES', []);
                 resolve();
             })
         }
