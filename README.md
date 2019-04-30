@@ -1,2 +1,5 @@
-# ant-design-vue-ms
-模仿ant-design-vue-pro生成的管理系统模板
+# 初衷
+* 希望能有一个管理系统来记录自己平时的一些工作或学习的过程
+* 期初是用element作为ui框架，并且也搭建了一个项目，项目也在此github中，但是长久使用中，发现使用element代码重复比较多，并且有些组件bug一直没有修复，因此决定不再使用了
+* 使用ant-design-of-vue，原因其实因为react的ant-design已经作为业界标准设计了，并且组件比较多，使用起来虽然比element难度大，但是好在比较灵活，能大量的减少很多组件的重复代码
+* 本项目其实就是参照[ant-design-pro-of-vue](https://pro.loacg.com/)来搭建的一个vue的框架，其中主要具体内容为博主在使用vue开发的时候遇到的一些问题或者是心得，都会展示在其中,有疑问的小伙伴可以随时issue来联系我。
