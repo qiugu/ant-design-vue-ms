@@ -1,6 +1,6 @@
 const api = {
-    getInfo: '/user/getInfo',
-    login: '/user/login'
+    getInfo: '/qgms/user/getInfo',
+    login: '/qgms/user/login'
 }
 
 export default api;

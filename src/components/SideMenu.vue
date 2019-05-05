@@ -56,7 +56,8 @@ export default {
     goPage(item) {
       this.keyArr = [item.key];
       let arrTab = this.$store.state.multiTab;
-      this.$router.push({ name: item.key });
+      //这里如果使用name属性跳转的话，则当路由不存在时，404页面无法捕获到
+      this.$router.push({ path: `/${item.key}` });
     }
   }
 };

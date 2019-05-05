@@ -49,7 +49,6 @@ export const constRouterMap = [
         path: '/user',
         redirect: '/login',
         component: UserLayout,
-        hidden: true,
         children: [
             {
                 path: '/login',
@@ -64,8 +63,7 @@ export const constRouterMap = [
         ]
     },
     {
-        path: '/not_found',
-        name: 'not_found',
+        path: '/404',
         component: () => import(/* webpackChunkName: "not_found" */ '@/views/NotFound.vue')
     }
 ]
@@ -89,7 +87,8 @@ export const asyncRouterMap = [
     },
     {
         path: '*',
-        redirect: '/not_found'
+        redirect: '/404',
+        hidden: true
     }
 ]
 

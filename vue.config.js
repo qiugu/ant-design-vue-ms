@@ -107,7 +107,14 @@ module.exports = {
   devServer: {
     port: 3002,
     open: true,
-    proxy: 'https://www.easy-mock.com/mock/5cb691e3e3926e3006389081/qgms'
+    proxy: {
+      '/qgdev': {
+        target: 'http://localhost:8080'
+      },
+      '/qgms': {
+        target: 'https://www.easy-mock.com/mock/5cb691e3e3926e3006389081'
+      }
+    }
   },
   transpileDependencies: [],
   // 第三方插件的选项

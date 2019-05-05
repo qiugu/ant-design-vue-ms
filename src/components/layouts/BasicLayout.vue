@@ -75,6 +75,7 @@ export default {
     logout () {
       this.$store.dispatch('Logout')
       .then(() => {
+        window.location.reload();
         this.$router.push({name: 'login'})
       })
     }
