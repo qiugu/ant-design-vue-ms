@@ -20,5 +20,8 @@ export function getInfo() {
         headers: {
             'x-csrf-token': csrf
         },
+        data: {
+            loginName: sessionStorage.getItem('loginName')
+        }
     })
 }

@@ -39,6 +39,7 @@ export default {
     add() {},
     remove(key) {
       this.panes.length > 1 && this.$store.commit('DELETE_TAB',key);
+      this.$router.go(-1);
     },
     tabClick (key) {
       console.log(key)

@@ -141,7 +141,6 @@ export default {
     };
   },
   created() {
-    console.log(document.cookie.csrfToken)
     // get2step({ })
     //   .then(res => {
     //     this.requiredTwoStepCaptcha = res.result.stepCode
