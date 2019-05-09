@@ -1,9 +1,11 @@
 import axios from 'axios'
+import Cookie from 'js-cookie'
 
 // 创建 axios 实例
+const csrf = Cookie.get('csrfToken')
 const service = axios.create({
-    baseURL: '/api', // api base_url
-    timeout: 6000 // 请求超时时间
+    timeout: 6000, // 请求超时时间
+    headers: {'x-csrf-token': csrf}
 })
 // 添加请求拦截器
 service.interceptors.request.use(function (config) {

@@ -108,8 +108,8 @@
         <a>
           <a-icon class="item-icon" type="taobao-circle"></a-icon>
         </a>
-        <a>
-          <a-icon class="item-icon" type="weibo-circle"></a-icon>
+        <a href="http://127.0.0.1:8080/passport/github">
+          <a-icon class="item-icon" type="github" />
         </a>
         <router-link class="register" :to="{ name: 'register' }">注册账户</router-link>
       </div>
@@ -141,6 +141,7 @@ export default {
     };
   },
   created() {
+    console.log(document.cookie.csrfToken)
     // get2step({ })
     //   .then(res => {
     //     this.requiredTwoStepCaptcha = res.result.stepCode
@@ -162,6 +163,16 @@ export default {
         state.loginType = 1;
       }
       callback();
+    },
+    //获取第三方登录的信息
+    async getAuth () {
+      let params = {
+        code: this.$route.query.code,
+        client_id: '46b85aea388080d94dd8',
+        client_secret: '793f96044a8003cbb9a879b897ba0f190804d0c9'
+      }
+      const res = await this.$http.post('http://127.0.0.1:8080/passport/github/callback',params);
+      console.log(res)
     },
     handleTabClick(key) {
       this.customActiveKey = key;
