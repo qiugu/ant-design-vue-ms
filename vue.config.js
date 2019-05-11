@@ -8,7 +8,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const productionGzipExtensions = ['js', 'css']
 
 module.exports = {
-  publicPath: '', //基本路径
+  publicPath: './', //基本路径
   productionSourceMap: false,
   assetsDir: 'static',
   filenameHashing: true,
@@ -69,7 +69,6 @@ module.exports = {
         new UglifyJsPlugin({
           uglifyOptions: {
             compress: {
-              warnings: false,
               drop_debugger: true,
               drop_console: true,
             },
