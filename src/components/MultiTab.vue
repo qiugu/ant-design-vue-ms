@@ -17,7 +17,8 @@ export default {
   computed: {
     panes: {
       get () {
-        return this.$store.state.multiTab
+        console.log(this.$store.getters.multiTab)
+        return this.$store.getters.multiTab
       },
       set (val) {}
     }
@@ -27,7 +28,6 @@ export default {
       this.panes = val;
     },
     activeKey (newPath) {
-      console.log(newPath)
       this.$router.push({path: newPath});
     }
   },

@@ -34,28 +34,32 @@ export default {
   },
   watch: {
     $route: function(val) {
-      let arrTab = this.$store.state.multiTab,
+      let arrTab = this.$store.state.app.multiTab,
         name = this.$route.name,
         toRoute = this.$route.meta.title;
-      if (!arrTab.some(item => item.title === toRoute)) {
+      if (name !== "login" && !arrTab.some(item => item.title === toRoute)) {
         this.$store.commit("ADD_TAB", { title: toRoute, key: name });
       }
     }
   },
   mounted() {
-    this.keyArr = [this.$router.currentRoute.name];
-    let arrTab = this.$store.state.multiTab;
-    if (!arrTab.some(item => item.title === this.$route.meta.title)) {
-      this.$store.commit("ADD_TAB", {
-        title: this.$route.meta.title,
-        key: this.$route.name
-      });
-    }
+    this.initMulti();
   },
   methods: {
+    //初始化多标签页
+    initMulti () {
+      this.keyArr = [this.$router.currentRoute.name];
+      let arrTab = this.$store.state.app.multiTab,
+        name = this.$route.name,
+        toRoute = this.$route.meta.title;
+      if (name !== "login" && !arrTab.some(item => item.title === toRoute)) {
+        this.$store.commit("ADD_TAB", { title: toRoute, key: name });
+      }
+    },
+    //跳转相应菜单路由
     goPage(item) {
       this.keyArr = [item.key];
-      let arrTab = this.$store.state.multiTab;
+      let arrTab = this.$store.state.app.multiTab;
       //这里如果使用name属性跳转的话，则当路由不存在时，404页面无法捕获到
       this.$router.push({ path: `/${item.key}` });
     }
