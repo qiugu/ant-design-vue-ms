@@ -1,59 +1,154 @@
-<template>
-  <div class="multi-tab">
-    <a-tabs type="editable-card" v-model="activeKey" @edit="onEdit" hideAdd>
-      <a-tab-pane v-for="pane in panes" :tab="pane.title" :key="pane.key" :closeable="panes.length > 1"></a-tab-pane>
-    </a-tabs>
-  </div>
-</template>
-
 <script>
-import {mapState} from 'vuex'
 export default {
-  data() {
+  name: 'MultiTab',
+  data () {
     return {
-      activeKey: '0'
-    };
+      fullPathList: [],
+      pages: [],
+      activeKey: '',
+      newTabIndex: 0
+    }
   },
-  computed: {
-    panes: {
-      get () {
-        console.log(this.$store.getters.multiTab)
-        return this.$store.getters.multiTab
-      },
-      set (val) {}
+  created () {
+    this.pages.push(this.$route)
+    this.fullPathList.push(this.$route.fullPath)
+    this.selectedLastPath()
+  },
+  methods: {
+    onEdit (targetKey, action) {
+      this[action](targetKey)
+    },
+    remove (targetKey) {
+      this.pages = this.pages.filter(page => page.fullPath !== targetKey)
+      this.fullPathList = this.fullPathList.filter(path => path !== targetKey)
+      // 判断当前标签是否关闭，若关闭则跳转到最后一个还存在的标签页
+      if (!this.fullPathList.includes(this.activeKey)) {
+        this.selectedLastPath()
+      }
+    },
+    selectedLastPath () {
+      this.activeKey = this.fullPathList[this.fullPathList.length - 1]
+    },
+
+    // content menu
+    closeThat (e) {
+      this.remove(e)
+    },
+    closeLeft (e) {
+      const currentIndex = this.fullPathList.indexOf(e)
+      if (currentIndex > 0) {
+        this.fullPathList.forEach((item, index) => {
+          if (index < currentIndex) {
+            this.remove(item)
+          }
+        })
+      } else {
+        this.$message.info('左侧没有标签')
+      }
+    },
+    closeRight (e) {
+      const currentIndex = this.fullPathList.indexOf(e)
+      if (currentIndex < (this.fullPathList.length - 1)) {
+        this.fullPathList.forEach((item, index) => {
+          if (index > currentIndex) {
+            this.remove(item)
+          }
+        })
+      } else {
+        this.$message.info('右侧没有标签')
+      }
+    },
+    closeAll (e) {
+      const currentIndex = this.fullPathList.indexOf(e)
+      this.fullPathList.forEach((item, index) => {
+        if (index !== currentIndex) {
+          this.remove(item)
+        }
+      })
+    },
+    closeMenuClick ({ key, item, domEvent }) {
+      const vkey = domEvent.target.getAttribute('data-vkey')
+      switch (key) {
+        case 'close-right':
+          this.closeRight(vkey)
+          break
+        case 'close-left':
+          this.closeLeft(vkey)
+          break
+        case 'close-all':
+          this.closeAll(vkey)
+          break
+        default:
+        case 'close-that':
+          this.closeThat(vkey)
+          break
+      }
+    },
+    renderTabPaneMenu (e) {
+      return (
+        <a-menu {...{ on: { click: this.closeMenuClick } }}>
+          <a-menu-item key="close-that" data-vkey={e}>关闭当前标签</a-menu-item>
+          <a-menu-item key="close-right" data-vkey={e}>关闭右侧</a-menu-item>
+          <a-menu-item key="close-left" data-vkey={e}>关闭左侧</a-menu-item>
+          <a-menu-item key="close-all" data-vkey={e}>关闭全部</a-menu-item>
+        </a-menu>
+      )
+    },
+    // render
+    renderTabPane (title, keyPath) {
+      const menu = this.renderTabPaneMenu(keyPath)
+
+      return (
+        <a-dropdown overlay={menu} trigger={['contextmenu']}>
+          <span style={{ userSelect: 'none' }}>{ title }</span>
+        </a-dropdown>
+      )
     }
   },
   watch: {
-    panes: function(val) {
-      this.panes = val;
+    //监听路由变化，如果跳转的路由和之前的路由不同，则添加tab，路径值也保存进fullPathList
+    '$route': function (newVal,oldVal) {
+      this.activeKey = newVal.fullPath
+      //初始登录，页面会重定向到index，触发activeKey，又跳转到新路径，于是会将index页面代入this.pages中，此处是个bug
+      if (this.fullPathList.indexOf(newVal.fullPath) < 0) {
+        this.fullPathList.push(newVal.fullPath)
+        this.pages.push(newVal)
+      }
     },
-    activeKey (newPath) {
-      this.$router.push({path: newPath});
+    //监听当前tabs，发生变化的话则跳转相应的路由
+    activeKey: function (newPathKey) {
+      this.$router.push({ path: newPathKey })
     }
   },
-  methods: {
-    onEdit(target, action) {
-      console.log(action);
-      this[action](target);
-    },
-    add() {},
-    remove(key) {
-      this.panes.length > 1 && this.$store.commit('DELETE_TAB',key);
-      this.$router.go(-1);
-    },
-    tabClick (key) {
-      console.log(key)
-    }
-  }
-};
-</script>
+  render () {
+    const { onEdit, $data: { pages } } = this
+    const panes = pages.map(page => {
+      return (
+        <a-tab-pane
+          style={{ height: 0 }}
+          tab={this.renderTabPane(page.meta.title, page.fullPath)}
+          key={page.fullPath} closable={pages.length > 1}
+        >
+        </a-tab-pane>)
+    })
 
-<style lang="less">
-.multi-tab {
-  background: #fff;
-  margin-top: 2px;
-  & > .ant-tabs > .ant-tabs-bar {
-    margin: 0;
+    return (
+      <div class="ant-pro-multi-tab">
+        <a-tabs
+          hideAdd
+          type={'editable-card'}
+          v-model={this.activeKey}
+          tabBarStyle={{ background: '#FFF', margin: 0, paddingLeft: '16px', paddingTop: '1px' }}
+          {...{ on: { edit: onEdit } }}>
+          {panes}
+        </a-tabs>
+      </div>
+    )
   }
+}
+</script>
+<style lang="scss" scoped>
+.ant-pro-multi-tab {
+  border-top: 1px solid #e8e8e8;
 }
 </style>

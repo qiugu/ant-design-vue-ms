@@ -28,7 +28,7 @@ const user = {
                 login(userInfo).then(res => {
                     if (res.data.status === 200) {
                         const result = res.data.resultData
-                        Vue.ls.set('ACCESS_TOKEN', result.ACCESS_TOKEN, 60 * 1000)
+                        Vue.ls.set('ACCESS_TOKEN', result.ACCESS_TOKEN, 60 * 60 * 1000)
                         sessionStorage.setItem('loginName', result.loginName)
                         commit('SET_TOKEN', result.ACCESS_TOKEN)
                         commit('SET_USER', result.loginName)

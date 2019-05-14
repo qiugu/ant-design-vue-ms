@@ -24,7 +24,9 @@ import {
     DatePicker,
     notification,
     Progress,
-    Popover
+    Popover,
+    Modal,
+    message
 } from 'ant-design-vue';
 
 Vue.use(Button)
@@ -52,4 +54,10 @@ Vue.use(DatePicker)
 Vue.use(Progress)
 Vue.use(Popover)
 
+Vue.prototype.$confirm = Modal.confirm
+Vue.prototype.$message = message
 Vue.prototype.$notification = notification
+Vue.prototype.$info = Modal.info
+Vue.prototype.$success = Modal.success
+Vue.prototype.$error = Modal.error
+Vue.prototype.$warning = Modal.warning

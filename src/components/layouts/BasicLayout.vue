@@ -73,10 +73,19 @@ export default {
     user () {},
     setting () {},
     logout () {
-      this.$store.dispatch('Logout')
-      .then(() => {
-        window.location.reload();
-        this.$router.push({name: 'login'})
+      this.$confirm({
+        title: '提示',
+        content: '是否确认退出',
+        okText: '确定',
+        cancelText: '取消',
+        onOk: () => {
+          this.$store.dispatch('Logout')
+          .then(() => {
+            window.location.reload();
+            this.$router.push({name: 'login'})
+          })
+        },
+        onCancel: () => {}
       })
     }
   },
@@ -124,7 +133,7 @@ export default {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-evenly; 
     h2 {
       color: #fff;
       margin: 0;
