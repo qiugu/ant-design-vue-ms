@@ -42,7 +42,7 @@
             </a-input>
           </a-form-item>
         </a-tab-pane>
-        <a-tab-pane key="tab2" tab="手机号登陆">
+        <a-tab-pane key="tab2" tab="手机号登陆" disabled>
           <a-form-item>
             <a-input
               size="large"
