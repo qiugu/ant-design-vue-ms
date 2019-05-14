@@ -27,20 +27,23 @@ export const constRouterMap = [
                 name: 'home',
                 component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
                 meta: {
-                    title: '表单页'
+                    title: 'HTML知识合集'
                 }
             },
             {
-                path: '/pattern',
-                name: 'pattern',
-                component: () => import(/* webpackChunkName: "pattern" */ '@/views/DesignPattern.vue')
+                path: '/css',
+                name: 'css',
+                component: () => import(/* webpackChunkName: "css" */ '@/views/DesignPattern.vue'),
+                meta: {
+                    title: 'CSS重点笔记'
+                }
             },
             {
                 path: '/map',
                 name: 'map',
                 component: () => import(/* webpackChunkName: "map" */ '@/views/DataMap.vue'),
                 meta: {
-                    title: '地图组件'
+                    title: '图表应用'
                 }
             },
         ]

@@ -46,7 +46,7 @@
       </a-layout-header>
       <multi-tab></multi-tab>
       <a-layout-content
-        :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: 'auto' }"
+        :style="{ margin: '24px 16px', padding: '24px', minHeight: 'auto' }"
       >
         <router-view/>
       </a-layout-content>

@@ -26,7 +26,10 @@ import {
     Progress,
     Popover,
     Modal,
-    message
+    message,
+    Spin,
+    List,
+    Card
 } from 'ant-design-vue';
 
 Vue.use(Button)
@@ -53,6 +56,9 @@ Vue.use(Slider)
 Vue.use(DatePicker)
 Vue.use(Progress)
 Vue.use(Popover)
+Vue.use(Spin)
+Vue.use(List)
+Vue.use(Card)
 
 Vue.prototype.$confirm = Modal.confirm
 Vue.prototype.$message = message
