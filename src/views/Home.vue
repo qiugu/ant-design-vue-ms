@@ -13,8 +13,8 @@
           :dataSource="data"
         >
           <a-list-item slot="renderItem" slot-scope="item,index">
-            <a-list-item-meta :description="item.email">
-              <a slot="title" :href="item.href">{{item.name.last}}</a>
+            <a-list-item-meta :description="item.descrip">
+              <span slot="title">{{item.tag}}</span>
               <a-avatar slot="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
             </a-list-item-meta>
             <div>Content</div>
@@ -24,6 +24,20 @@
           </div>
         </a-list>
       </div> -->
+      <a-list
+          :dataSource="data"
+        >
+          <a-list-item slot="renderItem" slot-scope="item,index">
+            <a-list-item-meta :description="item.descrip">
+              <span slot="title">{{item.tag}}</span>
+              <a-avatar slot="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+            </a-list-item-meta>
+            <div>Content</div>
+          </a-list-item>
+          <div v-if="loading && !busy" class="demo-loading-container">
+            <a-spin />
+          </div>
+        </a-list>
     </a-card-meta>
   </a-card>
 </div>
@@ -42,12 +56,17 @@ export default {
   },
   beforeMount () {
     this.fetchData((res) => {
-      this.data = res.data.results
+      this.data = res.data.resultData.results
+    })
+  },
+  mounted () {
+    this.fetchData((res) => {
+      this.data = res.data.resultData.results
     })
   },
   methods: {
     async fetchData (callback) {
-      const res = await this.$http.get(fakeDataUrl);
+      const res = await this.$http.post(this.$ctx + '/html5');
       if (res.status === 200) {
         console.log(res)
         callback(res);
