@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test": "vue-cli-service build --mode test"
+    "test": "vue-cli-service build --mode test",
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "ant-design-vue": "^1.3.3",
@@ -25,8 +26,13 @@
   "devDependencies": {
     "@babel/polyfill": "^7.4.3",
     "@vue/cli-plugin-babel": "^3.0.4",
+    "@vue/cli-plugin-eslint": "^3.7.0",
     "@vue/cli-service": "^3.0.4",
+    "babel-eslint": "^10.0.1",
     "babel-plugin-import": "^1.11.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-html": "^5.0.5",
+    "eslint-plugin-vue": "^5.2.2",
     "less": "^3.9.0",
     "less-loader": "^4.1.0",
     "node-sass": "^4.9.0",
@@ -36,6 +42,62 @@
   "postcss": {
     "plugins": {
       "autoprefixer": {}
+    }
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/strongly-recommended",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {
+      "generator-star-spacing": "off",
+      "no-mixed-operators": 0,
+      "eqeqeq": 2,
+      "vue/max-attributes-per-line": 0,
+      "vue/require-default-prop": 0,
+      "vue/attribute-hyphenation": 0,
+      "vue/component-name-in-template-casing": 0,
+      "vue/html-closing-bracket-spacing": 0,
+      "vue/singleline-html-element-content-newline": 0,
+      "vue/no-unused-components": 0,
+      "vue/multiline-html-element-content-newline": 0,
+      "vue/no-use-v-if-with-v-for": 0,
+      "vue/html-closing-bracket-newline": 0,
+      "vue/no-parsing-error": 0,
+      "vue/no-template-shadow": 0,
+      "vue/html-indent": 0,
+      "no-console": 0,
+      "no-tabs": 0,
+      "no-unused-vars": 0,
+      "quotes": [
+        2,
+        "single",
+        {
+          "avoidEscape": true,
+          "allowTemplateLiterals": true
+        }
+      ],
+      "semi": [
+        2,
+        "never",
+        {
+          "beforeStatementContinuationChars": "never"
+        }
+      ],
+      "no-delete-var": 2,
+      "prefer-const": [
+        2,
+        {
+          "ignoreReadBeforeAssign": false
+        }
+      ]
     }
   },
   "browserslist": [

@@ -19,10 +19,10 @@
 export default {
   methods: {
     goIndex () {
-      this.$router.go(-1);
+      this.$router.go(-1)
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

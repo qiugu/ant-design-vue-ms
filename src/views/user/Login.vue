@@ -74,7 +74,7 @@
                 :disabled="state.smsSendBtn"
                 @click.stop.prevent="getCaptcha"
                 v-text="!state.smsSendBtn && '获取验证码' || (state.time+' s')"
-              ></a-button>
+              />
             </a-col>
           </a-row>
         </a-tab-pane>
@@ -103,10 +103,10 @@
       <div class="user-login-other">
         <span>其他登陆方式</span>
         <a>
-          <a-icon class="item-icon" type="alipay-circle"></a-icon>
+          <a-icon class="item-icon" type="alipay-circle"/>
         </a>
         <a>
-          <a-icon class="item-icon" type="taobao-circle"></a-icon>
+          <a-icon class="item-icon" type="taobao-circle"/>
         </a>
         <a href="http://127.0.0.1:8080/passport/github">
           <a-icon class="item-icon" type="github" />
@@ -118,13 +118,13 @@
 </template>
 
 <script>
-import { timeFix } from "@/utils/util.js";
-import { mapActions } from "vuex";
+import { timeFix } from '@/utils/util.js'
+import { mapActions } from 'vuex'
 
 export default {
   data() {
     return {
-      customActiveKey: "tab1",
+      customActiveKey: 'tab1',
       loginBtn: false,
       // login type: 0 email, 1 username, 2 telephone
       loginType: 0,
@@ -138,7 +138,7 @@ export default {
         loginType: 0,
         smsSendBtn: false
       }
-    };
+    }
   },
   created() {
     // get2step({ })
@@ -151,139 +151,122 @@ export default {
     // this.requiredTwoStepCaptcha = true
   },
   methods: {
-    ...mapActions(["Login"]),
+    ...mapActions(['Login']),
     // handler
     handleUsernameOrEmail(rule, value, callback) {
-      const { state } = this;
-      const regex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
+      const { state } = this
+      const regex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
       if (regex.test(value)) {
-        state.loginType = 0;
+        state.loginType = 0
       } else {
-        state.loginType = 1;
+        state.loginType = 1
       }
-      callback();
+      callback()
     },
     //获取第三方登录的信息
     async getAuth () {
-      let params = {
+      const params = {
         code: this.$route.query.code,
         client_id: '46b85aea388080d94dd8',
         client_secret: '793f96044a8003cbb9a879b897ba0f190804d0c9'
       }
-      const res = await this.$http.post('http://127.0.0.1:8080/passport/github/callback',params);
+      const res = await this.$http.post('http://127.0.0.1:8080/passport/github/callback',params)
       console.log(res)
     },
     handleTabClick(key) {
-      this.customActiveKey = key;
+      this.customActiveKey = key
       // this.form.resetFields()
     },
     handleSubmit(e) {
-      e.preventDefault();
+      e.preventDefault()
       const {
         form: { validateFields },
         state,
         customActiveKey,
         Login
-      } = this;
+      } = this
 
-      state.loginBtn = true;
+      state.loginBtn = true
 
       const validateFieldsKey =
-        customActiveKey === "tab1"
-          ? ["username", "password"]
-          : ["mobile", "captcha"];
+        customActiveKey === 'tab1'
+          ? ['username', 'password']
+          : ['mobile', 'captcha']
 
       validateFields(validateFieldsKey, { force: true }, (err, values) => {
         if (!err) {
-          const loginParams = { ...values };
-          delete loginParams.username;
-          loginParams[!state.loginType ? "email" : "username"] =
-            values.username;
+          const loginParams = { ...values }
+          delete loginParams.username
+          loginParams[!state.loginType ? 'email' : 'username'] =
+            values.username
           // loginParams.password = md5(values.password)//密码加密
-          loginParams.password = values.password;
+          loginParams.password = values.password
           Login(loginParams)
             .then(res => this.loginSuccess(res))
             .catch(err => this.requestFailed(err))
             .finally(() => {
-              state.loginBtn = false;
-            });
+              state.loginBtn = false
+            })
         } else {
           setTimeout(() => {
-            state.loginBtn = false;
-          }, 600);
+            state.loginBtn = false
+          }, 600)
         }
-      });
+      })
     },
     getCaptcha(e) {
-      e.preventDefault();
+      e.preventDefault()
       const {
         form: { validateFields },
         state
-      } = this;
+      } = this
 
-      validateFields(["mobile"], { force: true }, (err, values) => {
+      validateFields(['mobile'], { force: true }, (err, values) => {
         if (!err) {
-          state.smsSendBtn = true;
+          state.smsSendBtn = true
 
           const interval = window.setInterval(() => {
             if (state.time-- <= 0) {
-              state.time = 60;
-              state.smsSendBtn = false;
-              window.clearInterval(interval);
+              state.time = 60
+              state.smsSendBtn = false
+              window.clearInterval(interval)
             }
-          }, 1000);
+          }, 1000)
 
-          const hide = this.$message.loading("验证码发送中..", 0);
-          getSmsCaptcha({ mobile: values.mobile })
-            .then(res => {
-              setTimeout(hide, 2500);
-              this.$notification["success"]({
-                message: "提示",
-                description:
-                  "验证码获取成功，您的验证码为：" + res.result.captcha,
-                duration: 8
-              });
-            })
-            .catch(err => {
-              setTimeout(hide, 1);
-              clearInterval(interval);
-              state.time = 60;
-              state.smsSendBtn = false;
-              this.requestFailed(err);
-            });
+          const hide = this.$message.loading('验证码发送中..', 0)
         }
-      });
+      })
     },
     stepCaptchaSuccess() {
-      this.loginSuccess();
+      this.loginSuccess()
     },
     stepCaptchaCancel() {
       this.Logout().then(() => {
-        this.loginBtn = false;
-        this.stepCaptchaVisible = false;
-      });
+        this.loginBtn = false
+        this.stepCaptchaVisible = false
+      })
     },
     loginSuccess(res) {
-      this.$router.push({ name: "index" });
+      this.$router.push({ name: 'index' })
       // 延迟 1 秒显示欢迎信息
       setTimeout(() => {
         this.$notification.success({
-          message: "欢迎",
+          message: '欢迎',
           description: `${timeFix()}，欢迎回来`
-        });
-      }, 1000);
+        })
+      }, 1000)
     },
     requestFailed(err) {
-      this.$notification["error"]({
-        message: "错误",
+      this.$notification['error']({
+        message: '错误',
         description:
           ((err.response || {}).data || {}).message ||
-          "请求出现错误，请稍后再试",
+          '请求出现错误，请稍后再试',
         duration: 4
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style lang="less" scoped>

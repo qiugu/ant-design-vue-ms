@@ -1,4 +1,4 @@
-import Vue from 'vue';
+import Vue from 'vue'
 import {
     Button,
     Row,
@@ -30,7 +30,7 @@ import {
     Spin,
     List,
     Card
-} from 'ant-design-vue';
+} from 'ant-design-vue'
 
 Vue.use(Button)
 Vue.use(Row)

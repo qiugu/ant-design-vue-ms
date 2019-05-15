@@ -146,39 +146,39 @@ export default {
     }
   }),
   beforeCreate() {
-    this.form = this.$form.createForm(this);
+    this.form = this.$form.createForm(this)
   },
   mounted () {
     // this.initData();
   },
   methods: {
     initData () {
-      fetch("http://localhost:8080/book/hello",{
+      fetch('http://localhost:8080/book/hello',{
         method: 'post'
       })
               .then(res => res.json())
               .then(res => {
-                console.log(res);
+                console.log(res)
               })
     },
     handleSubmit(e) {
-      e.preventDefault();
+      e.preventDefault()
       this.form.validateFields((err, values) => {
-        console.log(values);
+        console.log(values)
         if (!err) {
-          console.log("Received values of form: ", values);
+          console.log('Received values of form: ', values)
         }
-      });
+      })
     },
     normFile(e) {
-      console.log("Upload event:", e);
+      console.log('Upload event:', e)
       if (Array.isArray(e)) {
-        return e;
+        return e
       }
-      return e && e.fileList;
+      return e && e.fileList
     }
   }
-};
+}
 </script>
 <style>
 #components-form-demo-validate-other .dropbox {

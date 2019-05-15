@@ -10,7 +10,7 @@
             <a-list-item-meta :title="item.tag">
               <a-avatar slot="avatar" src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
             </a-list-item-meta>
-            <div>{{item.descrip}}</div>
+            <div>{{ item.descrip }}</div>
           </a-list-item>
           <div v-if="loading && !busy" class="demo-loading-container">
             <a-spin />
@@ -36,10 +36,10 @@ export default {
   },
   methods: {
     async fetchData (callback) {
-      const res = await this.$http.post(this.$ctx + '/html5');
+      const res = await this.$http.post(this.$ctx + '/html5')
       if (res.status === 200) {
         console.log(res)
-        callback(res);
+        callback(res)
       }
     },
     handleInfiniteOnLoad  () {

@@ -2,8 +2,8 @@ import Vue from 'vue'
 import { login, getInfo } from '@/api/api'
 const user = {
     state: {
-        username: sessionStorage.getItem("username"),
-        token: sessionStorage.getItem("token"),
+        username: sessionStorage.getItem('username'),
+        token: sessionStorage.getItem('token'),
         roles: [],
         menus: []
     },
@@ -15,10 +15,10 @@ const user = {
             state.token = data.token
         },
         SET_ROLES: (state, data) => {
-            state.roles = data;
+            state.roles = data
         },
         SET_MENUS: (state, data) => {
-            state.menus = data;
+            state.menus = data
         }
     },
     actions: {
@@ -32,7 +32,7 @@ const user = {
                         sessionStorage.setItem('loginName', result.loginName)
                         commit('SET_TOKEN', result.ACCESS_TOKEN)
                         commit('SET_USER', result.loginName)
-                        resolve(res);
+                        resolve(res)
                     }
                 })
             })
@@ -46,19 +46,19 @@ const user = {
                         commit('SET_MENUS', res.data.resultData.menus)
                         sessionStorage.setItem('roles', JSON.stringify(res.data.resultData.roles))
                     }
-                    resolve(res);
+                    resolve(res)
                 })
             })
         },
         Logout({ commit }) {
             return new Promise((resolve, reject) => {
-                Vue.ls.remove('ACCESS_TOKEN');
-                sessionStorage.clear();
-                commit('SET_TOKEN', '');
-                commit('SET_USER', '');
-                commit('SET_ROLES', []);
-                commit('SET_TAB', []);
-                resolve();
+                Vue.ls.remove('ACCESS_TOKEN')
+                sessionStorage.clear()
+                commit('SET_TOKEN', '')
+                commit('SET_USER', '')
+                commit('SET_ROLES', [])
+                commit('SET_TAB', [])
+                resolve()
             })
         }
     }

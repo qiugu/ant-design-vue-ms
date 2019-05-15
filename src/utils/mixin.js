@@ -13,4 +13,4 @@ const mixin = {
         }
     }
 }
-export default mixin;
+export default mixin

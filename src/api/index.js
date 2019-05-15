@@ -3,4 +3,4 @@ const api = {
     login: '/qgms/user/login'
 }
 
-export default api;
+export default api

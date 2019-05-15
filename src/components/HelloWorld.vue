@@ -4,11 +4,11 @@
     <a-form>
       <a-form-item label="拖到的位置" :label-col="{ span: 5 }"
       :wrapper-col="{ span: 12 }">
-        <a-textarea :rows="4" v-model="content1" @change="changText"></a-textarea>
+        <a-textarea :rows="4" v-model="content1" @change="changText"/>
       </a-form-item>
       <a-form-item label="被拖动区域" :label-col="{ span: 5 }"
       :wrapper-col="{ span: 12 }">
-        <a-textarea :rows="4" v-model="content2"></a-textarea>
+        <a-textarea :rows="4" v-model="content2"/>
       </a-form-item>
     </a-form>
   </div>

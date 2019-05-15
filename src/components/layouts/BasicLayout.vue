@@ -11,7 +11,7 @@
           <h2 v-if="!collapsed">Web Developer Notes</h2>
         </a>
       </div>
-      <side-menu></side-menu>
+      <side-menu/>
     </a-layout-sider>
     <a-layout>
       <a-layout-header class="header-wrap">
@@ -22,12 +22,12 @@
         />
         <div class="user-wrapper">
           <a-badge count="15">
-            <a-icon type="bell" style="font-size: 20px;"></a-icon>
+            <a-icon type="bell" style="font-size: 20px;"/>
           </a-badge>
           <a-dropdown v-model="visible" placement="topRight">
             <span>
               <a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>
-              {{username || '游客'}}
+              {{ username || '游客' }}
             </span>
             <a-menu slot="overlay" @click="handleMenuClick">
               <a-menu-item key="1">
@@ -44,7 +44,7 @@
           </a-dropdown>
         </div>
       </a-layout-header>
-      <multi-tab></multi-tab>
+      <multi-tab/>
       <a-layout-content
         :style="{ margin: '24px 16px', padding: '24px', minHeight: 'auto' }"
       >
@@ -54,21 +54,21 @@
   </a-layout>
 </template>
 <script>
-import SideMenu from "@/components/SideMenu.vue";
-import MultiTab from "@/components/MultiTab.vue";
+import SideMenu from '@/components/SideMenu.vue'
+import MultiTab from '@/components/MultiTab.vue'
 export default {
   components: { SideMenu, MultiTab },
   data() {
     return {
       collapsed: false,
       visible: false,
-      username: ""
-    };
+      username: ''
+    }
   },
   methods: {
     handleMenuClick({ key }) {
-      console.log(key);
-      this[key]();
+      console.log(key)
+      this[key]()
     },
     user () {},
     setting () {},
@@ -81,7 +81,7 @@ export default {
         onOk: () => {
           this.$store.dispatch('Logout')
           .then(() => {
-            window.location.reload();
+            window.location.reload()
             this.$router.push({name: 'login'})
           })
         },
@@ -90,9 +90,9 @@ export default {
     }
   },
   mounted() {
-    this.username = sessionStorage.getItem("loginName");
+    this.username = sessionStorage.getItem('loginName')
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 #components-layout-demo-custom-trigger {
