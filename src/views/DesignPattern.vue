@@ -17,7 +17,6 @@ export default {
     },
     computed: {
         info () {
-            console.log(this.singleton)
             return this.singleton
         }
     },

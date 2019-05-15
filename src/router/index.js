@@ -17,9 +17,10 @@ export const constRouterMap = [
                 // route level code-splitting
                 // this generates a separate chunk (about.[hash].js) for this route
                 // which is lazy-loaded when the route is visited.
-                component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue'),
+                component: () => import(/* webpackChunkName: "WorkPlace" */ '@/views/WorkPlace.vue'),
                 meta: {
-                    title: '仪表盘'
+                    title: '计划预览',
+                    key: 'dashboard'
                 }
             },
             {
@@ -43,7 +44,8 @@ export const constRouterMap = [
                 name: 'map',
                 component: () => import(/* webpackChunkName: "map" */ '@/views/DataMap.vue'),
                 meta: {
-                    title: '图表应用'
+                    title: '图表应用',
+                    key: 'chart'
                 }
             },
         ]

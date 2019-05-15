@@ -1,6 +1,13 @@
 <template>
   <div class="sidemenu">
-    <a-menu theme="dark" mode="inline" v-model="keyArr" @click="goPage">
+    <a-menu 
+      theme="dark" 
+      mode="inline" 
+      v-model="keyArr" 
+      :openKeys="openKeys"
+      @click="goPage" 
+      @openChange="openChangeHander"
+    >
       <template v-for="item in menus">
         <a-menu-item :key="item.key" v-if="!item.children">
           <a-icon :type="item.icon"/>
@@ -24,10 +31,17 @@
 export default {
   data() {
     return {
-      
+      openKeys: []
     }
   },
   computed: {
+    rootSubmenuKeys () {
+      const list = []
+      this.$store.getters.menus.map(item => {
+        list.push(item.key)
+      })
+      return list
+    },
     menus() {
       return this.$store.getters.menus
     },
@@ -40,19 +54,20 @@ export default {
       set (val) {}
     }
   },
-  mounted() {
-    // this.initMulti();
+  mounted () {
+    this.initOpenKeys()
   },
   methods: {
-    //初始化多标签页
-    initMulti () {
-      this.keyArr = [this.$router.currentRoute.name]
-      const arrTab = this.$store.state.app.multiTab
-      if (!arrTab.some(item => item.title === this.$route.meta.title)) {
-        this.$store.commit('ADD_TAB', {
-          title: this.$route.meta.title,
-          key: this.$route.name
-        })
+    initOpenKeys () {
+      this.openKeys = [this.$route.meta.key]
+    },
+    //展开/折叠子菜单时的回调
+    openChangeHander (openKeys) {
+      const latestOpenKey = openKeys.find(key => this.openKeys.indexOf(key) === -1)
+      if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+        this.openKeys = openKeys
+      } else {
+        this.openKeys = latestOpenKey ? [latestOpenKey] : []
       }
     },
     //跳转相应菜单路由

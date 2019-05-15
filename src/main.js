@@ -14,7 +14,6 @@ Vue.use(VueStorage, {
   storage: 'session', // storage name session, local, memory
 })
 Vue.config.productionTip = false
-console.log(process.env)
 Vue.prototype.$http = http
 Vue.prototype.$ctx = process.env.VUE_APP_CONTEXT
 
