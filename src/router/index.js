@@ -26,7 +26,7 @@ export const constRouterMap = [
             {
                 path: '/home',
                 name: 'home',
-                component: () => import(/* webpackChunkName: "home" */ '@/views/Home.vue'),
+                component: () => import(/* webpackChunkName: "HtmlLearn" */ '@/views/HtmlLearn.vue'),
                 meta: {
                     title: 'HTML知识合集'
                 }
