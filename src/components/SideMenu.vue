@@ -5,7 +5,7 @@
       mode="inline" 
       v-model="keyArr" 
       :openKeys="openKeys"
-      @click="goPage" 
+      @click="goPage"
       @openChange="openChangeHander"
     >
       <template v-for="item in menus">
@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     initOpenKeys () {
-      this.openKeys = [this.$route.meta.key]
+      this.openKeys = this.$route.meta.key ? [this.$route.meta.key] : []
     },
     //展开/折叠子菜单时的回调
     openChangeHander (openKeys) {

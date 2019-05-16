@@ -81,8 +81,8 @@ export default {
         onOk: () => {
           this.$store.dispatch('Logout')
           .then(() => {
+            this.$router.push({name: 'login',query: ''})
             window.location.reload()
-            this.$router.push({name: 'login'})
           })
         },
         onCancel: () => {}
