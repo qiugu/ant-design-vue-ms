@@ -108,7 +108,7 @@
         <a>
           <a-icon class="item-icon" type="taobao-circle"/>
         </a>
-        <a href="http://127.0.0.1:8080/passport/github">
+        <a href="http://127.0.0.1:8080/passport/github" target="_blank">
           <a-icon class="item-icon" type="github" />
         </a>
         <router-link class="register" :to="{ name: 'register' }">注册账户</router-link>
@@ -257,7 +257,6 @@ export default {
       }, 1000)
     },
     requestFailed(err) {
-      console.log(err)
       this.$notification['error']({
         message: '错误',
         description:
