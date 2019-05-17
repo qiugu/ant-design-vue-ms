@@ -74,9 +74,6 @@ export default {
       return this.todos.filter(todo => !todo.done).length
     }
   },
-  mounted() {
-    console.log(this.toggleAll())
-  },
   methods: {
     ...mapActions(['toggleAll', 'clearCompleted']),
     addTodo(e) {

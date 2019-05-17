@@ -33,6 +33,8 @@ const user = {
                         commit('SET_TOKEN', result.ACCESS_TOKEN)
                         commit('SET_USER', result.loginName)
                         resolve(res)
+                    } else {
+                        reject(res)
                     }
                 })
             })
