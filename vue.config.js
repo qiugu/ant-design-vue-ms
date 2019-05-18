@@ -108,10 +108,10 @@ module.exports = {
     open: true,
     proxy: {
       '/qgdev': {
-        target: 'http://localhost:8080'
+        target: 'https://www.easy-mock.com/mock/5cb691e3e3926e3006389081'
       },
       '/qgms': {
-        target: 'https://www.easy-mock.com/mock/5cb691e3e3926e3006389081'
+        target: 'http://47.110.48.159:7001'
       }
     }
   },
