@@ -57,7 +57,7 @@ module.exports = {
   },
   // 高级的方式
   configureWebpack: config => {
-    if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test') {
+    if (process.env.NODE_ENV === 'production') {
       config.plugins.push(
         new CompressionWebpackPlugin({
           filename: '[path].gz[query]',
@@ -80,6 +80,8 @@ module.exports = {
       )
       const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
       config.plugins.push(new BundleAnalyzerPlugin())
+    } else {
+      config.plugins.push(new webpack.HotModuleReplacementPlugin())
     }
   },
   // CSS 相关选项
@@ -112,6 +114,9 @@ module.exports = {
       },
       '/qgms': {
         target: 'http://47.110.48.159:7001'
+      },
+      '/qgtest': {
+        target: 'http://127.0.0.1:8080'
       }
     }
   },

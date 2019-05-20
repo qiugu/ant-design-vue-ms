@@ -20,7 +20,7 @@
               placeholder="帐户名或邮箱地址 / admin"
               v-decorator="[
                 'username',
-                {rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
+                /*{rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}*/
               ]"
             >
               <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -35,7 +35,7 @@
               placeholder="密码 / admin"
               v-decorator="[
                 'password',
-                {rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}
+                /*{rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}*/
               ]"
             >
               <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
@@ -135,7 +135,7 @@ export default {
         time: 60,
         loginBtn: false,
         // login type: 0 email, 1 username, 2 telephone
-        loginType: 0,
+        loginType: 1,
         smsSendBtn: false
       }
     }
