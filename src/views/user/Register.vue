@@ -78,6 +78,7 @@
                 size="large" 
                 type="text" 
                 placeholder="验证码"
+                :disabled="true"
                 v-decorator="[
                     'captcha',
                     {rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'}
@@ -90,7 +91,7 @@
           <a-button
             class="getCaptcha"
             size="large"
-            :disabled="state.smsSendBtn"
+            :disabled="true"
             @click.stop.prevent="getCaptcha"
             v-text="!state.smsSendBtn && '获取验证码'||(state.time+' s')"/>
         </a-col>

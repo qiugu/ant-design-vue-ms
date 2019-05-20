@@ -130,12 +130,12 @@ export default {
       loginType: 0,
       requiredTwoStepCaptcha: false,
       stepCaptchaVisible: false,
-      form: this.$form.createForm(this),
+      form: this.$form.createForm(this), 
       state: {
         time: 60,
         loginBtn: false,
         // login type: 0 email, 1 username, 2 telephone
-        loginType: 0,
+        loginType: 1,
         smsSendBtn: false
       }
     }
