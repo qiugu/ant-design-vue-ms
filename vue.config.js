@@ -112,6 +112,9 @@ module.exports = {
       },
       '/qgms': {
         target: 'http://47.110.48.159:7001'
+      },
+      'qgtest': {
+        target: 'http://127.0.0.1:8080'
       }
     }
   },
