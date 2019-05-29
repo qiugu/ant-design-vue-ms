@@ -80,8 +80,6 @@ module.exports = {
       )
       const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
       config.plugins.push(new BundleAnalyzerPlugin())
-    } else {
-      config.plugins.push(new webpack.HotModuleReplacementPlugin())
     }
   },
   // CSS 相关选项

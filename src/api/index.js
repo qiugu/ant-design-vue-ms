@@ -1,5 +1,5 @@
 const api = {
-    getInfo: process.env.VUE_APP_CONTEXT + '/user/getInfo',
+    getInfo: process.env.VUE_APP_CONTEXT + '/user/getinfo',
     login: process.env.VUE_APP_CONTEXT + '/user/login'
 }
 

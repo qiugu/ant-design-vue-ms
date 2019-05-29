@@ -1,4 +1,4 @@
-import { constRouterMap, asyncRouterMap } from '@/router'
+import { constRouterMap, asyncRouterMap } from '@/router/router.config'
 
 /**
  * 过滤账户是否拥有某一个权限，并将菜单从加载列表移除
@@ -45,7 +45,7 @@ function hasRole(roles, route) {
  */
 function filterAsyncRouter(routerMap, roles) {
   const accessedRouters = routerMap.filter(route => {
-    if (hasPermission(roles, route)) {
+    if (hasPermission(roles.permissionList, route)) {
       if (route.children && route.children.length) {
         route.children = filterAsyncRouter(route.children, roles)
       }
@@ -71,7 +71,7 @@ const permission = {
     GenerateRoutes({ commit }, data) {
       return new Promise(resolve => {
         const { roles } = data
-        const accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
+        const accessedRouters = filterAsyncRouter(asyncRouterMap, roles[0])
         commit('SET_ROUTERS', accessedRouters)
         resolve()
       })

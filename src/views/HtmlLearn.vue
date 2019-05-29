@@ -38,7 +38,7 @@ export default {
   },
   mounted() {
     this.fetchData(res => {
-      this.data = res.data.resultData.results
+      this.data = res.resultData.results
     })
   },
   methods: {

@@ -29,7 +29,8 @@ import {
     message,
     Spin,
     List,
-    Card
+    Card,
+    Breadcrumb
 } from 'ant-design-vue'
 
 Vue.use(Button)
@@ -59,6 +60,7 @@ Vue.use(Popover)
 Vue.use(Spin)
 Vue.use(List)
 Vue.use(Card)
+Vue.use(Breadcrumb)
 
 Vue.prototype.$confirm = Modal.confirm
 Vue.prototype.$message = message

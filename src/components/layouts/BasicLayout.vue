@@ -45,9 +45,7 @@
         </div>
       </a-layout-header>
       <multi-tab/>
-      <a-layout-content
-        :style="{ margin: '24px 16px', padding: '24px', minHeight: 'auto' }"
-      >
+      <a-layout-content>
         <router-view/>
       </a-layout-content>
     </a-layout>
@@ -81,7 +79,6 @@ export default {
         onOk: () => {
           this.$store.dispatch('Logout')
           .then(() => {
-            this.$router.push({name: 'login',query: ''})
             window.location.reload()
           })
         },
