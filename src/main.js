@@ -6,6 +6,7 @@ import './permission'
 import '@babel/polyfill'
 import '@/config'
 import http from '@/utils/http'
+import { VueAxios } from '@/utils/request'
 import VueStorage from 'vue-ls'
 
 Vue.use(VueStorage, {
@@ -14,7 +15,8 @@ Vue.use(VueStorage, {
   storage: 'session', // storage name session, local, memory
 })
 Vue.config.productionTip = false
-Vue.prototype.$http = http
+// Vue.prototype.$http = http
+Vue.use(VueAxios)
 Vue.prototype.$ctx = process.env.VUE_APP_CONTEXT
 
 new Vue({
