@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     initOpenKeys () {
-      this.openKeys = this.$route.meta.key ? [this.$route.meta.key] : []
+      this.openKeys = this.$route.matched[1].meta.key ? [this.$route.matched[1].meta.key] : []
     },
     //展开/折叠子菜单时的回调
     openChangeHander (openKeys) {
