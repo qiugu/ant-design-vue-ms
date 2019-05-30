@@ -67,9 +67,11 @@ export default {
     right: 0;
     bottom: 0;
     overflow: hidden;
+    z-index: 0;
 }
 #userLayout.user-layout-wrapper {
   height: 100%;
+  user-select: none;
   &.mobile {
     .container {
       .main {
