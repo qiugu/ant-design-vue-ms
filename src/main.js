@@ -8,7 +8,9 @@ import '@/config'
 import http from '@/utils/http'
 import { VueAxios } from '@/utils/request'
 import VueStorage from 'vue-ls'
+import VueParticles from 'vue-particles'
 
+Vue.use(VueParticles)
 Vue.use(VueStorage, {
   namespace: 'ms__', // key prefix
   name: 'ls', // name variable Vue.[ls] or this.[$ls],
