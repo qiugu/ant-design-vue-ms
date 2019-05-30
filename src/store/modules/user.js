@@ -41,8 +41,8 @@ const user = {
             return new Promise((resolve, reject) => {
                 getInfo().then(res => {
                     if (res.data.status === 200) {
-                        commit('SET_ROLES', res.data.resultData.roles)
-                        sessionStorage.setItem('roles', JSON.stringify(res.data.resultData.roles))
+                        commit('SET_ROLES', res.data.resultData.info.roles)
+                        sessionStorage.setItem('roles', JSON.stringify(res.data.resultData.info))
                     }
                     resolve(res)
                 })

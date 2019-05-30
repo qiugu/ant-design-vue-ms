@@ -107,18 +107,21 @@ module.exports = {
     port: 3002,
     open: true,
     proxy: {
+      // '/qgdev': {
+      //   target: 'https://www.easy-mock.com/mock/5cb691e3e3926e3006389081'
+      // },
       '/qgdev': {
-        target: 'https://www.easy-mock.com/mock/5cb691e3e3926e3006389081'
+        target: 'http://127.0.0.1:7001'
       },
       '/qgms': {
         target: 'http://47.110.48.159:7001'
       },
       '/qgtest': {
-        target: 'http://127.0.0.1:8080'
+        target: 'http://127.0.0.1:7001'
       }
     }
   },
-  transpileDependencies: [],
+  transpileDependencies: ['vue-particles'],
   // 第三方插件的选项
   pluginOptions: {}
 }
