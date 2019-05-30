@@ -9,11 +9,11 @@
       @openChange="openChangeHander"
     >
       <template v-for="item in menus">
-        <a-menu-item :key="item.meta.key" v-if="!item.children">
+        <a-menu-item :key="item.path" v-if="!item.children">
           <a-icon :type="item.meta.icon"/>
           <span>{{ item.meta.title }}</span>
         </a-menu-item>
-        <a-sub-menu :key="item.meta.key" v-else>
+        <a-sub-menu :key="item.path" v-else>
           <span slot="title">
             <a-icon :type="item.meta.icon"/>
             <span>{{ item.meta.title }}</span>
@@ -38,12 +38,13 @@ export default {
     rootSubmenuKeys () {
       const list = []
       this.menus.map(item => {
-        list.push(item.meta.key)
+        list.push(item.path)
       })
       return list
     },
     menus() {
-      return this.$store.getters.addRouters[0].children
+      const mainMenus = this.$store.getters.addRouters
+      return mainMenus.find(menu => menu.path === '/').children
     },
     keyArr: {
       get () {
@@ -59,7 +60,7 @@ export default {
   },
   methods: {
     initOpenKeys () {
-      this.openKeys = this.$route.matched[1].meta.key ? [this.$route.matched[1].meta.key] : []
+      this.openKeys = this.$route.matched[1].path ? [this.$route.matched[1].path] : []
     },
     //展开/折叠子菜单时的回调
     openChangeHander (openKeys) {

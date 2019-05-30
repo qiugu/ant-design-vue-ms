@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import store from '@/store'
 
 const action = Vue.directive('action', {
   bind: function (el, binding, vnode) {
