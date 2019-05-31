@@ -101,7 +101,7 @@ export const asyncRouterMap = [
                 path: '/personal',
                 name: 'personal',
                 component: PageView,
-                meta: { title: '个人中心', icon: 'user', permission: [] },
+                meta: { title: '个人中心', icon: 'user' },
                 children: []
             }
         ]

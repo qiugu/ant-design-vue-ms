@@ -100,7 +100,7 @@
         >确定</a-button>
       </a-form-item>
 
-      <div class="user-login-other">
+      <a-form-item class="user-login-other">
         <span>其他登陆方式</span>
         <a>
           <a-icon class="item-icon" type="alipay-circle"/>
@@ -112,7 +112,7 @@
           <a-icon class="item-icon" type="github" />
         </a>
         <router-link class="register" :to="{ name: 'register' }">注册账户</router-link>
-      </div>
+      </a-form-item>
     </a-form>
   </div>
 </template>
@@ -197,7 +197,7 @@ export default {
         if (!err) {
           const loginParams = { ...values }
           delete loginParams.username
-          loginParams[!state.loginType ? 'email' : 'username'] =
+          loginParams['username'] =
             values.username
           // loginParams.password = md5(values.password)//密码加密
           loginParams.password = values.password

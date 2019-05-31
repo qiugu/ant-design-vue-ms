@@ -6,9 +6,9 @@
         <a-input 
             size="large" 
             type="text" 
-            placeholder="邮箱" 
+            placeholder="邮箱"
             v-decorator="[
-            'emaill',
+            'email',
             {rules: [{ required: true, type: 'email', message: '请输入邮箱地址' }], validateTrigger: ['change', 'blur']}
         ]"/>
       </a-form-item>
@@ -53,6 +53,7 @@
         <a-input 
             size="large" 
             placeholder="11 位手机号"
+            maxlength="11"
             v-decorator="[
                 'mobile',
                 {rules: [{ required: true, message: '请输入正确的手机号', pattern: /^1[3456789]\d{9}$/ }, { validator: this.handlePhoneCheck } ], validateTrigger: ['change', 'blur'] }
@@ -63,13 +64,6 @@
           </a-select>
         </a-input>
       </a-form-item>
-      <!--<a-input-group size="large" compact>
-            <a-select style="width: 20%" size="large" defaultValue="+86">
-              <a-select-option value="+86">+86</a-select-option>
-              <a-select-option value="+87">+87</a-select-option>
-            </a-select>
-            <a-input style="width: 80%" size="large" placeholder="11 位手机号"></a-input>
-          </a-input-group>-->
 
       <a-row :gutter="16">
         <a-col class="gutter-row" :span="16">
@@ -81,7 +75,7 @@
                 :disabled="true"
                 v-decorator="[
                     'captcha',
-                    {rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'}
+                    {/*rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'*/}
                 ]">
               <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
@@ -208,9 +202,9 @@ export default {
     },
 
     handlePhoneCheck (rule, value, callback) {
-      console.log('handlePhoneCheck, rule:', rule)
-      console.log('handlePhoneCheck, value', value)
-      console.log('handlePhoneCheck, callback', callback)
+      // console.log('handlePhoneCheck, rule:', rule)
+      // console.log('handlePhoneCheck, value', value)
+      // console.log('handlePhoneCheck, callback', callback)
 
       callback()
     },
@@ -226,9 +220,31 @@ export default {
     handleSubmit () {
       this.form.validateFields((err, values) => {
         if (!err) {
-          this.$router.push({ name: 'registerResult', params: { ...values } })
+          this.createUser(values)
+        } else {
+           this.$notification['warn']({
+             message: '注册失败',
+             description: '请稍后重新尝试'
+           })
         }
       })
+    },
+
+    //  注册请求
+    async createUser (params) {
+      const res = await this.$http.post(`${this.$ctx}/user/register`,params)
+      if (res.status === 200) {
+        this.$notification['success']({
+          message: '提示',
+          description: res.resultMsg
+        })
+        this.$router.push({name: 'login'})
+      } else {
+        this.$notification['warn']({
+          message: '提示',
+          description: res.resultMsg
+        })
+      }
     },
 
     getCaptcha (e) {
@@ -279,7 +295,7 @@ export default {
   },
   watch: {
     'state.passwordLevel' (val) {
-      console.log(val)
+      // console.log(val)
     }
   }
 }

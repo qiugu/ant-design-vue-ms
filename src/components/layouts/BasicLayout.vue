@@ -25,9 +25,9 @@
             <a-icon type="bell" style="font-size: 20px;"/>
           </a-badge>
           <a-dropdown v-model="visible" placement="topRight">
-            <span>
+            <span class="dropdown-title">
               <a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>
-              {{ username || '游客' }}
+              <span class="dropdown-user">{{ username || '游客' }}</span>
             </span>
             <a-menu slot="overlay" @click="handleMenuClick">
               <a-menu-item key="1">
@@ -100,11 +100,23 @@ export default {
     display: flex;
     justify-content: space-between;
     .user-wrapper {
-      width: 180px;
+      width: 220px;
       display: flex;
-      justify-content: space-between;
+      justify-content: space-evenly;
       align-items: center;
       padding: 0 24px;
+      flex-wrap: nowrap;
+      .dropdown-title {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        .dropdown-user {
+          width: 60px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          display: inline-block;
+        }
+      }
     }
   }
   .trigger {

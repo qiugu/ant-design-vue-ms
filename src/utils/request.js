@@ -35,6 +35,7 @@ const err = error => {
 }
 
 service.interceptors.request.use(config => {
+  config.data = new URLSearchParams(config.data)
   const token = sessionStorage.getItem('token')
   if (token) {
     config.headers['sessId'] = token // 让每个请求携带自定义 token 请根据实际情况自行修改

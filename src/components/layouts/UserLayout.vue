@@ -24,7 +24,7 @@
         <div class="header">
           <a href="/">
             <img src="~@/assets/logo.svg" class="logo" alt="logo">
-            <span class="title">Ant Design of Vue</span>
+            <span class="title">Antd of Vue</span>
           </a>
         </div>
         <div class="desc">知识收集管理系统</div>
@@ -67,7 +67,6 @@ export default {
     right: 0;
     bottom: 0;
     overflow: hidden;
-    z-index: 0;
 }
 #userLayout.user-layout-wrapper {
   height: 100%;

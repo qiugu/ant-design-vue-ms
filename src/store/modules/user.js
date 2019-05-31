@@ -4,8 +4,7 @@ const user = {
     state: {
         username: sessionStorage.getItem('username'),
         token: sessionStorage.getItem('token'),
-        roles: [],
-        menus: []
+        roles: []
     },
     mutations: {
         SET_USER: (state, data) => {
