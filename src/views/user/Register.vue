@@ -6,10 +6,11 @@
         <a-input 
             size="large" 
             type="text" 
-            placeholder="邮箱"
+            placeholder="用户名"
+            maxlength="100"
             v-decorator="[
-            'email',
-            {rules: [{ required: true, type: 'email', message: '请输入邮箱地址' }], validateTrigger: ['change', 'blur']}
+            'username',
+            {rules: [{ required: true, message: '请输入用户名' }], validateTrigger: ['change', 'blur']}
         ]"/>
       </a-form-item>
 
@@ -27,6 +28,7 @@
           <a-input 
             size="large" 
             type="password" 
+            maxlength="100"
             @click="handlePasswordInputClick" 
             autocomplete="false" 
             placeholder="至少6位密码，区分大小写"
@@ -42,6 +44,7 @@
             size="large" 
             type="password" 
             autocomplete="false" 
+            maxlength="100"
             placeholder="确认密码"
             v-decorator="[
                 'password2',
@@ -72,22 +75,23 @@
                 size="large" 
                 type="text" 
                 placeholder="验证码"
-                :disabled="true"
+                maxlength="4"
                 v-decorator="[
                     'captcha',
-                    {/*rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'*/}
+                    {rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'}
                 ]">
               <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }"/>
             </a-input>
           </a-form-item>
         </a-col>
         <a-col class="gutter-row" :span="8">
-          <a-button
+          <!-- <a-button
             class="getCaptcha"
             size="large"
             :disabled="true"
             @click.stop.prevent="getCaptcha"
-            v-text="!state.smsSendBtn && '获取验证码'||(state.time+' s')"/>
+            v-text="!state.smsSendBtn && '获取验证码'||(state.time+' s')"/> -->
+            <img :src="captchaUrl" alt="captcha" class="getCaptcha" @click="getCaptcha">
         </a-col>
       </a-row>
 
@@ -143,6 +147,7 @@ export default {
         percent: 10,
         progressColor: '#FF0000'
       },
+      captchaUrl: 'http://127.0.0.1:7001' + this.$ctx + '/user/verify?t=' + new Date().getTime(),
       registerBtn: false
     }
   },
@@ -191,7 +196,6 @@ export default {
 
     handlePasswordCheck (rule, value, callback) {
       const password = this.form.getFieldValue('password')
-      console.log('value', value)
       if (value === undefined) {
         callback(new Error('请输入密码'))
       }
@@ -240,49 +244,16 @@ export default {
         })
         this.$router.push({name: 'login'})
       } else {
+        this.getCaptcha()
         this.$notification['warn']({
           message: '提示',
           description: res.resultMsg
         })
       }
     },
-
-    getCaptcha (e) {
-      e.preventDefault()
-      const that = this
-
-      this.form.validateFields(['mobile'], { force: true },
-        (err, values) => {
-          if (!err) {
-            this.state.smsSendBtn = true
-
-            const interval = window.setInterval(() => {
-              if (that.state.time-- <= 0) {
-                that.state.time = 60
-                that.state.smsSendBtn = false
-                window.clearInterval(interval)
-              }
-            }, 1000)
-
-            const hide = this.$message.loading('验证码发送中..', 0)
-
-            // getSmsCaptcha({ mobile: values.mobile }).then(res => {
-            //   setTimeout(hide, 2500)
-            //   this.$notification['success']({
-            //     message: '提示',
-            //     description: '验证码获取成功，您的验证码为：' + res.result.captcha,
-            //     duration: 8
-            //   })
-            // }).catch(err => {
-            //   setTimeout(hide, 1)
-            //   clearInterval(interval)
-            //   that.state.time = 60
-            //   that.state.smsSendBtn = false
-            //   this.requestFailed(err)
-            // })
-          }
-        }
-      )
+    //  获取验证码
+    getCaptcha () {
+      this.captchaUrl = 'http://127.0.0.1:7001' + this.$ctx + '/user/verify?t=' + new Date().getTime()
     },
     requestFailed (err) {
       this.$notification['error']({
@@ -335,6 +306,9 @@ export default {
       display: block;
       width: 100%;
       height: 40px;
+      border: 1px solid #d9d9d9;
+      background: #fff;
+      cursor: pointer;
     }
 
     .register-button {

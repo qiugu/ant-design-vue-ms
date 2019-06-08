@@ -91,7 +91,7 @@ export const asyncRouterMap = [
                 children: [
                     {
                         path: '/test',
-                        name: 'controls',
+                        name: 'controlstest',
                         component: () => import(/* webpackChunkName: "controls" */ '@/views/Controls.vue'),
                         meta: { title: '权限测试', permission: ['controls'] }
                     }

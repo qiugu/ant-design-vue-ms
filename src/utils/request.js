@@ -5,7 +5,8 @@ import Cookies from 'js-cookie'
 
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASEURL,
-  timeout: 100000
+  timeout: 100000,
+  withCredentials: true
 })
 
 const err = error => {

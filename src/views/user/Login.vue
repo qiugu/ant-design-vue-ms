@@ -17,6 +17,7 @@
             <a-input
               size="large"
               type="text"
+              maxlength="50"
               placeholder="帐户名或邮箱地址 / admin"
               v-decorator="[
                 'username',
@@ -31,6 +32,7 @@
             <a-input
               size="large"
               type="password"
+              maxlength="50"
               autocomplete="false"
               placeholder="密码 / admin"
               v-decorator="[
@@ -108,7 +110,7 @@
         <a>
           <a-icon class="item-icon" type="taobao-circle"/>
         </a>
-        <a href="http://127.0.0.1:8080/passport/github" target="_blank">
+        <a>
           <a-icon class="item-icon" type="github" />
         </a>
         <router-link class="register" :to="{ name: 'register' }">注册账户</router-link>

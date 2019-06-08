@@ -114,7 +114,7 @@ module.exports = {
         target: 'http://127.0.0.1:7001'
       },
       '/qgms': {
-        target: 'http://47.110.48.159:7001'
+        target: 'http://47.110.48.159'
       },
       '/qgtest': {
         target: 'http://127.0.0.1:7001'
