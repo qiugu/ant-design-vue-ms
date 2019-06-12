@@ -1,6 +1,6 @@
 <template>
   <div class="main user-layout-register">
-    <h3><span>注册</span></h3>
+    <!-- <h3><span>注册</span></h3> -->
     <a-form ref="formRegister" :form="form" id="formRegister">
       <a-form-item>
         <a-input 
@@ -29,7 +29,9 @@
             size="large" 
             type="password" 
             maxlength="100"
-            @click="handlePasswordInputClick" 
+            @click="handlePasswordInputClick"
+            @focus="focusAnimate"
+            @blur="blurAnimate"
             autocomplete="false" 
             placeholder="至少6位密码，区分大小写"
             v-decorator="[
@@ -43,9 +45,11 @@
         <a-input 
             size="large" 
             type="password" 
-            autocomplete="false" 
+            autocomplete="false"
             maxlength="100"
             placeholder="确认密码"
+            @focus="focusAnimate"
+            @blur="blurAnimate"
             v-decorator="[
                 'password2',
                 {rules: [{ required: true, message: '至少6位密码，区分大小写' }, { validator: this.handlePasswordCheck }], validateTrigger: ['change', 'blur']}
@@ -59,7 +63,7 @@
             maxlength="11"
             v-decorator="[
                 'mobile',
-                {rules: [{ required: true, message: '请输入正确的手机号', pattern: /^1[3456789]\d{9}$/ }, { validator: this.handlePhoneCheck } ], validateTrigger: ['change', 'blur'] }
+                {rules: [{ required: true, message: '请输入正确的手机号', pattern: /^1[3456789]\d{9}$/ }], validateTrigger: ['change', 'blur'] }
             ]">
           <a-select slot="addonBefore" size="large" defaultValue="+86">
             <a-select-option value="+86">+86</a-select-option>
@@ -85,12 +89,6 @@
           </a-form-item>
         </a-col>
         <a-col class="gutter-row" :span="8">
-          <!-- <a-button
-            class="getCaptcha"
-            size="large"
-            :disabled="true"
-            @click.stop.prevent="getCaptcha"
-            v-text="!state.smsSendBtn && '获取验证码'||(state.time+' s')"/> -->
             <img :src="captchaUrl" alt="captcha" class="getCaptcha" @click="getCaptcha">
         </a-col>
       </a-row>
@@ -205,19 +203,7 @@ export default {
       callback()
     },
 
-    handlePhoneCheck (rule, value, callback) {
-      // console.log('handlePhoneCheck, rule:', rule)
-      // console.log('handlePhoneCheck, value', value)
-      // console.log('handlePhoneCheck, callback', callback)
-
-      callback()
-    },
-
     handlePasswordInputClick () {
-    //   if (!this.isMobile()) {
-    //     this.state.passwordLevelChecked = true
-    //     return
-    //   }
       this.state.passwordLevelChecked = true
     },
 
@@ -253,7 +239,7 @@ export default {
     },
     //  获取验证码
     getCaptcha () {
-      this.captchaUrl = 'http://127.0.0.1:7001' + this.$ctx + '/user/verify?t=' + new Date().getTime()
+      this.captchaUrl = this.$base + this.$ctx + '/user/verify?t=' + new Date().getTime()
     },
     requestFailed (err) {
       this.$notification['error']({
@@ -262,6 +248,13 @@ export default {
         duration: 4
       })
       this.registerBtn = false
+    },
+    //  点击密码输入框聚焦事件
+    focusAnimate() {
+      this.$store.commit('SET_COVER', true)
+    },
+    blurAnimate() {
+      this.$store.commit('SET_COVER', false)
     }
   },
   watch: {
@@ -289,6 +282,8 @@ export default {
   }
 
   .user-layout-register {
+    padding: 42px 20px 20px;
+    background: rgba(255, 255, 255, .2);
     .ant-input-group-addon:first-child {
       background-color: #fff;
     }

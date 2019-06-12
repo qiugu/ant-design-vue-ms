@@ -102,7 +102,14 @@ export const asyncRouterMap = [
                 name: 'personal',
                 component: PageView,
                 meta: { title: '个人中心', icon: 'user' },
-                children: []
+                children: [
+                    {
+                        path: '/message_manage',
+                        name: 'message_manage',
+                        component: () => import(/* webpackChunkName: "message" */ '@/views/personal/MessageManage.vue'),
+                        meta: { title: '消息管理' }
+                    }
+                ]
             }
         ]
     },

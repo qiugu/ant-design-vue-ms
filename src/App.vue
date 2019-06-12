@@ -13,4 +13,10 @@
   color: #2c3e50;
   height: 100%;
 }
+.font-theme {
+  color: #7546c9;
+  span {
+    color: #7546c9;
+  }
+}
 </style>

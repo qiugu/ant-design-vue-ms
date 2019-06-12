@@ -4,12 +4,12 @@
       <!-- 粒子漂浮物 -->
       <vue-particles
         id="particles-js"
-        color="#7546c9"
+        color="#fff"
         :particleOpacity="0.7"
-        :particlesNumber="30"
-        shapeType="polygon"
+        :particlesNumber="50"
+        shapeType="star"
         :particleSize="3"
-        linesColor="#7546c9"
+        linesColor="#fff"
         :linesWidth="1"
         :lineLinked="true"
         :lineOpacity="0.4"
@@ -21,13 +21,22 @@
         clickMode="repulse"
       />
       <div class="top">
-        <div class="header">
-          <a href="/">
-            <img src="~@/assets/logo.svg" class="logo" alt="logo">
-            <span class="title">Antd of Vue</span>
-          </a>
+        <transition name="left-cover">
+          <span v-if="!cover" class="owl-hand left"/>
+        </transition>
+        <transition name="left-remove">
+          <img src="~@/assets/owl-login-arm.png" v-if="cover" alt="left-arm" class="left-arm">
+        </transition>
+        <div>
+          <img src="~@/assets/owl-login.png" alt="owl">
+          <div class="owl-body"/>
         </div>
-        <div class="desc">知识收集管理系统</div>
+        <transition name="right-cover">
+          <span v-if="!cover" class="owl-hand right"/>
+        </transition>
+        <transition name="right-remove">
+          <img src="~@/assets/owl-login-arm.png" v-if="cover" alt="left-arm" class="right-arm">
+        </transition>
       </div>
 
       <router-view/>
@@ -38,7 +47,7 @@
           <a href="_self">隐私</a>
           <a href="_self">条款</a>
         </div>
-        <div class="copyright">Copyright &copy; 2019 qiugu个人出品</div>
+        <div class="copyright">Copyright &copy; 2019 qiugu personal produce</div>
       </div>
     </div>
   </div>
@@ -47,8 +56,10 @@
 <script>
 export default {
   name: 'UserLayout',
-  data() {
-    return {}
+  computed: {
+    cover() {
+      return this.$store.getters.cover
+    }
   },
   mounted() {
     document.body.classList.add('userLayout')
@@ -60,13 +71,57 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#particles-js {
-    position: absolute;
-    top: 0;
+.left-cover-enter-active {
+  animation: left-cover-eyes .4s reverse;
+}
+.left-cover-leave-active {
+  animation: left-cover-eyes .3s;
+}
+.right-cover-enter-active {
+  animation: left-cover-eyes .4s reverse;
+}
+.right-cover-leave-active {
+  animation: right-cover-eyes .3s;
+}
+.left-remove-enter-active {
+  animation: left-cover-eyes .3s;
+}
+.left-remove-leave-active {
+  animation: left-cover-eyes .4s reverse;
+}
+.right-remove-enter-active {
+  animation: right-cover-eyes .3s;
+}
+.right-remove-leave-active {
+  animation: right-cover-eyes .4s reverse;
+}
+@keyframes left-cover-eyes {
+  0% {
+    top: 90px;
     left: 0;
+  }
+  100% {
+    top: 65px;
+    left: 63px;
+  }
+}
+@keyframes right-cover-eyes {
+  0% {
+    top: 90px;
     right: 0;
-    bottom: 0;
-    overflow: hidden;
+  }
+  100% {
+    top: 65px;
+    right: 60px;
+  }
+}
+#particles-js {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
 }
 #userLayout.user-layout-wrapper {
   height: 100%;
@@ -83,8 +138,8 @@ export default {
   .container {
     width: 100%;
     min-height: 100%;
-    background: #f0f2f5 url(~@/assets/background.svg) no-repeat 50%;
-    background-size: 100%;
+    background: url(~@/assets/login-bg.png) no-repeat 100%;
+    background-size: cover;
     padding: 110px 0 144px;
     box-sizing: border-box;
     position: relative;
@@ -94,38 +149,45 @@ export default {
 
     .top {
       text-align: center;
-
-      .header {
-        height: 44px;
-        line-height: 44px;
-
-        .badge {
-          position: absolute;
-          display: inline-block;
-          line-height: 1;
-          vertical-align: middle;
-          margin-left: -12px;
-          margin-top: -10px;
-          opacity: 0.8;
-        }
-
-        .logo {
-          height: 44px;
-          vertical-align: top;
-          margin-right: 16px;
-          border-style: none;
-        }
-
-        .title {
-          font-size: 33px;
-          color: rgba(0, 0, 0, 0.85);
-          font-family: 'Chinese Quote', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
-            'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-            'Segoe UI Symbol';
-          font-weight: 600;
-          position: relative;
-          top: 2px;
-        }
+      position: absolute;
+      left: 50%;
+      top: calc(50% - 205px);
+      transform: translate(-50%, -50%);
+      .owl-body {
+        width: 0;
+        height: 0;
+        margin: 0 auto;
+        border-left: 70px solid transparent;
+        border-right: 70px solid transparent;
+        border-top: 70px solid #4e3425;
+        border-bottom: 70px solid transparent;
+      }
+      .left-arm {
+        position: absolute;
+        left: 60px;
+        top: 60px;
+      }
+      .right-arm {
+        transform: rotateY(180deg);
+        position: absolute;
+        right: 55px;
+        top: 60px;
+      }
+      .owl-hand {
+        display: inline-block;
+        width: 25px;
+        height: 20px;
+        border-radius: 70%;
+        background: #4e3425;
+        position: absolute;
+      }
+      .owl-hand.left {
+        left: 0;
+        top: 90px;
+      }
+      .owl-hand.right {
+        right: 0;
+        top: 90px;
       }
       .desc {
         font-size: 14px;
@@ -138,7 +200,10 @@ export default {
     .main {
       min-width: 260px;
       width: 368px;
-      margin: 0 auto;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
 
     .footer {

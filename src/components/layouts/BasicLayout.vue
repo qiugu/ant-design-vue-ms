@@ -21,19 +21,19 @@
           @click="()=> collapsed = !collapsed"
         />
         <div class="user-wrapper">
-          <a-badge count="15">
-            <a-icon type="bell" style="font-size: 20px;"/>
+          <a-badge :count="messageNumber">
+            <a-icon type="bell" style="font-size: 20px;cursor: pointer;" @click="inform"/>
           </a-badge>
           <a-dropdown v-model="visible" placement="topRight">
             <span class="dropdown-title">
               <a-avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"/>
-              <span class="dropdown-user">{{ username || '游客' }}</span>
+              <span class="dropdown-user">{{ username }}</span>
             </span>
             <a-menu slot="overlay" @click="handleMenuClick">
-              <a-menu-item key="1">
+              <a-menu-item key="user">
                 <a-icon type="user"/>个人中心
               </a-menu-item>
-              <a-menu-item key="2">
+              <a-menu-item key="setting">
                 <a-icon type="setting"/>账户设置
               </a-menu-item>
               <a-menu-divider/>
@@ -48,6 +48,14 @@
       <a-layout-content>
         <router-view/>
       </a-layout-content>
+      <!-- <a-layout-footer class="page-footer">
+        <a href="https://www.github.com/qiugu/ant-design-vue-ms" target="_blank">
+        仓库地址
+          <a-icon type="github" />
+        </a>
+        <a href="https://pro.loacg.com/">Ant Design Pro of Vue</a>
+        <a href="https://vue.ant.design/docs/vue/introduce-cn/">Ant Design Vue</a>
+      </a-layout-footer> -->
     </a-layout>
   </a-layout>
 </template>
@@ -60,15 +68,19 @@ export default {
     return {
       collapsed: false,
       visible: false,
-      username: ''
+      username: '',
+      messageNumber: 0
     }
   },
   methods: {
     handleMenuClick({ key }) {
-      console.log(key)
       this[key]()
     },
-    user () {},
+    user () {
+      this.$router.push({
+        name: 'personal'
+      })
+    },
     setting () {},
     logout () {
       this.$confirm({
@@ -77,17 +89,28 @@ export default {
         okText: '确定',
         cancelText: '取消',
         onOk: () => {
-          this.$store.dispatch('Logout')
-          .then(() => {
-            window.location.reload()
-          })
+          return new Promise((resolve, reject) => {
+            this.$store.dispatch('Logout')
+            .then(() => {
+              window.location.reload()
+            })
+          }).catch(err => {})
         },
         onCancel: () => {}
+      })
+    },
+    //  查看消息通知
+    inform() {
+      if(this.messageNumber === 0) {
+        this.$message.info('暂无消息通知')
+      }
+      this.$router.push({
+        name: 'message_manage'
       })
     }
   },
   mounted() {
-    this.username = sessionStorage.getItem('loginName')
+    this.username = sessionStorage.getItem('loginName') || '游客'
   }
 }
 </script>
@@ -99,6 +122,7 @@ export default {
     padding: 0;
     display: flex;
     justify-content: space-between;
+    user-select: none;
     .user-wrapper {
       width: 220px;
       display: flex;
@@ -111,7 +135,7 @@ export default {
         align-items: center;
         justify-content: flex-end;
         .dropdown-user {
-          width: 60px;
+          max-width: 60px;
           text-overflow: ellipsis;
           overflow: hidden;
           display: inline-block;
@@ -148,5 +172,10 @@ export default {
       margin: 0;
     }
   }
+}
+.page-footer {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 20px 40px;
 }
 </style>

@@ -30,37 +30,50 @@ import {
     Spin,
     List,
     Card,
-    Breadcrumb
+    Breadcrumb,
+    Table,
+    Alert
 } from 'ant-design-vue'
 
-Vue.use(Button)
-Vue.use(Row)
-Vue.use(Col)
-Vue.use(Layout)
-Vue.use(Menu)
-Vue.use(Icon)
-Vue.use(Form)
-Vue.use(Tag)
-Vue.use(Input)
-Vue.use(Checkbox)
-Vue.use(Avatar)
-Vue.use(Badge)
-Vue.use(Dropdown)
-Vue.use(Tabs)
-Vue.use(Radio)
-Vue.use(Select)
-Vue.use(Switch)
-Vue.use(Rate)
-Vue.use(Upload)
-Vue.use(InputNumber)
-Vue.use(Slider)
-Vue.use(DatePicker)
-Vue.use(Progress)
-Vue.use(Popover)
-Vue.use(Spin)
-Vue.use(List)
-Vue.use(Card)
-Vue.use(Breadcrumb)
+const components = [
+    Button,
+    Row,
+    Col,
+    Layout,
+    Menu,
+    Icon,
+    Form,
+    Tag,
+    Input,
+    Checkbox,
+    Avatar,
+    Badge,
+    Dropdown,
+    Tabs,
+    Radio,
+    Select,
+    Switch,
+    Rate,
+    Upload,
+    InputNumber,
+    Slider,
+    DatePicker,
+    notification,
+    Progress,
+    Popover,
+    Modal,
+    message,
+    Spin,
+    List,
+    Card,
+    Breadcrumb,
+    Table,
+    Alert
+]
+
+components.forEach(component => {
+    Vue.use(component)
+})
 
 Vue.prototype.$confirm = Modal.confirm
 Vue.prototype.$message = message

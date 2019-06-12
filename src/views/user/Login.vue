@@ -7,83 +7,45 @@
       :form="form"
       @submit="handleSubmit"
     >
-      <a-tabs
-        :activeKey="customActiveKey"
-        :tabBarStyle="{ textAlign: 'center', borderBottom: 'unset' }"
-        @change="handleTabClick"
-      >
-        <a-tab-pane key="tab1" tab="账号密码登陆">
-          <a-form-item>
-            <a-input
-              size="large"
-              type="text"
-              maxlength="50"
-              placeholder="帐户名或邮箱地址 / admin"
-              v-decorator="[
+      <div class="header">
+        <img src="~@/assets/logo.svg" class="logo" alt="logo">
+        <span class="title">花里胡哨的系统</span>
+      </div>
+      <a-form-item>
+        <a-input
+          size="large"
+          type="text"
+          maxlength="50"
+          placeholder="帐户名 / admin"
+          v-decorator="[
                 'username',
-                {rules: [{ required: true, message: '请输入帐户名或邮箱地址' }, { validator: handleUsernameOrEmail }], validateTrigger: 'change'}
+                {rules: [{ required: true, message: '请输入帐户名' }], validateTrigger: 'change'}
               ]"
-            >
-              <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-            </a-input>
-          </a-form-item>
+        >
+          <a-icon slot="prefix" type="user" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+        </a-input>
+      </a-form-item>
 
-          <a-form-item>
-            <a-input
-              size="large"
-              type="password"
-              maxlength="50"
-              autocomplete="false"
-              placeholder="密码 / admin"
-              v-decorator="[
+      <a-form-item>
+        <a-input
+          size="large"
+          type="password"
+          maxlength="50"
+          autocomplete="false"
+          placeholder="密码 / admin"
+          @focus="focusAnimate"
+          @blur="blurAnimate"
+          v-decorator="[
                 'password',
                 {rules: [{ required: true, message: '请输入密码' }], validateTrigger: 'blur'}
               ]"
-            >
-              <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-            </a-input>
-          </a-form-item>
-        </a-tab-pane>
-        <a-tab-pane key="tab2" tab="手机号登陆" disabled>
-          <a-form-item>
-            <a-input
-              size="large"
-              type="text"
-              placeholder="手机号"
-              v-decorator="['mobile', {rules: [{ required: true, pattern: /^1[34578]\d{9}$/, message: '请输入正确的手机号' }], validateTrigger: 'change'}]"
-            >
-              <a-icon slot="prefix" type="mobile" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-            </a-input>
-          </a-form-item>
+        >
+          <a-icon slot="prefix" type="lock" :style="{ color: 'rgba(0,0,0,.25)' }"/>
+        </a-input>
+      </a-form-item>
 
-          <a-row :gutter="16">
-            <a-col class="gutter-row" :span="16">
-              <a-form-item>
-                <a-input
-                  size="large"
-                  type="text"
-                  placeholder="验证码"
-                  v-decorator="['captcha', {rules: [{ required: true, message: '请输入验证码' }], validateTrigger: 'blur'}]"
-                >
-                  <a-icon slot="prefix" type="mail" :style="{ color: 'rgba(0,0,0,.25)' }"/>
-                </a-input>
-              </a-form-item>
-            </a-col>
-            <a-col class="gutter-row" :span="8">
-              <a-button
-                class="getCaptcha"
-                tabindex="-1"
-                :disabled="state.smsSendBtn"
-                @click.stop.prevent="getCaptcha"
-                v-text="!state.smsSendBtn && '获取验证码' || (state.time+' s')"
-              />
-            </a-col>
-          </a-row>
-        </a-tab-pane>
-      </a-tabs>
-
-      <a-form-item>
-        <a-checkbox v-decorator="['rememberMe']">自动登陆</a-checkbox>
+      <a-form-item style="margin-bottom: 0;">
+        <a-checkbox v-decorator="['rememberMe']" class="font-theme">自动登陆</a-checkbox>
         <router-link
           :to="{ name: 'login', params: { user: 'aaa'} }"
           class="forge-password"
@@ -91,7 +53,7 @@
         >忘记密码</router-link>
       </a-form-item>
 
-      <a-form-item style="margin-top:24px">
+      <a-form-item>
         <a-button
           size="large"
           type="primary"
@@ -103,7 +65,7 @@
       </a-form-item>
 
       <a-form-item class="user-login-other">
-        <span>其他登陆方式</span>
+        <span class="font-theme">其他登陆方式</span>
         <a>
           <a-icon class="item-icon" type="alipay-circle"/>
         </a>
@@ -111,7 +73,7 @@
           <a-icon class="item-icon" type="taobao-circle"/>
         </a>
         <a>
-          <a-icon class="item-icon" type="github" />
+          <a-icon class="item-icon" type="github"/>
         </a>
         <router-link class="register" :to="{ name: 'register' }">注册账户</router-link>
       </a-form-item>
@@ -126,81 +88,42 @@ import { mapActions } from 'vuex'
 export default {
   data() {
     return {
-      customActiveKey: 'tab1',
       loginBtn: false,
-      // login type: 0 email, 1 username, 2 telephone
-      loginType: 0,
-      requiredTwoStepCaptcha: false,
-      stepCaptchaVisible: false,
-      form: this.$form.createForm(this), 
+      form: this.$form.createForm(this),
       state: {
         time: 60,
         loginBtn: false,
-        // login type: 0 email, 1 username, 2 telephone
-        loginType: 1,
         smsSendBtn: false
       }
     }
   },
-  created() {
-    // get2step({ })
-    //   .then(res => {
-    //     this.requiredTwoStepCaptcha = res.result.stepCode
-    //   })
-    //   .catch(() => {
-    //     this.requiredTwoStepCaptcha = false
-    //   })
-    // this.requiredTwoStepCaptcha = true
-  },
   methods: {
     ...mapActions(['Login']),
-    // handler
-    handleUsernameOrEmail(rule, value, callback) {
-      const { state } = this
-      const regex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/
-      if (regex.test(value)) {
-        state.loginType = 0
-      } else {
-        state.loginType = 1
-      }
-      callback()
-    },
     //获取第三方登录的信息
-    async getAuth () {
+    async getAuth() {
       const params = {
         code: this.$route.query.code,
         client_id: '46b85aea388080d94dd8',
         client_secret: '793f96044a8003cbb9a879b897ba0f190804d0c9'
       }
-      const res = await this.$http.post('http://127.0.0.1:8080/passport/github/callback',params)
+      const res = await this.$http.post('http://127.0.0.1:8080/passport/github/callback', params)
       console.log(res)
-    },
-    handleTabClick(key) {
-      this.customActiveKey = key
-      // this.form.resetFields()
     },
     handleSubmit(e) {
       e.preventDefault()
       const {
         form: { validateFields },
         state,
-        customActiveKey,
         Login
       } = this
 
       state.loginBtn = true
 
-      const validateFieldsKey =
-        customActiveKey === 'tab1'
-          ? ['username', 'password']
-          : ['mobile', 'captcha']
-
-      validateFields(validateFieldsKey, { force: true }, (err, values) => {
+      validateFields(['username','password'], { force: true }, (err, values) => {
         if (!err) {
           const loginParams = { ...values }
           delete loginParams.username
-          loginParams['username'] =
-            values.username
+          loginParams['username'] = values.username
           // loginParams.password = md5(values.password)//密码加密
           loginParams.password = values.password
           Login(loginParams)
@@ -216,38 +139,6 @@ export default {
         }
       })
     },
-    getCaptcha(e) {
-      e.preventDefault()
-      const {
-        form: { validateFields },
-        state
-      } = this
-
-      validateFields(['mobile'], { force: true }, (err, values) => {
-        if (!err) {
-          state.smsSendBtn = true
-
-          const interval = window.setInterval(() => {
-            if (state.time-- <= 0) {
-              state.time = 60
-              state.smsSendBtn = false
-              window.clearInterval(interval)
-            }
-          }, 1000)
-
-          const hide = this.$message.loading('验证码发送中..', 0)
-        }
-      })
-    },
-    stepCaptchaSuccess() {
-      this.loginSuccess()
-    },
-    stepCaptchaCancel() {
-      this.Logout().then(() => {
-        this.loginBtn = false
-        this.stepCaptchaVisible = false
-      })
-    },
     loginSuccess(res) {
       this.$router.push({ name: 'index' })
       // 延迟 1 秒显示欢迎信息
@@ -261,18 +152,57 @@ export default {
     requestFailed(err) {
       this.$notification['error']({
         message: '错误',
-        description:
-          ((err.response || {}).data || {}).message || err.data.resultMsg ||
-          '请求出现错误，请稍后再试',
+        description: ((err.response || {}).data || {}).message || err.data.resultMsg || '请求出现错误，请稍后再试',
         duration: 4
       })
+    },
+    //  点击密码输入框聚焦事件
+    focusAnimate() {
+      this.$store.commit('SET_COVER', true)
+    },
+    blurAnimate() {
+      this.$store.commit('SET_COVER', false)
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
+.header {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+  .badge {
+    position: absolute;
+    display: inline-block;
+    line-height: 1;
+    vertical-align: middle;
+    margin-left: -12px;
+    margin-top: -10px;
+    opacity: 0.8;
+  }
+
+  .logo {
+    height: 44px;
+    margin-right: 16px;
+    border-style: none;
+  }
+
+  .title {
+    font-size: 33px;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: 'Chinese Quote', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+      'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+      'Segoe UI Symbol';
+    font-weight: 600;
+  }
+}
 .user-layout-login {
+  padding: 40px 20px 20px;
+  margin-top: -5px; 
+  height: 450px;
+  background: rgba(255, 255, 255, .2);
   label {
     font-size: 14px;
   }
@@ -301,7 +231,7 @@ export default {
 
     .item-icon {
       font-size: 24px;
-      color: rgba(0, 0, 0, 0.2);
+      color: rgba(255, 255, 255, 0.7);
       margin-left: 16px;
       vertical-align: middle;
       cursor: pointer;

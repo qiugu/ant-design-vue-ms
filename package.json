@@ -74,6 +74,7 @@
       "vue/no-parsing-error": 0,
       "vue/no-template-shadow": 0,
       "vue/html-indent": 0,
+      "vue/no-unused-vars": 0,
       "no-console": 0,
       "no-tabs": 0,
       "no-unused-vars": 0,

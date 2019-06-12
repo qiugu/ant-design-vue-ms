@@ -4,17 +4,21 @@ const user = {
     state: {
         username: sessionStorage.getItem('username'),
         token: sessionStorage.getItem('token'),
-        roles: []
+        roles: [],
+        cover: false
     },
     mutations: {
         SET_USER: (state, data) => {
-            state.username = data.username || ''
+            state.username = data.username
         },
         SET_TOKEN: (state, data) => {
             state.token = data.token
         },
         SET_ROLES: (state, data) => {
             state.roles = data
+        },
+        SET_COVER: (state, data) => {
+            state.cover = data
         }
     },
     actions: {
@@ -53,7 +57,6 @@ const user = {
                 commit('SET_TOKEN', '')
                 commit('SET_USER', '')
                 commit('SET_ROLES', [])
-                commit('SET_TAB', [])
                 resolve()
             })
         }

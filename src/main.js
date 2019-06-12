@@ -19,6 +19,7 @@ Vue.config.productionTip = false
 // Vue.prototype.$http = http
 Vue.use(VueAxios)
 Vue.prototype.$ctx = process.env.VUE_APP_CONTEXT
+Vue.prototype.$base = process.env.VUE_APP_BASEURL
 
 new Vue({
   router,
