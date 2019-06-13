@@ -2,6 +2,7 @@ import axios from 'axios'
 import VueAxios from './axios'
 import notification from 'ant-design-vue/es/notification'
 import Cookies from 'js-cookie'
+import store from '@/store'
 
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASEURL,
@@ -12,7 +13,7 @@ const service = axios.create({
 const err = error => {
   if (error.response) {
     const data = error.response.data
-    const token = sessionStorage.getItem('token')
+    const token = sessionStorage.getItem('ms__ACCESS_TOKEN')
     if (error.response.status === 403) {
       notification.error({
         message: 'Forbidden',
@@ -25,11 +26,11 @@ const err = error => {
         description: 'Authorization verification failed'
       })
       if (token) {
-        // store.dispatch('Logout').then(() => {
-        //   setTimeout(() => {
-        //     window.location.reload()
-        //   }, 1500)
-        // })
+        store.dispatch('Logout').then(() => {
+          setTimeout(() => {
+            window.location.reload()
+          }, 1500)
+        })
       }
     }
   }

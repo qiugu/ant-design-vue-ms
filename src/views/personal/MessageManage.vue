@@ -14,7 +14,7 @@
         <a-col :span="8">
           <a-form-item label="消息类型：" :labelCol="{ span: formLayout.labelCol }" :wrapperCol="{ span: formLayout.wrapCol }">
             <a-select placeholder="请选择消息类型" v-decorator="['messType']">
-              <a-select-option v-for="item in types" :key="item" :value="item">{{ item }}</a-select-option>
+              <a-select-option v-for="item in types" :key="item.value" :value="item.value">{{ item.title }}</a-select-option>
             </a-select>
           </a-form-item>
         </a-col>
@@ -58,7 +58,12 @@ export default {
   data() {
     return {
       form: this.$form.createForm(this),
-      types: ['通知', '警告', '错误', '待办'],
+      types: [
+        {value: '0',title: '通知'},
+        {value: '1',title: '警告'},
+        {value: '2',title: '错误'},
+        {value: '3',title: '待办'}
+      ],
       formLayout: {
         labelCol: 4,
         wrapCol: 20
@@ -89,7 +94,10 @@ export default {
       }
       const res = await this.$http.post(this.$ctx + '/personal/message',params)
       if (res.status === 200) {
-        this.tableData = res.resultData
+        this.tableData = res.resultData && res.resultData.map(item => {
+          item.mesType = this.types[item.mesType].title
+          return item
+        })
       }
     },
     handleSubmit(e) {
