@@ -90,7 +90,7 @@ export default {
   methods: {
     async fetchData() {
       const params = {
-        username: sessionStorage.getItem('loginName')
+        token: JSON.parse(sessionStorage.getItem('ms__ACCESS_TOKEN')).value
       }
       const res = await this.$http.post(this.$ctx + '/personal/message',params)
       if (res.status === 200) {
