@@ -2,8 +2,6 @@ import BasicLayout from '@/components/layouts/BasicLayout.vue'
 import UserLayout from '@/components/layouts/UserLayout.vue'
 import PageView from '@/components/layouts/PageView.vue'
 
-
-
 export const asyncRouterMap = [
     {
         path: '/',
