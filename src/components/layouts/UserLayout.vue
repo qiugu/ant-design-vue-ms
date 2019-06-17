@@ -166,6 +166,10 @@ export default {
         position: absolute;
         left: 60px;
         top: 60px;
+        -webkit-transform: translate3d(0, 0, 0);
+        -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
       }
       .right-arm {
         transform: rotateY(180deg);
@@ -180,6 +184,10 @@ export default {
         border-radius: 70%;
         background: #4e3425;
         position: absolute;
+        -webkit-transform: translate3d(0, 0, 0);
+        -moz-transform: translate3d(0, 0, 0);
+        -ms-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
       }
       .owl-hand.left {
         left: 0;

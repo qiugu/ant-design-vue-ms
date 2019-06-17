@@ -46,7 +46,7 @@
           </div>
         </template>
         <template slot="operation" slot-scope="text, record, index">
-          <a-button size="small">已读</a-button>
+          <a-button size="small" @click="readed">已读</a-button>
         </template>
       </a-table>
     </div>
@@ -105,6 +105,9 @@ export default {
       this.form.validateFields((err, values) => {
         if (!err) {
           console.log(values)
+          this.$notification['info']({
+            message: '暂未开启'
+          })
         }
       })
     },
@@ -121,6 +124,11 @@ export default {
         })
         return
       }
+    },
+    readed() {
+      this.$notification['info']({
+        message: '暂未开启'
+      })
     }
   }
 }
