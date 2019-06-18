@@ -2,7 +2,6 @@
 感谢大佬的背景图片，大佬的文章[掘金](https://juejin.im/post/5b3b2ac9e51d4519972faa62)
 * 登录页
 ![avater](http://47.110.48.159/public/assets/images/login-page-clip.png)
-# egg-server
 
 ## 前端向知识体系
 参考：[从输入URL到页面加载的过程](http://www.dailichun.com/2018/03/12/whenyouenteraurl.html)
