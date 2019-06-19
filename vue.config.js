@@ -91,7 +91,7 @@ module.exports = {
   pwa: {},
   // 配置 webpack-dev-server 行为。
   devServer: {
-    port: 3002,
+    port: 3022,
     open: true,
     proxy: {
       // '/qgdev': {

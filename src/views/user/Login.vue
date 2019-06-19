@@ -67,12 +67,12 @@
       <a-form-item class="user-login-other">
         <span class="font-theme">其他登陆方式</span>
         <a>
-          <a-icon class="item-icon" type="alipay-circle"/>
+          <a-icon class="item-icon" type="alipay"/>
         </a>
         <a>
-          <a-icon class="item-icon" type="taobao-circle"/>
+          <a-icon class="item-icon" type="wechat"/>
         </a>
-        <a>
+        <a href="https://github.com/login/oauth/authorize?client_id=46b85aea388080d94dd8">
           <a-icon class="item-icon" type="github"/>
         </a>
         <router-link class="register" :to="{ name: 'register' }">注册账户</router-link>
@@ -97,6 +97,11 @@ export default {
       }
     }
   },
+  mounted() {
+    if (this.$route.query.code) {
+      this.getAuth()
+    }
+  },
   methods: {
     ...mapActions(['Login']),
     //获取第三方登录的信息
@@ -106,8 +111,19 @@ export default {
         client_id: '46b85aea388080d94dd8',
         client_secret: '793f96044a8003cbb9a879b897ba0f190804d0c9'
       }
-      const res = await this.$http.post('http://127.0.0.1:8080/passport/github/callback', params)
+      const res = await this.$http.post(this.$ctx + '/user/githubAuth', params)
       console.log(res)
+      if (res.resultData.status === 200) {
+        this.Login({
+          username: res.resultData.data.login,
+          password: res.resultData.data.node_id
+        })
+          .then(res => this.loginSuccess(res))
+          .catch(err => this.requestFailed(err))
+          .finally(() => {
+            this.state.loginBtn = false
+          })
+      }
     },
     handleSubmit(e) {
       e.preventDefault()
@@ -140,7 +156,7 @@ export default {
       })
     },
     loginSuccess(res) {
-      this.$router.push({ name: 'index' })
+      this.$router.push({ name: 'dashboard' })
       // 延迟 1 秒显示欢迎信息
       setTimeout(() => {
         this.$notification.success({
