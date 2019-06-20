@@ -1,7 +1,7 @@
 <template>
   <div class="not">
     <div class="notfound-wrapper">
-      <img src="../assets/404.png" alt="404">
+      <img src="../assets/images/404.png" alt="404">
       <p class="disc">哎呀迷路了...</p>
       <div class="reason">
         <span>可能的原因：</span>

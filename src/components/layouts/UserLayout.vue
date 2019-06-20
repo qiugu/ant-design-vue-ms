@@ -25,17 +25,17 @@
           <span v-if="!cover" class="owl-hand left"/>
         </transition>
         <transition name="left-remove">
-          <img src="~@/assets/owl-login-arm.png" v-if="cover" alt="left-arm" class="left-arm">
+          <img src="~@/assets/images/owl-login-arm.png" v-if="cover" alt="left-arm" class="left-arm">
         </transition>
         <div>
-          <img src="~@/assets/owl-login.png" alt="owl">
+          <img src="~@/assets/images/owl-login.png" alt="owl">
           <div class="owl-body"/>
         </div>
         <transition name="right-cover">
           <span v-if="!cover" class="owl-hand right"/>
         </transition>
         <transition name="right-remove">
-          <img src="~@/assets/owl-login-arm.png" v-if="cover" alt="left-arm" class="right-arm">
+          <img src="~@/assets/images/owl-login-arm.png" v-if="cover" alt="left-arm" class="right-arm">
         </transition>
       </div>
 
@@ -138,7 +138,7 @@ export default {
   .container {
     width: 100%;
     min-height: 100%;
-    background: url(~@/assets/login-bg.png) no-repeat 100%;
+    background: url(~@/assets/images/login-bg.png) no-repeat 100%;
     background-size: cover;
     padding: 110px 0 144px;
     box-sizing: border-box;

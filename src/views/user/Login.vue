@@ -8,7 +8,7 @@
       @submit="handleSubmit"
     >
       <div class="header">
-        <img src="~@/assets/logo.svg" class="logo" alt="logo">
+        <img src="~@/assets/svg/logo.svg" class="logo" alt="logo">
         <span class="title">花里胡哨的系统</span>
       </div>
       <a-form-item>
@@ -156,7 +156,7 @@ export default {
       })
     },
     loginSuccess(res) {
-      this.$router.push({ name: 'dashboard' })
+      this.$router.push({ path: '/schedule' })
       // 延迟 1 秒显示欢迎信息
       setTimeout(() => {
         this.$notification.success({

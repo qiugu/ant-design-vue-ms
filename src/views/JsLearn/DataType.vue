@@ -15,7 +15,7 @@
         <a-list-item slot="renderItem" slot-scope="item">{{ item }}</a-list-item>
       </a-list>
       <a-card title="类型转换规则" style="margin: 20px 0;">
-        <img src="../../assets/type-convert.png" alt="convert">
+        <img src="../../assets/images/type-convert.png" alt="convert">
       </a-card>
       <a-card title="包装类型（装箱和拆箱）">
         <a-tag color="#2db7f5">Boolean</a-tag>
