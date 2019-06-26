@@ -115,25 +115,22 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+@import '~@/assets/styles/mixins.scss';
+@import '~@/assets/styles/var.scss';
 #components-layout-demo-custom-trigger {
   height: 100%;
   .header-wrap {
-    background: #fff;
+    background: $bg-color;
     padding: 0;
-    display: flex;
-    justify-content: space-between;
+    @include flex-layout(space-between);
     user-select: none;
     .user-wrapper {
       width: 220px;
-      display: flex;
-      justify-content: space-evenly;
-      align-items: center;
+      @include flex-layout(space-evenly);
       padding: 0 24px;
       flex-wrap: nowrap;
       .dropdown-title {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
+        @include flex-layout(flex-end);
         .dropdown-user {
           max-width: 60px;
           text-overflow: ellipsis;
@@ -153,7 +150,7 @@ export default {
 }
 
 #components-layout-demo-custom-trigger .trigger:hover {
-  color: #1890ff;
+  color: $theme-color;
 }
 
 #components-layout-demo-custom-trigger .logo {
@@ -168,14 +165,13 @@ export default {
     align-items: center;
     justify-content: space-evenly; 
     h2 {
-      color: #fff;
+      color: $font-color;
       margin: 0;
     }
   }
 }
 .page-footer {
-  display: flex;
-  justify-content: space-evenly;
+  @include flex-layout(space-evenly);
   padding: 20px 40px;
 }
 </style>

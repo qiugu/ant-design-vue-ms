@@ -30,10 +30,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '~@/assets/styles/var.scss';
 .page-view {
   .breadcrumb {
     padding: 20px;
-    background: #fff;
+    background: $bg-color;
   }
 }
 </style>
