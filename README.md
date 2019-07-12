@@ -1,7 +1,9 @@
-# 预览
+# 概览
 感谢大佬的背景图片，大佬的文章[掘金](https://juejin.im/post/5b3b2ac9e51d4519972faa62)
-* 登录页
-![avater](http://47.110.48.159/public/assets/images/login-page-clip.png)
+推荐以下大佬们的精品文章[面试](https://yuchengkai.cn/)
+<div style="text-align: center">
+  <p>看了下面大佬的关于前端知识体系的文章以后，从本来的想要做一个前端知识的系统变的更加清晰了，本项目的作为前端知识体系的一个管理后台，希望收集大家的信息，一起来完善前端的知识体系，给处于不知如何学习的前端er们一个参考的方向</p>
+</div>
 
 ## 前端向知识体系
 参考：[从输入URL到页面加载的过程](http://www.dailichun.com/2018/03/12/whenyouenteraurl.html)
