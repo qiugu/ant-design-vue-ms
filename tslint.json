@@ -14,6 +14,16 @@
     "interface-name": false,
     "ordered-imports": false,
     "object-literal-sort-keys": false,
-    "no-consecutive-blank-lines": false
+    "no-consecutive-blank-lines": false,
+    "semicolon": false,
+    "trailing-comma": false,
+    "max-line-length": false,
+    "space-before-function-paren": false,
+    "no-console": false,
+    "arrow-parens": false,
+    "no-empty": false,
+    "no-unused-expression": false,
+    "no-string-literal": false,
+    "no-shadowed-variable": false
   }
 }
