@@ -34,6 +34,7 @@
     "babel-plugin-import": "^1.12.0",
     "chai": "^4.2.0",
     "compression-webpack-plugin": "^3.0.0",
+    "cz-conventional-changelog": "^3.0.2",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
     "lint-staged": "^8.1.5",
@@ -64,5 +65,10 @@
       "vue-cli-service lint",
       "git add"
     ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }

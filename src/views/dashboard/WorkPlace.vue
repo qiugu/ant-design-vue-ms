@@ -1,12 +1,12 @@
 <template>
   <div class="word">
     <a-card title="学习计划表">
-      <todo-list/>
+      <TodoList/>
     </a-card>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import TodoList from '@/components/TodoList/TodoList.vue'
 
@@ -17,7 +17,3 @@ import TodoList from '@/components/TodoList/TodoList.vue'
 })
 export default class WorkPlace extends Vue {}
 </script>
-
-<style>
-
-</style>
