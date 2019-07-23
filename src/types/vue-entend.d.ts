@@ -10,6 +10,7 @@ declare module 'vue/types/vue' {
 
 declare module 'vue/types/vue' {
   interface VueConstructor {
-    ls: any
+    ls: any,
+    [propName: string]: any
   }
 }

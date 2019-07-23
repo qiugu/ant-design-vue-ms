@@ -3,10 +3,11 @@ import VueAxios from './axios'
 import notification from 'ant-design-vue/es/notification'
 import store from '@/store'
 import Cookies from 'js-cookie'
+import { VueConstructor } from 'vue';
 
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASEURL,
-  timeout: 100000,
+  timeout: 10000,
   withCredentials: true
 })
 
@@ -39,7 +40,7 @@ const err = (error: any) => {
 
 service.interceptors.request.use(config => {
   config.data = new URLSearchParams(config.data)
-  const token = Cookies.get('csrfToken')
+  const token: string = Cookies.get('csrfToken')
   if (token) {
     config.headers['x-csrf-token'] = token // 让每个请求携带自定义 token 请根据实际情况自行修改
   }
@@ -51,7 +52,7 @@ service.interceptors.response.use(response => {
 }, err)
 
 const installer = {
-  install (Vue: any): void {
+  install (Vue: VueConstructor): void {
     Vue.use(VueAxios, service)
   }
 }

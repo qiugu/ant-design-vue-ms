@@ -21,7 +21,7 @@ export const asyncRouterMap = [
                         path: '/schedule',
                         name: 'schedule',
                         component: () => import(/* webpackChunkName: "WorkPlace" */ '../views/dashboard/WorkPlace.vue'),
-                        meta: { title: '计划预览', permission: ['dashboard'] }
+                        meta: { title: '工作台', permission: ['dashboard'] }
                     }
                 ]
             },

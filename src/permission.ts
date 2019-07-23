@@ -8,7 +8,7 @@ import notification from 'ant-design-vue/es/notification'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['login', 'register'] // no redirect whitelist
+const whiteList: string[] = ['login', 'register'] // no redirect whitelist
 
 router.beforeEach((to: any, from: any, next: any): void => {
   NProgress.start() // start progress bar
@@ -23,7 +23,7 @@ router.beforeEach((to: any, from: any, next: any): void => {
         store
           .dispatch('GetInfo')
           .then(res => {
-            const roles = res.data.resultData && res.data.resultData.info
+            const roles = res.resultData && res.resultData.info
             store.dispatch('GenerateRoutes', { roles }).then(() => {
               // 根据roles权限生成可访问的路由表
               // 动态添加可访问路由表

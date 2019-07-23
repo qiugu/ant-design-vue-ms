@@ -26,8 +26,8 @@ const user = {
         Login(store: any, userInfo: any) {
             return new Promise((resolve, reject) => {
                 login(userInfo).then((res: any) => {
-                    if (res.data.status === 200) {
-                        const result = res.data.resultData
+                    if (res.status === 200) {
+                        const result = res.resultData
                         Vue.ls.set('ACCESS_TOKEN', result.ACCESS_TOKEN, 60 * 60 * 1000 * 60 * 24)
                         sessionStorage.setItem('loginName', result.username)
                         store.commit('SET_TOKEN', result.ACCESS_TOKEN)
@@ -43,9 +43,9 @@ const user = {
         GetInfo(store: any) {
             return new Promise((resolve, reject) => {
                 getInfo().then((res: any): void => {
-                    if (res.data.status === 200) {
-                        store.commit('SET_ROLES', res.data.resultData.info.roles)
-                        sessionStorage.setItem('roles', JSON.stringify(res.data.resultData.info))
+                    if (res.status === 200) {
+                        store.commit('SET_ROLES', res.resultData.info.roles)
+                        sessionStorage.setItem('roles', JSON.stringify(res.resultData.info))
                     }
                     resolve(res)
                 })

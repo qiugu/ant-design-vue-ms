@@ -100,7 +100,7 @@ export default class Login extends Vue {
   }
 
   private mounted() {
-    if (this.$route.query.code) {
+    if (this.$route.query.code && !sessionStorage.getItem('ms__ACCESS_TOKEN')) {
       this.getAuth()
     }
   }
@@ -117,14 +117,14 @@ export default class Login extends Vue {
         username: res.resultData.data.login,
         password: res.resultData.data.node_id
       })
-        .then((res: any) => this.loginSuccess(res))
+        .then((res: Ajax.AxiosResponse) => this.loginSuccess(res))
         .catch((err: any) => this.requestFailed(err))
         .finally(() => {
           this.state.loginBtn = false
         })
     }
   }
-  private handleSubmit(e: any) {
+  private handleSubmit(e: Event) {
     e.preventDefault()
     this.state.loginBtn = true
 
@@ -136,7 +136,7 @@ export default class Login extends Vue {
         // loginParams.password = md5(values.password)//密码加密
         loginParams.password = values.password
         this.Login(loginParams)
-          .then((res: any) => this.loginSuccess(res))
+          .then((res: Ajax.AxiosResponse) => this.loginSuccess(res))
           .catch((err: any) => this.requestFailed(err))
           .finally(() => {
             this.state.loginBtn = false
@@ -148,7 +148,7 @@ export default class Login extends Vue {
       }
     })
   }
-  private loginSuccess(res: any) {
+  private loginSuccess(res: Ajax.AxiosResponse) {
     this.$router.push({ path: '/schedule' })
     // 延迟 1 秒显示欢迎信息
     setTimeout(() => {

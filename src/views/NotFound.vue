@@ -15,12 +15,13 @@
   </div>
 </template>
 
-<script>
-export default {
-  methods: {
-    goIndex () {
-      this.$router.go(-1)
-    }
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+
+@Component
+export default class NotFound extends Vue {
+  private goIndex () {
+    this.$router.go(-1)
   }
 }
 </script>
