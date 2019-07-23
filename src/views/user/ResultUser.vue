@@ -18,7 +18,9 @@ import { Vue, Component } from 'vue-property-decorator'
 import Result from '@/components/result'
 
 @Component({
-  [Result.name]: Result
+  components: {
+    [Result.name]: Result
+  }
 })
 export default class RegisterResult extends Vue {
 

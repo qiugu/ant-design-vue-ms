@@ -117,7 +117,7 @@ export default class Login extends Vue {
         username: res.resultData.data.login,
         password: res.resultData.data.node_id
       })
-        .then((res: Ajax.AxiosResponse) => this.loginSuccess(res))
+        .then((res: Ajax.AjaxResponse) => this.loginSuccess(res))
         .catch((err: any) => this.requestFailed(err))
         .finally(() => {
           this.state.loginBtn = false
@@ -130,13 +130,9 @@ export default class Login extends Vue {
 
     this.form.validateFields(['username', 'password'], { force: true }, (err: any, values: any) => {
       if (!err) {
-        const loginParams = { ...values }
-        delete loginParams.username
-        loginParams['username'] = values.username
         // loginParams.password = md5(values.password)//密码加密
-        loginParams.password = values.password
-        this.Login(loginParams)
-          .then((res: Ajax.AxiosResponse) => this.loginSuccess(res))
+        this.Login(values)
+          .then((res: Ajax.AjaxResponse) => this.loginSuccess(res))
           .catch((err: any) => this.requestFailed(err))
           .finally(() => {
             this.state.loginBtn = false
@@ -148,7 +144,7 @@ export default class Login extends Vue {
       }
     })
   }
-  private loginSuccess(res: Ajax.AxiosResponse) {
+  private loginSuccess(res: Ajax.AjaxResponse) {
     this.$router.push({ path: '/schedule' })
     // 延迟 1 秒显示欢迎信息
     setTimeout(() => {

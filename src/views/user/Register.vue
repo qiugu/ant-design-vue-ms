@@ -112,24 +112,12 @@
 
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
-const levelNames: any = {
-  0: '低',
-  1: '低',
-  2: '中',
-  3: '强'
-}
-const levelClass: any = {
-  0: 'error',
-  1: 'error',
-  2: 'warning',
-  3: 'success'
-}
-const levelColor: any = {
-  0: '#ff0000',
-  1: '#ff0000',
-  2: '#ff7e05',
-  3: '#52c41a'
-}
+
+const levelNames: string[] = ['低', '低', '中', '强']
+
+const levelClass: string[] = ['error', 'error', 'warning', 'success']
+
+const levelColor: string[] = ['#ff0000', '#ff0000', '#ff7e05', '#52c41a']
 
 @Component
 export default class Register extends Vue {
@@ -224,18 +212,18 @@ export default class Register extends Vue {
 
   //  注册请求
   private async createUser (params: any) {
-    const res = await this.$http.post(`${this.$ctx}/user/register`, params)
+    const res: Ajax.AjaxResponse = await this.$http.post(`${this.$ctx}/user/register`, params)
     if (res.status === 200) {
       this.$notification['success']({
         message: '提示',
-        description: res.resultMsg
+        description: res.resultMsg || '注册成功'
       })
-      this.$router.push({name: 'login'})
+      this.$router.push({name: 'result'})
     } else {
       this.getCaptcha()
       this.$notification['warn']({
         message: '提示',
-        description: res.resultMsg
+        description: res.resultMsg || '注册失败'
       })
     }
   }
@@ -260,7 +248,7 @@ export default class Register extends Vue {
   }
 }
 </script>
-<style lang="less">
+<style lang="scss">
   .user-register {
 
     &.error {
@@ -285,7 +273,7 @@ export default class Register extends Vue {
     }
   }
 </style>
-<style lang="less" scoped>
+<style lang="scss" scoped>
   .user-layout-register {
 
     & > h3 {

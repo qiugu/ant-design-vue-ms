@@ -134,6 +134,11 @@ export const constRouterMap = [
                 path: '/register',
                 name: 'register',
                 component: () => import(/* webpackChunkName: "register" */ '../views/user/Register.vue')
+            },
+            {
+                path: '/result',
+                name: 'result',
+                component: () => import(/* webpackChunkName: "ResultUser" */ '../views/user/ResultUser.vue')
             }
         ]
     },

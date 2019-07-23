@@ -42,7 +42,7 @@ const user = {
         // 获取用户角色信息
         GetInfo(store: any) {
             return new Promise((resolve, reject) => {
-                getInfo().then((res: any): void => {
+                getInfo().then((res: any) => {
                     if (res.status === 200) {
                         store.commit('SET_ROLES', res.resultData.info.roles)
                         sessionStorage.setItem('roles', JSON.stringify(res.resultData.info))
