@@ -91,7 +91,10 @@ export default class MessageManage extends Vue {
   }
 
   private async fetchData() {
-    const res = await this.$http.post(this.$ctx + '/personal/message', {})
+    const param = {
+      token: JSON.parse(sessionStorage.getItem('ms__ACCESS_TOKEN') || '').value
+    }
+    const res = await this.$http.post(this.$ctx + '/personal/message', param)
     if (res.status === 200) {
       this.tableData = res.resultData && res.resultData.map((item: any) => {
         item.mesType = this.types[item.mesType].title

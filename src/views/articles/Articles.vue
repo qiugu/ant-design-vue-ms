@@ -3,10 +3,17 @@
     <mavon-editor
       ref="md" 
       v-model="text" 
-      :style="{ minHeight: '650px' }" 
+      :style="{ minHeight: '650px', zIndex: '100' }" 
       placeholder="暂时无法上传图片"
       @imgAdd="imgAdd"
       @save="saveContent"/>
+    <a-modal title="请输入文章标题" :visible="visible" :destroyClose="true" width="380px" @cancel="closeTitle">
+      <a-input v-model="title" maxlength="50"></a-input>
+      <template slot="footer">
+        <a-button @click="closeTitle">取消</a-button>
+        <a-button type="primary" @click="sendContent">确定</a-button>
+      </template>
+    </a-modal>
   </div>
 </template>
 
@@ -17,6 +24,8 @@ import { axios } from '@/utils/request'
 @Component
 export default class Articles extends Vue {
   private text: string = ''
+  private title: string = ''
+  private visible: boolean = false
 
   private imgAdd(pos: any, $file: any) {
     this.$notification['info']({
@@ -41,10 +50,22 @@ export default class Articles extends Vue {
     //     this.$refs['md'].$img2Url(pos, url);
     // })
   }
-  private async saveContent(value: string) {
+  private saveContent(value: string) {
+    this.visible = true
+  }
+  private async sendContent() {
+    if (!this.text || !this.title) {
+      this.$notification['warning']({
+        message: '文章标题和内容不能为空',
+        description: ''
+      })
+      return
+    }
     const param = {
-      docContent: value,
-      username: sessionStorage.getItem('loginName')
+      title: this.title,
+      docContent: this.text,
+      username: sessionStorage.getItem('loginName'),
+      token: JSON.parse(sessionStorage.getItem('ms__ACCESS_TOKEN') || '').value
     }
     const res = await this.$http.post(this.$ctx + '/articles/saveContent', param)
     if (res.status === 200) {
@@ -52,8 +73,19 @@ export default class Articles extends Vue {
         message: res.resultMsg,
         description: ''
       })
+      this.visible = false
       this.text = ''
     }
   }
+  private closeTitle() {
+    this.visible = false
+  }
 }
 </script>
+
+<style lang="scss">
+.ant-modal-footer {
+  border: 0;
+}
+</style>
+
