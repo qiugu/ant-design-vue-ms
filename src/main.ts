@@ -8,8 +8,11 @@ import '@/config'
 import { VueAxios } from '@/utils/request'
 import VueStorage from 'vue-ls'
 import VueParticles from 'vue-particles'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
 Vue.use(VueParticles)
+Vue.use(mavonEditor)
 Vue.use(VueStorage, {
   namespace: 'ms__', // key prefix
   name: 'ls', // name variable Vue.[ls] or this.[$ls],

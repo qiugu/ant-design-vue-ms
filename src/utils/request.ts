@@ -39,7 +39,8 @@ const err = (error: any) => {
 }
 
 service.interceptors.request.use(config => {
-  config.data = new URLSearchParams(config.data)
+  const auth: string = JSON.parse(sessionStorage.getItem('ms__ACCESS_TOKEN') || '').value
+  config.data = new URLSearchParams(Object.assign(config.data, { token: auth }))
   const token: string = Cookies.get('csrfToken')
   if (token) {
     config.headers['x-csrf-token'] = token // 让每个请求携带自定义 token 请根据实际情况自行修改

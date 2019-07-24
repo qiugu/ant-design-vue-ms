@@ -157,7 +157,7 @@ export default class Login extends Vue {
   private requestFailed(err: any) {
     this.$notification['error']({
       message: '错误',
-      description: ((err.response || {}).data || {}).message || err.data.resultMsg || '请求出现错误，请稍后再试',
+      description: ((err.response || {}).data || {}).message || err.resultMsg || '请求出现错误，请稍后再试',
       duration: 4
     })
   }

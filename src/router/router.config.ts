@@ -25,20 +25,20 @@ export const asyncRouterMap = [
                     }
                 ]
             },
-            // {
-            //     path: '/html',
-            //     name: 'html',
-            //     component: PageView,
-            //     meta: { title: 'HTML知识合集', icon: 'html5', permission: ['html'] },
-            //     children: [
-            //         {
-            //             path: '/tags',
-            //             name: 'tags',
-            //             component: () => import(/* webpackChunkName: "HtmlLearn" */ '../views/HtmlLearn.vue'),
-            //             meta: { title: 'HTML5标签', permission: ['html'] }
-            //         }
-            //     ]
-            // },
+            {
+                path: '/articles',
+                name: 'articles',
+                component: PageView,
+                meta: { title: '文章管理', icon: 'html5', permission: ['articles'] },
+                children: [
+                    {
+                        path: '/arti_manage',
+                        name: 'arti_manage',
+                        component: () => import(/* webpackChunkName: "articles" */ '../views/articles/Articles.vue'),
+                        meta: { title: '文章管理', permission: ['articles'] }
+                    }
+                ]
+            },
             // {
             //     path: '/css',
             //     name: 'css',
