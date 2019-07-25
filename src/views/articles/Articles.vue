@@ -73,9 +73,15 @@ export default class Articles extends Vue {
         message: res.resultMsg,
         description: ''
       })
-      this.visible = false
-      this.text = ''
+    } else {
+      this.$notification['success']({
+        message: res.resultMsg,
+        description: ''
+      })
     }
+    this.visible = false
+    this.text = ''
+    this.title = ''
   }
   private closeTitle() {
     this.visible = false
