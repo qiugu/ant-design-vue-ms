@@ -12,6 +12,6 @@ describe('BasicLayout.vue', () => {
         messageNumber: 0
       },
     });
-    expect(wrapper.find('.menu-fold').exists()).toBeFalsy();
+    expect(wrapper.find('.menu-fold').exists());
   });
 });

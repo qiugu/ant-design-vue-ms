@@ -6,6 +6,11 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import echarts from 'echarts/lib/echarts'
+import 'echarts/lib/component/geo'
+import 'echarts/lib/component/tooltip'
+import 'echarts/lib/chart/scatter'
+import 'echarts/lib/chart/map'
 import geoJson from '@/json/wuhu.json'
 
 @Component
@@ -20,7 +25,7 @@ export default class Diagram extends Vue {
     return nomalVal;
   }
   private loadMap() {
-    this.$echarts.registerMap('hefei', geoJson);
+    echarts.registerMap('hefei', geoJson);
     const that = this
     const option = {
         tooltip: {
@@ -162,7 +167,7 @@ export default class Diagram extends Vue {
             }
         ]
     }
-    const myChart = this.$echarts.init(this.$refs.wuhu)
+    const myChart = echarts.init(this.$refs.wuhu)
     myChart.setOption(option, true);
   }
 }

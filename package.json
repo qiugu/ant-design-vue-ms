@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@types/chai": "^4.1.0",
+    "@types/echarts": "^4.1.9",
     "@types/mocha": "^5.2.7",
     "@vue/cli-plugin-babel": "^3.9.0",
     "@vue/cli-plugin-typescript": "^3.9.0",
