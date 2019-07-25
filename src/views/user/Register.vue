@@ -145,7 +145,7 @@ export default {
         percent: 10,
         progressColor: '#FF0000'
       },
-      captchaUrl: 'http://127.0.0.1:7001' + this.$ctx + '/user/verify?t=' + new Date().getTime(),
+      captchaUrl: `${this.$base}${this.$ctx}/user/verify?t=${new Date().getTime()}`,
       registerBtn: false
     }
   },

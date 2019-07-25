@@ -112,7 +112,6 @@ export default {
         client_secret: '793f96044a8003cbb9a879b897ba0f190804d0c9'
       }
       const res = await this.$http.post(this.$ctx + '/user/githubAuth', params)
-      console.log(res)
       if (res.resultData.status === 200) {
         this.Login({
           username: res.resultData.data.login,
