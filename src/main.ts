@@ -10,6 +10,7 @@ import VueStorage from 'vue-ls'
 import VueParticles from 'vue-particles'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
+import echarts from 'echarts'
 
 Vue.use(VueParticles)
 Vue.use(mavonEditor)
@@ -23,6 +24,7 @@ Vue.config.productionTip = false
 Vue.use(VueAxios)
 Vue.prototype.$ctx = process.env.VUE_APP_CONTEXT
 Vue.prototype.$base = process.env.VUE_APP_BASEURL
+Vue.prototype.$echarts = echarts
 
 new Vue({
   router,

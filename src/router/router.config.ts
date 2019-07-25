@@ -78,6 +78,12 @@ export const asyncRouterMap = [
                         name: 'map',
                         component: () => import(/* webpackChunkName: "map" */ '../views/chart/DataMap.vue'),
                         meta: { title: '地图应用', permission: ['charts'] }
+                    },
+                    {
+                        path: '/diagram',
+                        name: 'diagram',
+                        component: () => import(/* webpackChunkName: "diagram" */ '../views/chart/Diagram.vue'),
+                        meta: { title: '图表应用', permission: ['charts'] }
                     }
                 ]
             },

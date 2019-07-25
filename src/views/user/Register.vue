@@ -4,8 +4,8 @@
     <a-form ref="formRegister" :form="form" id="formRegister">
       <a-form-item>
         <a-input 
-            size="large" 
-            type="text" 
+            size="large"
+            type="text"
             placeholder="用户名"
             maxlength="100"
             v-decorator="[
