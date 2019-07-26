@@ -15,7 +15,7 @@ module.exports = {
   pages: {
     index: {
       // page 的入口
-      entry: 'src/main.js',
+      entry: 'src/main.ts',
       // 模板来源
       template: 'public/index.html', // 这里用来区分加载那个 html
       // 在 dist/index.html 的输出
@@ -92,14 +92,13 @@ module.exports = {
   // 配置 webpack-dev-server 行为。
   devServer: {
     port: 3022,
-    open: true,
     proxy: {
-      '/qgdev': {
-        target: 'https://www.easy-mock.com/mock/5cb691e3e3926e3006389081'
-      },
       // '/qgdev': {
-      //   target: 'http://127.0.0.1:7001'
+      //   target: 'https://www.easy-mock.com/mock/5cb691e3e3926e3006389081'
       // },
+      '/qgdev': {
+        target: 'http://127.0.0.1:7001'
+      },
       '/qgms': {
         target: 'http://47.110.48.159'
       },

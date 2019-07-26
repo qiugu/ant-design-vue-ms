@@ -88,10 +88,10 @@ export default {
     renderTabPaneMenu (e) {
       return (
         <a-menu {...{ on: { click: this.closeMenuClick } }}>
-          <a-menu-item key="close-that" data-vkey={e}>关闭当前标签</a-menu-item>
-          <a-menu-item key="close-right" data-vkey={e}>关闭右侧</a-menu-item>
-          <a-menu-item key="close-left" data-vkey={e}>关闭左侧</a-menu-item>
-          <a-menu-item key="close-all" data-vkey={e}>关闭全部</a-menu-item>
+          <a-menu-item key='close-that' data-vkey={e}>关闭当前标签</a-menu-item>
+          <a-menu-item key='close-right' data-vkey={e}>关闭右侧</a-menu-item>
+          <a-menu-item key='close-left' data-vkey={e}>关闭左侧</a-menu-item>
+          <a-menu-item key='close-all' data-vkey={e}>关闭全部</a-menu-item>
         </a-menu>
       )
     },
@@ -107,17 +107,17 @@ export default {
     }
   },
   watch: {
-    //监听路由变化，如果跳转的路由和之前的路由不同，则添加tab，路径值也保存进fullPathList
-    '$route': function (newVal,oldVal) {
+    // 监听路由变化，如果跳转的路由和之前的路由不同，则添加tab，路径值也保存进fullPathList
+    $route (newVal, oldVal) {
       this.activeKey = newVal.fullPath
-      //初始登录，页面会重定向到index，触发activeKey，又跳转到新路径，于是会将index页面代入this.pages中，此处是个bug
+      // 初始登录，页面会重定向到index，触发activeKey，又跳转到新路径，于是会将index页面代入this.pages中，此处是个bug
       if (this.fullPathList.indexOf(newVal.fullPath) < 0) {
         this.fullPathList.push(newVal.fullPath)
         this.pages.push(newVal)
       }
     },
-    //监听当前tabs，发生变化的话则跳转相应的路由
-    activeKey: function (newPathKey) {
+    // 监听当前tabs，发生变化的话则跳转相应的路由
+    activeKey (newPathKey) {
       this.$router.push({ path: newPathKey })
     }
   },
@@ -134,7 +134,7 @@ export default {
     })
 
     return (
-      <div class="ant-pro-multi-tab">
+      <div class='ant-pro-multi-tab'>
         <a-tabs
           hideAdd
           type={'editable-card'}

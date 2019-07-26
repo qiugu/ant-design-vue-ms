@@ -10,21 +10,22 @@
         </router-link>
       </template>
     </a-breadcrumb>
-    <div :style="{ margin: '24px 16px', padding: '24px', minHeight: 'auto' }">
+    <div :style="{ margin: '24px 16px', padding: '24px 24px 0 24px', minHeight: 'auto' }">
       <router-view/>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+
+@Component
+export default class PageView extends Vue {
+  public data() {
     return {}
-  },
-  computed: {
-    routes () {
-      return this.$route.matched
-    }
+  }
+  public get routes () {
+    return this.$route.matched
   }
 }
 </script>

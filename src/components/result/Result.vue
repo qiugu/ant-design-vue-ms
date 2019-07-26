@@ -22,36 +22,26 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Vue, Component, Prop } from 'vue-property-decorator'
 const resultEnum = ['success', 'error']
-export default {
-  name: 'Result',
-  props: {
-    type: {
-      type: String,
-      default: resultEnum[0],
-      validator (val) {
-        return val => resultEnum.includes(val)
-      }
-    },
-    title: {
-      type: String,
-      default: ''
-    },
-    description: {
-      type: String,
-      default: ''
-    }
-  },
-  computed: {
-    localIsSuccess () {
-      return this.type === resultEnum[0]
-    }
+
+@Component
+export default class Result extends Vue {
+  @Prop({
+    default: resultEnum[0],
+    validator: (val: string): any => (values: string) => resultEnum.includes(val)
+  }) private type!: string
+  @Prop({ default: '' }) private title!: string
+  @Prop({ default: '' }) private description!: string
+
+  private get localIsSuccess () {
+    return this.type === resultEnum[0]
   }
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
   .result {
     text-align: center;
     width: 72%;

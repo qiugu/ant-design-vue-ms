@@ -1,12 +1,11 @@
 .DS_Store
 node_modules
 /dist
-public/
+/public
 
 # local env files
 .env.local
 .env.*.local
-package-lock.json
 
 # Log files
 npm-debug.log*
@@ -20,5 +19,5 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
-*.sw*
+*.sw?
 public/index.html

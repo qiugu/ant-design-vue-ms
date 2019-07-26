@@ -1,110 +1,77 @@
 {
-  "name": "ant-design-vue-ms",
+  "name": "ant-design-ts",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test": "vue-cli-service serve --mode test",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "ant-design-vue": "^1.3.3",
-    "axios": "^0.18.0",
+    "ant-design-vue": "^1.3.10",
+    "axios": "^0.19.0",
+    "core-js": "^2.6.5",
+    "echarts": "^4.2.1",
     "js-cookie": "^2.2.0",
-    "mapv": "^2.0.33",
-    "mathjs": "^5.5.0",
+    "mavon-editor": "^2.7.5",
     "nprogress": "^0.2.0",
     "vue": "^2.6.10",
+    "vue-class-component": "^7.0.2",
     "vue-ls": "^3.2.1",
     "vue-particles": "^1.0.9",
-    "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vue-property-decorator": "^8.1.0",
+    "vue-router": "^3.0.3",
+    "vuex": "^3.0.1",
+    "vuex-class": "^0.3.2"
   },
   "devDependencies": {
-    "@babel/polyfill": "^7.4.3",
-    "@vue/cli-plugin-babel": "^3.0.4",
-    "@vue/cli-plugin-eslint": "^3.7.0",
-    "@vue/cli-service": "^3.0.4",
-    "babel-eslint": "^10.0.1",
-    "babel-plugin-import": "^1.11.0",
-    "compression-webpack-plugin": "^2.0.0",
-    "eslint": "^5.16.0",
-    "eslint-plugin-html": "^5.0.5",
-    "eslint-plugin-vue": "^5.2.2",
+    "@types/chai": "^4.1.0",
+    "@types/echarts": "^4.1.9",
+    "@types/mocha": "^5.2.7",
+    "@vue/cli-plugin-babel": "^3.9.0",
+    "@vue/cli-plugin-typescript": "^3.9.0",
+    "@vue/cli-plugin-unit-mocha": "^3.9.0",
+    "@vue/cli-service": "^3.9.0",
+    "@vue/test-utils": "^1.0.0-beta.29",
+    "babel-plugin-import": "^1.12.0",
+    "chai": "^4.2.0",
+    "compression-webpack-plugin": "^3.0.0",
+    "cz-conventional-changelog": "^3.0.2",
     "less": "^3.9.0",
-    "less-loader": "^4.1.0",
+    "less-loader": "^5.0.0",
+    "lint-staged": "^8.1.5",
     "node-sass": "^4.9.0",
-    "sass-loader": "^7.0.1",
+    "sass-loader": "^7.1.0",
+    "typescript": "^3.4.3",
     "uglifyjs-webpack-plugin": "^2.1.3",
-    "vue-template-compiler": "^2.6.10",
-    "webpack-bundle-analyzer": "^3.3.2"
+    "vue-template-compiler": "^2.6.10"
   },
   "postcss": {
     "plugins": {
       "autoprefixer": {}
     }
   },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/strongly-recommended",
-      "eslint:recommended"
-    ],
-    "parserOptions": {
-      "parser": "babel-eslint"
-    },
-    "rules": {
-      "generator-star-spacing": "off",
-      "no-mixed-operators": 0,
-      "eqeqeq": 2,
-      "vue/max-attributes-per-line": 0,
-      "vue/require-default-prop": 0,
-      "vue/attribute-hyphenation": 0,
-      "vue/component-name-in-template-casing": 0,
-      "vue/html-closing-bracket-spacing": 0,
-      "vue/singleline-html-element-content-newline": 0,
-      "vue/no-unused-components": 0,
-      "vue/multiline-html-element-content-newline": 0,
-      "vue/no-use-v-if-with-v-for": 0,
-      "vue/html-closing-bracket-newline": 0,
-      "vue/no-parsing-error": 0,
-      "vue/no-template-shadow": 0,
-      "vue/html-indent": 0,
-      "vue/no-unused-vars": 0,
-      "no-console": 0,
-      "no-tabs": 0,
-      "no-unused-vars": 0,
-      "quotes": [
-        2,
-        "single",
-        {
-          "avoidEscape": true,
-          "allowTemplateLiterals": true
-        }
-      ],
-      "semi": [
-        2,
-        "never",
-        {
-          "beforeStatementContinuationChars": "never"
-        }
-      ],
-      "no-delete-var": 2,
-      "prefer-const": [
-        2,
-        {
-          "ignoreReadBeforeAssign": false
-        }
-      ]
-    }
-  },
   "browserslist": [
     "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+    "last 2 versions"
+  ],
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.vue": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }

@@ -81,108 +81,97 @@
   </div>
 </template>
 
-<script>
-import { timeFix } from '@/utils/util.js'
-import { mapActions } from 'vuex'
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+import { Action } from 'vuex-class'
+import { timeFix } from '@/utils/util.ts'
 
-export default {
-  data() {
+@Component
+export default class Login extends Vue {
+  @Action('Login') private Login!: (data: { username: string; password: string }) => any
+  public data() {
     return {
-      loginBtn: false,
       form: this.$form.createForm(this),
       state: {
         time: 60,
-        loginBtn: false,
-        smsSendBtn: false
+        LoginBtn: false
       }
     }
-  },
-  mounted() {
-    if (this.$route.query.code) {
+  }
+
+  private mounted() {
+    if (this.$route.query.code && !sessionStorage.getItem('ms__ACCESS_TOKEN')) {
       this.getAuth()
     }
-  },
-  methods: {
-    ...mapActions(['Login']),
-    //获取第三方登录的信息
-    async getAuth() {
-      const params = {
-        code: this.$route.query.code,
-        client_id: '46b85aea388080d94dd8',
-        client_secret: '793f96044a8003cbb9a879b897ba0f190804d0c9'
-      }
-      const res = await this.$http.post(this.$ctx + '/user/githubAuth', params)
-      if (res.resultData.status === 200) {
-        this.Login({
-          username: res.resultData.data.login,
-          password: res.resultData.data.node_id
+  }
+  // 获取第三方登录的信息
+  private async getAuth() {
+    const params = {
+      code: this.$route.query.code,
+      client_id: '46b85aea388080d94dd8',
+      client_secret: '793f96044a8003cbb9a879b897ba0f190804d0c9'
+    }
+    const res = await this.$http.post(this.$ctx + '/user/githubAuth', params)
+    if (res.resultData.status === 200) {
+      this.Login({
+        username: res.resultData.data.login,
+        password: res.resultData.data.node_id
+      })
+        .then((res: Ajax.AjaxResponse) => this.loginSuccess(res))
+        .catch((err: any) => this.requestFailed(err))
+        .finally(() => {
+          this.state.loginBtn = false
         })
-          .then(res => this.loginSuccess(res))
-          .catch(err => this.requestFailed(err))
+    }
+  }
+  private handleSubmit(e: Event) {
+    e.preventDefault()
+    this.state.loginBtn = true
+
+    this.form.validateFields(['username', 'password'], { force: true }, (err: any, values: any) => {
+      if (!err) {
+        // loginParams.password = md5(values.password)//密码加密
+        this.Login(values)
+          .then((res: Ajax.AjaxResponse) => this.loginSuccess(res))
+          .catch((err: any) => this.requestFailed(err))
           .finally(() => {
             this.state.loginBtn = false
           })
+      } else {
+        setTimeout(() => {
+          this.state.loginBtn = false
+        }, 600)
       }
-    },
-    handleSubmit(e) {
-      e.preventDefault()
-      const {
-        form: { validateFields },
-        state,
-        Login
-      } = this
-
-      state.loginBtn = true
-
-      validateFields(['username','password'], { force: true }, (err, values) => {
-        if (!err) {
-          const loginParams = { ...values }
-          delete loginParams.username
-          loginParams['username'] = values.username
-          // loginParams.password = md5(values.password)//密码加密
-          loginParams.password = values.password
-          Login(loginParams)
-            .then(res => this.loginSuccess(res))
-            .catch(err => this.requestFailed(err))
-            .finally(() => {
-              state.loginBtn = false
-            })
-        } else {
-          setTimeout(() => {
-            state.loginBtn = false
-          }, 600)
-        }
+    })
+  }
+  private loginSuccess(res: Ajax.AjaxResponse) {
+    this.$router.push({ path: '/schedule' })
+    // 延迟 1 秒显示欢迎信息
+    setTimeout(() => {
+      this.$notification.success({
+        message: '欢迎',
+        description: `${timeFix()}，欢迎回来`
       })
-    },
-    loginSuccess(res) {
-      this.$router.push({ path: '/schedule' })
-      // 延迟 1 秒显示欢迎信息
-      setTimeout(() => {
-        this.$notification.success({
-          message: '欢迎',
-          description: `${timeFix()}，欢迎回来`
-        })
-      }, 1000)
-    },
-    requestFailed(err) {
-      this.$notification['error']({
-        message: '错误',
-        description: ((err.response || {}).data || {}).message || err.data.resultMsg || '请求出现错误，请稍后再试',
-        duration: 4
-      })
-    },
-    //  点击密码输入框聚焦事件
-    focusAnimate() {
-      this.$store.commit('SET_COVER', true)
-    },
-    blurAnimate() {
-      this.$store.commit('SET_COVER', false)
-    }
+    }, 1000)
+  }
+  private requestFailed(err: any) {
+    this.$notification['error']({
+      message: '错误',
+      description: ((err.response || {}).data || {}).message || err.resultMsg || '请求出现错误，请稍后再试',
+      duration: 4
+    })
+  }
+  //  点击密码输入框聚焦事件
+  private focusAnimate() {
+    this.$store.commit('SET_COVER', true)
+  }
+  private blurAnimate() {
+    this.$store.commit('SET_COVER', false)
   }
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="scss" scoped>
 .header {
   height: 44px;
   display: flex;

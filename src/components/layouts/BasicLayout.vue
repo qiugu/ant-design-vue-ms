@@ -11,7 +11,7 @@
           <h2 v-if="!collapsed">Developer Notes</h2>
         </a>
       </div>
-      <side-menu/>
+      <SideMenu/>
     </a-layout-sider>
     <a-layout>
       <a-layout-header class="header-wrap">
@@ -59,58 +59,68 @@
     </a-layout>
   </a-layout>
 </template>
-<script>
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
 import SideMenu from '@/components/SideMenu.vue'
 import MultiTab from '@/components/MultiTab.vue'
-export default {
-  components: { SideMenu, MultiTab },
-  data() {
+
+@Component({
+  components: {
+    [SideMenu.name]: SideMenu,
+    [MultiTab.name]: MultiTab
+  }
+})
+export default class BasicLayout extends Vue {
+
+  private username: string = ''
+  public data() {
     return {
       collapsed: false,
       visible: false,
-      username: '',
       messageNumber: 0
     }
-  },
-  methods: {
-    handleMenuClick({ key }) {
-      this[key]()
-    },
-    user () {
-      this.$router.push({
-        name: 'personal'
-      })
-    },
-    setting () {},
-    logout () {
-      this.$confirm({
-        title: '提示',
-        content: '是否确认退出',
-        okText: '确定',
-        cancelText: '取消',
-        onOk: () => {
-          return new Promise((resolve, reject) => {
-            this.$store.dispatch('Logout')
-            .then(() => {
-              window.location.reload()
-            })
-          }).catch(err => {})
-        },
-        onCancel: () => {}
-      })
-    },
-    //  查看消息通知
-    inform() {
-      if(this.messageNumber === 0) {
-        this.$message.info('暂无消息通知')
-      }
-      this.$router.push({
-        name: 'message_manage'
-      })
-    }
-  },
-  mounted() {
+  }
+
+  private mounted() {
     this.username = sessionStorage.getItem('loginName') || '游客'
+  }
+  // 点击下拉菜单执行响应的方法
+  private handleMenuClick(data: { key: string }) {
+    this[data.key]()
+  }
+  //  跳转到个人中心
+  private user () {
+    this.$router.push({
+      name: 'personal'
+    })
+  }
+  private setting () {}
+  //  退出方法
+  private logout () {
+    this.$confirm({
+      title: '提示',
+      content: '是否确认退出',
+      okText: '确定',
+      cancelText: '取消',
+      onOk: () => {
+        return new Promise((resolve, reject) => {
+          this.$store.dispatch('Logout')
+          .then(() => {
+            window.location.reload()
+          })
+        }).catch(err => {})
+      },
+      onCancel: () => {}
+    })
+  }
+  //  查看消息通知
+  private inform() {
+    if (this.messageNumber === 0) {
+      this.$message.info('暂无消息通知')
+    }
+    this.$router.push({
+      name: 'message_manage'
+    })
   }
 }
 </script>

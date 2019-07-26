@@ -4,8 +4,8 @@
     <a-form ref="formRegister" :form="form" id="formRegister">
       <a-form-item>
         <a-input 
-            size="large" 
-            type="text" 
+            size="large"
+            type="text"
             placeholder="用户名"
             maxlength="100"
             v-decorator="[
@@ -110,31 +110,20 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Vue, Component, Watch } from 'vue-property-decorator'
 
-const levelNames = {
-  0: '低',
-  1: '低',
-  2: '中',
-  3: '强'
-}
-const levelClass = {
-  0: 'error',
-  1: 'error',
-  2: 'warning',
-  3: 'success'
-}
-const levelColor = {
-  0: '#ff0000',
-  1: '#ff0000',
-  2: '#ff7e05',
-  3: '#52c41a'
-}
-export default {
-  name: 'Register',
-  components: {
-  },
-  data () {
+const levelNames: string[] = ['低', '低', '中', '强']
+
+const levelClass: string[] = ['error', 'error', 'warning', 'success']
+
+const levelColor: string[] = ['#ff0000', '#ff0000', '#ff7e05', '#52c41a']
+
+@Component
+export default class Register extends Vue {
+  private captchaUrl: string = `${this.$ctx}/user/verify?t=${new Date().getTime()}`
+  private registerBtn: boolean = false
+  public data () {
     return {
       form: this.$form.createForm(this),
       state: {
@@ -144,127 +133,122 @@ export default {
         passwordLevelChecked: false,
         percent: 10,
         progressColor: '#FF0000'
-      },
-      captchaUrl: `${this.$base}${this.$ctx}/user/verify?t=${new Date().getTime()}`,
-      registerBtn: false
+      }
     }
-  },
-  computed: {
-    passwordLevelClass () {
-      return levelClass[this.state.passwordLevel]
-    },
-    passwordLevelName () {
-      return levelNames[this.state.passwordLevel]
-    },
-    passwordLevelColor () {
-      return levelColor[this.state.passwordLevel]
+  }
+
+  @Watch('state.passwordLevel')
+  private passwordLevel (val: number) {
+    // console.log(val)
+  }
+
+  private get passwordLevelClass () {
+    return levelClass[this.state.passwordLevel]
+  }
+  private get passwordLevelName () {
+    return levelNames[this.state.passwordLevel]
+  }
+  private get passwordLevelColor () {
+    return levelColor[this.state.passwordLevel]
+  }
+
+  private handlePasswordLevel (rule: any, value: any, callback: any) {
+    let level = 0
+
+    // 判断这个字符串中有没有数字
+    if (/[0-9]/.test(value)) {
+      level++
     }
-  },
-  methods: {
-
-    handlePasswordLevel (rule, value, callback) {
-      let level = 0
-
-      // 判断这个字符串中有没有数字
-      if (/[0-9]/.test(value)) {
-        level++
-      }
-      // 判断字符串中有没有字母
-      if (/[a-zA-Z]/.test(value)) {
-        level++
-      }
-      // 判断字符串中有没有特殊符号
-      if (/[^0-9a-zA-Z_]/.test(value)) {
-        level++
-      }
-      this.state.passwordLevel = level
-      this.state.percent = level * 30
-      if (level >= 2) {
-        if (level >= 3) {
-          this.state.percent = 100
-        }
-        callback()
-      } else {
-        if (level === 0) {
-          this.state.percent = 10
-        }
-        callback(new Error('密码强度不够'))
-      }
-    },
-
-    handlePasswordCheck (rule, value, callback) {
-      const password = this.form.getFieldValue('password')
-      if (value === undefined) {
-        callback(new Error('请输入密码'))
-      }
-      if (value && password && value.trim() !== password.trim()) {
-        callback(new Error('两次密码不一致'))
+    // 判断字符串中有没有字母
+    if (/[a-zA-Z]/.test(value)) {
+      level++
+    }
+    // 判断字符串中有没有特殊符号
+    if (/[^0-9a-zA-Z_]/.test(value)) {
+      level++
+    }
+    this.state.passwordLevel = level
+    this.state.percent = level * 30
+    if (level >= 2) {
+      if (level >= 3) {
+        this.state.percent = 100
       }
       callback()
-    },
-
-    handlePasswordInputClick () {
-      this.state.passwordLevelChecked = true
-    },
-
-    handleSubmit () {
-      this.form.validateFields((err, values) => {
-        if (!err) {
-          this.createUser(values)
-        } else {
-           this.$notification['warn']({
-             message: '注册失败',
-             description: '请稍后重新尝试'
-           })
-        }
-      })
-    },
-
-    //  注册请求
-    async createUser (params) {
-      const res = await this.$http.post(`${this.$ctx}/user/register`,params)
-      if (res.status === 200) {
-        this.$notification['success']({
-          message: '提示',
-          description: res.resultMsg
-        })
-        this.$router.push({name: 'login'})
-      } else {
-        this.getCaptcha()
-        this.$notification['warn']({
-          message: '提示',
-          description: res.resultMsg
-        })
+    } else {
+      if (level === 0) {
+        this.state.percent = 10
       }
-    },
-    //  获取验证码
-    getCaptcha () {
-      this.captchaUrl = this.$base + this.$ctx + '/user/verify?t=' + new Date().getTime()
-    },
-    requestFailed (err) {
-      this.$notification['error']({
-        message: '错误',
-        description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',
-        duration: 4
+      callback(new Error('密码强度不够'))
+    }
+  }
+
+  private handlePasswordCheck (rule: any, value: any, callback: any) {
+    const password = this.form.getFieldValue('password')
+    if (value === undefined) {
+      callback(new Error('请输入密码'))
+    }
+    if (value && password && value.trim() !== password.trim()) {
+      callback(new Error('两次密码不一致'))
+    }
+    callback()
+  }
+
+  private handlePasswordInputClick () {
+    this.state.passwordLevelChecked = true
+  }
+
+  private handleSubmit () {
+    this.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        this.createUser(values)
+      } else {
+          this.$notification['warn']({
+            message: '注册失败',
+            description: '请稍后重新尝试'
+          })
+      }
+    })
+  }
+
+  //  注册请求
+  private async createUser (params: any) {
+    const res: Ajax.AjaxResponse = await this.$http.post(`${this.$ctx}/user/register`, params)
+    if (res.status === 200) {
+      this.$notification['success']({
+        message: '提示',
+        description: res.resultMsg || '注册成功'
       })
-      this.registerBtn = false
-    },
-    //  点击密码输入框聚焦事件
-    focusAnimate() {
-      this.$store.commit('SET_COVER', true)
-    },
-    blurAnimate() {
-      this.$store.commit('SET_COVER', false)
+      this.$router.push({name: 'result'})
+    } else {
+      this.getCaptcha()
+      this.$notification['warn']({
+        message: '提示',
+        description: res.resultMsg || '注册失败'
+      })
     }
-  },
-  watch: {
-    'state.passwordLevel' (val) {
-      // console.log(val)
-    }
+  }
+  //  获取验证码
+  private getCaptcha () {
+    this.captchaUrl = this.$base + this.$ctx + '/user/verify?t=' + new Date().getTime()
+  }
+  private requestFailed (err: any) {
+    this.$notification['error']({
+      message: '错误',
+      description: ((err.response || {}).data || {}).message || '请求出现错误，请稍后再试',
+      duration: 4
+    })
+    this.registerBtn = false
+  }
+  //  点击密码输入框聚焦事件
+  private focusAnimate() {
+    this.$store.commit('SET_COVER', true)
+  }
+  private blurAnimate() {
+    this.$store.commit('SET_COVER', false)
   }
 }
 </script>
-<style lang="less">
+<style lang="scss">
   .user-register {
 
     &.error {
@@ -289,7 +273,7 @@ export default {
     }
   }
 </style>
-<style lang="less" scoped>
+<style lang="scss" scoped>
   .user-layout-register {
 
     & > h3 {

@@ -53,18 +53,18 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'UserLayout',
-  computed: {
-    cover() {
-      return this.$store.getters.cover
-    }
-  },
-  mounted() {
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+
+@Component
+export default class UserLayout extends Vue {
+  private get cover() {
+    return this.$store.getters.cover
+  }
+  private mounted() {
     document.body.classList.add('userLayout')
-  },
-  beforeDestroy() {
+  }
+  private beforeDestroy() {
     document.body.classList.remove('userLayout')
   }
 }

@@ -45,7 +45,7 @@
             <template v-else>{{ record[item] }}</template>
           </div>
         </template>
-        <template slot="operation" slot-scope="text, record, index">
+        <template slot="operation">
           <a-button size="small" @click="readed">已读</a-button>
         </template>
       </a-table>
@@ -53,83 +53,86 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+
+@Component
+export default class MessageManage extends Vue {
+  private selectedRowKeys: any[] = []
+  private tableData: any[] = []
+  public data() {
     return {
       form: this.$form.createForm(this),
       types: [
-        {value: '0',title: '通知'},
-        {value: '1',title: '警告'},
-        {value: '2',title: '错误'},
-        {value: '3',title: '待办'}
+        {value: '0', title: '通知'},
+        {value: '1', title: '警告'},
+        {value: '2', title: '错误'},
+        {value: '3', title: '待办'}
       ],
       formLayout: {
         labelCol: 4,
         wrapCol: 20
       },
-      tableData: [],
       columns: [
-        {title: '#',dataIndex: 'index',align: 'center',scopedSlots: { customRender: 'index' }},
-        {title: '时间',dataIndex: 'datetime',align: 'center',scopedSlots: { customRender: 'datetime' }},
-        {title: '消息类型',dataIndex: 'mesType',align: 'center',scopedSlots: { customRender: 'mesType' }},
-        {title: '内容',dataIndex: 'mesContent',align: 'center',scopedSlots: { customRender: 'mesContent' }},
-        {title: '操作',dataIndex: 'operation',align: 'center',scopedSlots: { customRender: 'operation' }}
-      ],
-      selectedRowKeys: []
+        {title: '#', dataIndex: 'index', align: 'center', scopedSlots: { customRender: 'index' }},
+        {title: '时间', dataIndex: 'datetime', align: 'center', scopedSlots: { customRender: 'datetime' }},
+        {title: '消息类型', dataIndex: 'mesType', align: 'center', scopedSlots: { customRender: 'mesType' }},
+        {title: '内容', dataIndex: 'mesContent', align: 'center', scopedSlots: { customRender: 'mesContent' }},
+        {title: '操作', dataIndex: 'operation', align: 'center', scopedSlots: { customRender: 'operation' }}
+      ]
     }
-  },
-  computed: {
-    alertSelectedRows () {
-      return `当前选中了${this.selectedRowKeys.length}行`
-    }
-  },
-  created () {
+  }
+  private get alertSelectedRows () {
+    return `当前选中了${this.selectedRowKeys.length}行`
+  }
+
+  private created () {
     this.fetchData()
-  },
-  methods: {
-    async fetchData() {
-      const params = {
-        token: JSON.parse(sessionStorage.getItem('ms__ACCESS_TOKEN')).value
-      }
-      const res = await this.$http.post(this.$ctx + '/personal/message',params)
-      if (res.status === 200) {
-        this.tableData = res.resultData && res.resultData.map(item => {
-          item.mesType = this.types[item.mesType].title
-          return item
-        })
-      }
-    },
-    handleSubmit(e) {
-      e.preventDefault()
-      this.form.validateFields((err, values) => {
-        if (!err) {
-          console.log(values)
-          this.$notification['info']({
-            message: '暂未开启'
-          })
-        }
-      })
-    },
-    resetForm() {
-      this.form.resetFields()
-    },
-    onSelectChange(selectKeys) {
-      this.selectedRowKeys = selectKeys
-    },
-    clearCurrentPage() {
-      if (this.selectedRowKeys.length === 0) {
-        this.$notification['info']({
-          message: '请选择要清空的行'
-        })
-        return
-      }
-    },
-    readed() {
-      this.$notification['info']({
-        message: '暂未开启'
+  }
+
+  private async fetchData() {
+    const param = {
+      token: JSON.parse(sessionStorage.getItem('ms__ACCESS_TOKEN') || '').value
+    }
+    const res = await this.$http.post(this.$ctx + '/personal/message', param)
+    if (res.status === 200) {
+      this.tableData = res.resultData && res.resultData.map((item: any) => {
+        item.mesType = this.types[item.mesType].title
+        return item
       })
     }
+  }
+  private handleSubmit(e: any) {
+    e.preventDefault()
+    this.form.validateFields((err: any, values: any) => {
+      if (!err) {
+        this.$notification['info']({
+          message: '暂未开启',
+          description: ''
+        })
+      }
+    })
+  }
+  private resetForm() {
+    this.form.resetFields()
+  }
+  private onSelectChange(selectKeys: any) {
+    this.selectedRowKeys = selectKeys
+  }
+  private clearCurrentPage() {
+    if (this.selectedRowKeys.length === 0) {
+      this.$notification['info']({
+        message: '请选择要清空的行',
+        description: ''
+      })
+      return
+    }
+  }
+  private readed() {
+    this.$notification['info']({
+      message: '暂未开启',
+      description: ''
+    })
   }
 }
 </script>
