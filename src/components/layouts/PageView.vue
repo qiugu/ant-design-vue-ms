@@ -10,7 +10,7 @@
         </router-link>
       </template>
     </a-breadcrumb>
-    <div :style="{ margin: '24px 16px', padding: '24px', minHeight: 'auto' }">
+    <div :style="{ margin: '24px 16px', padding: '24px 24px 0 24px', minHeight: 'auto' }">
       <router-view/>
     </div>
   </div>

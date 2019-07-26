@@ -1,19 +1,21 @@
 <template>
   <div class="articles">
+    <a-row type="flex" justify="space-between" class="header-toolbar">
+      <a-col :span="23">
+        <a-input v-model="title" maxlength="50" placeholder="请输入文章标题" />
+      </a-col>
+      <a-col :span="1">
+        <!-- <a-button type="primary">保存</a-button> -->
+      </a-col>
+    </a-row>
     <mavon-editor
       ref="md" 
       v-model="text" 
-      :style="{ minHeight: '650px', zIndex: '100' }" 
+      :style="{ minHeight: '600px', zIndex: '100' }" 
       placeholder="暂时无法上传图片"
+      :toolbarsFlag="false"
       @imgAdd="imgAdd"
       @save="saveContent"/>
-    <a-modal title="请输入文章标题" :visible="visible" :destroyClose="true" width="380px" @cancel="closeTitle">
-      <a-input v-model="title" maxlength="50"></a-input>
-      <template slot="footer">
-        <a-button @click="closeTitle">取消</a-button>
-        <a-button type="primary" @click="sendContent">确定</a-button>
-      </template>
-    </a-modal>
   </div>
 </template>
 
@@ -25,7 +27,6 @@ import { axios } from '@/utils/request'
 export default class Articles extends Vue {
   private text: string = ''
   private title: string = ''
-  private visible: boolean = false
 
   private imgAdd(pos: any, $file: any) {
     this.$notification['info']({
@@ -51,7 +52,16 @@ export default class Articles extends Vue {
     // })
   }
   private saveContent(value: string) {
-    this.visible = true
+    this.$confirm({
+      title: '提示',
+      content: '是否保存？',
+      okText: '保存',
+      cancelText: '取消',
+      onOk: () => {
+        this.sendContent()
+      },
+      onCancel: () => {}
+    })
   }
   private async sendContent() {
     if (!this.text || !this.title) {
@@ -79,19 +89,30 @@ export default class Articles extends Vue {
         description: ''
       })
     }
-    this.visible = false
     this.text = ''
     this.title = ''
-  }
-  private closeTitle() {
-    this.visible = false
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+.header-toolbar {
+  padding: 10px 0;
+  background: #fff;
+  box-shadow: 0 0px 3px rgba(0,0,0,0.157), 0 0px 3px rgba(0,0,0,0.227);
+}
 .ant-modal-footer {
   border: 0;
+}
+.ant-input:focus,
+.ant-input:hover {
+  border-color: transparent;
+  box-shadow: none;
+  border-width: 0;
+}
+.ant-input {
+  border: 0;
+  padding-left: 25px;
 }
 </style>
 
