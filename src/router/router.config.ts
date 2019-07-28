@@ -35,7 +35,7 @@ export const asyncRouterMap = [
                         path: '/arti_manage',
                         name: 'arti_manage',
                         component: () => import(/* webpackChunkName: "articles" */ '../views/articles/Articles.vue'),
-                        meta: { title: '文章管理', permission: ['articles'] }
+                        meta: { title: '文章编辑', permission: ['articles'] }
                     }
                 ]
             },
