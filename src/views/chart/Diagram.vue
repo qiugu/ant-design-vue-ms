@@ -6,11 +6,11 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import echarts from 'echarts/lib/echarts'
-import 'echarts/lib/component/geo'
-import 'echarts/lib/component/tooltip'
-import 'echarts/lib/chart/scatter'
-import 'echarts/lib/chart/map'
+const echarts = require('echarts/lib/echarts')
+require('echarts/lib/component/geo')
+require('echarts/lib/component/tooltip')
+require('echarts/lib/chart/scatter')
+require('echarts/lib/chart/map')
 import geoJson from '@/json/wuhu.json'
 
 @Component

@@ -6,6 +6,12 @@ const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 // 定义压缩文件类型
 const productionGzipExtensions = ['js', 'css']
+const externals = {
+  'vue': 'Vue',
+  'vue-router': 'VueRouter',
+  'vuex': 'Vuex',
+  'axios': 'axios'
+}
 
 module.exports = {
   publicPath: './', //基本路径
@@ -45,6 +51,7 @@ module.exports = {
   // 高级的方式
   configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
+      config.externals = externals
       config.plugins.push(
         new CompressionWebpackPlugin({
           filename: '[path].gz[query]',

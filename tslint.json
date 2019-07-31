@@ -25,6 +25,7 @@
     "no-unused-expression": false,
     "no-string-literal": false,
     "no-shadowed-variable": false,
-    "no-namespace": false
+    "no-namespace": false,
+    "no-var-requires": false
   }
 }
