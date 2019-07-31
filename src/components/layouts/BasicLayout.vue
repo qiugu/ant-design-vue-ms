@@ -63,11 +63,12 @@
 import { Vue, Component } from 'vue-property-decorator'
 import SideMenu from '@/components/SideMenu.vue'
 import MultiTab from '@/components/MultiTab.vue'
+import { SubMenu } from 'ant-design-vue/types/menu/sub-menu';
 
 @Component({
   components: {
-    [SideMenu.name]: SideMenu,
-    [MultiTab.name]: MultiTab
+    SideMenu,
+    MultiTab
   }
 })
 export default class BasicLayout extends Vue {

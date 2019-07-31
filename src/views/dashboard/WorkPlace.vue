@@ -12,7 +12,7 @@ import TodoList from '@/components/TodoList/TodoList.vue'
 
 @Component({
   components: {
-    [TodoList.name]: TodoList
+    TodoList
   }
 })
 export default class WorkPlace extends Vue {}
