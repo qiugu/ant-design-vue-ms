@@ -66,8 +66,8 @@ import MultiTab from '@/components/MultiTab.vue'
 
 @Component({
   components: {
-    [SideMenu.name]: SideMenu,
-    [MultiTab.name]: MultiTab
+    SideMenu,
+    MultiTab
   }
 })
 export default class BasicLayout extends Vue {
