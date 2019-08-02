@@ -1,6 +1,10 @@
 const path = require('path')
 const webpack = require('webpack')
 
+function resolve (dir) {
+  return path.join(__dirname, dir)
+}
+
 // 导入compression-webpack-plugin
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -10,7 +14,8 @@ const externals = {
   'vue': 'Vue',
   'vue-router': 'VueRouter',
   'vuex': 'Vuex',
-  'axios': 'axios'
+  'axios': 'axios',
+  'echarts': 'echarts'
 }
 
 module.exports = {
@@ -32,6 +37,9 @@ module.exports = {
     }
   },
   chainWebpack: config => {
+    config.resolve.alias
+      .set('@ant-design/icons/lib/dist$', resolve('./src/utils/icons.js'))
+
     const svgRule = config.module.rule('svg')
     svgRule.uses.clear()
     svgRule
@@ -70,7 +78,7 @@ module.exports = {
           sourceMap: false,
           parallel: true,
         }),
-        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/, /^@ant-design$/)
       )
       const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
       config.plugins.push(new BundleAnalyzerPlugin())
@@ -78,7 +86,6 @@ module.exports = {
   },
   // CSS 相关选项
   css: {
-    extract: true,
     sourceMap: false,
     loaderOptions: {
       less: {
@@ -100,12 +107,12 @@ module.exports = {
   devServer: {
     port: 3022,
     proxy: {
-      // '/qgdev': {
-      //   target: 'https://www.easy-mock.com/mock/5cb691e3e3926e3006389081'
-      // },
       '/qgdev': {
-        target: 'http://127.0.0.1:7001'
+        target: 'https://www.easy-mock.com/mock/5cb691e3e3926e3006389081'
       },
+      // '/qgdev': {
+      //   target: 'http://127.0.0.1:7001'
+      // },
       '/qgms': {
         target: 'http://47.110.48.159'
       },
@@ -114,7 +121,7 @@ module.exports = {
       }
     }
   },
-  transpileDependencies: ['vue-particles'],
+  transpileDependencies: ['vue-particles', 'vue-echarts', 'resize-detector'],
   // 第三方插件的选项
   pluginOptions: {}
 }
