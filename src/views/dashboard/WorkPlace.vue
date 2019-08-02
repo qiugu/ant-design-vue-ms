@@ -1,7 +1,7 @@
 <template>
   <div class="word">
     <a-card title="学习计划表">
-      <github/>
+      <TodoList/>
     </a-card>
   </div>
 </template>
