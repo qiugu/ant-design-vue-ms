@@ -22,8 +22,14 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { axios } from '@/utils/request'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
-@Component
+@Component({
+  components: {
+    'mavon-editor': mavonEditor.mavonEditor
+  }
+})
 export default class Articles extends Vue {
   private text: string = ''
   private title: string = ''

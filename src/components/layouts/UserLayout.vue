@@ -56,12 +56,9 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import VueParticles from 'vue-particles'
+Vue.use(VueParticles)
 
-@Component({
-  components: {
-    VueParticles
-  }
-})
+@Component
 export default class UserLayout extends Vue {
   private get cover() {
     return this.$store.getters.cover
