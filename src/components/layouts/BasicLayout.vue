@@ -142,6 +142,7 @@ export default class BasicLayout extends Vue {
           text-overflow: ellipsis;
           overflow: hidden;
           display: inline-block;
+          white-space: nowrap;
         }
       }
     }
