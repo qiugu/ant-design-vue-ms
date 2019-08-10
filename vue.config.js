@@ -37,8 +37,8 @@ module.exports = {
     }
   },
   chainWebpack: config => {
-    // config.resolve.alias
-    //   .set('@ant-design/icons/lib/dist$', resolve('./src/utils/icons.js'))
+    config.resolve.alias
+      .set('@ant-design/icons/lib/dist$', resolve('./src/utils/icons.js'))
 
     const svgRule = config.module.rule('svg')
     svgRule.uses.clear()
