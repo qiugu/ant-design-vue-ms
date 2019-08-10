@@ -126,7 +126,7 @@ export default class UserLayout extends Vue {
   overflow: hidden;
 }
 #userLayout.user-layout-wrapper {
-  height: 100%;
+  height: 100vh;
   user-select: none;
   &.mobile {
     .container {

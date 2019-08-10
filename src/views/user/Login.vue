@@ -10,7 +10,7 @@
     >
       <div class="header">
         <img src="~@/assets/svg/logo.svg" class="logo" alt="logo">
-        <span class="title">花里胡哨的系统</span>
+        <span class="title">前端架构管理系统</span>
       </div>
       <a-form-item>
         <a-input

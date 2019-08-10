@@ -10,7 +10,7 @@
         </router-link>
       </template>
     </a-breadcrumb>
-    <div :style="{ margin: '24px 16px', padding: '24px 24px 0 24px', minHeight: 'auto' }">
+    <div :style="{ margin: '24px 16px', padding: '24px 24px 0 24px', height: '100%' }">
       <router-view/>
     </div>
   </div>
@@ -33,6 +33,7 @@ export default class PageView extends Vue {
 <style lang="scss" scoped>
 @import '~@/assets/styles/var.scss';
 .page-view {
+  margin: -24px -24px 0;
   .breadcrumb {
     padding: 20px;
     background: $bg-color;

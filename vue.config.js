@@ -37,8 +37,8 @@ module.exports = {
     }
   },
   chainWebpack: config => {
-    config.resolve.alias
-      .set('@ant-design/icons/lib/dist$', resolve('./src/utils/icons.js'))
+    // config.resolve.alias
+    //   .set('@ant-design/icons/lib/dist$', resolve('./src/utils/icons.js'))
 
     const svgRule = config.module.rule('svg')
     svgRule.uses.clear()
@@ -78,7 +78,7 @@ module.exports = {
           sourceMap: false,
           parallel: true,
         }),
-        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/, /^@ant-design$/)
+        new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
       )
       const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
       config.plugins.push(new BundleAnalyzerPlugin())

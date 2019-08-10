@@ -9,7 +9,7 @@
       </div>
       <SideMenu/>
     </a-layout-sider>
-    <a-layout>
+    <a-layout :style="{ minHeight: '100vh' }">
       <a-layout-header class="header-wrap">
         <a-icon
           class="trigger"
@@ -40,18 +40,19 @@
           </a-dropdown>
         </div>
       </a-layout-header>
-      <multi-tab/>
-      <a-layout-content>
+      <a-layout-content :style="{ height: '100%', margin: '24px 24px 0' }">
+        <multi-tab/>
         <router-view/>
       </a-layout-content>
-      <!-- <a-layout-footer class="page-footer">
+      <a-layout-footer class="page-footer">
         <a href="https://www.github.com/qiugu/ant-design-vue-ms" target="_blank">
         仓库地址
           <a-icon type="github" />
         </a>
-        <a href="https://pro.loacg.com/">Ant Design Pro of Vue</a>
-        <a href="https://vue.ant.design/docs/vue/introduce-cn/">Ant Design Vue</a>
-      </a-layout-footer> -->
+        <a href="https://pro.loacg.com/" target="_blank">Ant Design Pro of Vue</a>
+        <a href="https://vue.ant.design/docs/vue/introduce-cn/" target="_blank">Ant Design Vue</a>
+        <a href="http://www.beian.miit.gov.cn/" target="_blank">皖ICP备19014274号-1</a>
+      </a-layout-footer>
     </a-layout>
   </a-layout>
 </template>
@@ -179,7 +180,8 @@ export default class BasicLayout extends Vue {
 }
 .page-footer {
   @include flex-layout(space-evenly);
-  padding: 20px 40px;
+  padding: 20px 180px;
+  font-size: 12px;
 }
 .svg-icon {
   width: 30px;

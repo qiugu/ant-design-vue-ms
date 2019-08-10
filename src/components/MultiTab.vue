@@ -151,5 +151,6 @@ export default {
 <style lang="scss" scoped>
 .ant-pro-multi-tab {
   border-top: 1px solid #e8e8e8;
+  margin: -23px -24px 24px -24px;
 }
 </style>
