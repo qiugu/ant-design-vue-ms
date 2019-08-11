@@ -1,11 +1,11 @@
 <template>
   <div class="articles">
-    <a-row type="flex" justify="space-between" class="header-toolbar">
+    <a-row type="flex" justify="space-between" align="middle" class="header-toolbar">
       <a-col :span="23">
         <a-input v-model="title" maxlength="50" placeholder="请输入文章标题" />
       </a-col>
       <a-col :span="1">
-        <!-- <a-button type="primary">保存</a-button> -->
+        <a href="#" @click="saveContent">保存</a>
       </a-col>
     </a-row>
     <mavon-editor
@@ -14,6 +14,7 @@
       :style="{ minHeight: '600px', zIndex: '100' }" 
       placeholder="暂时无法上传图片"
       :toolbarsFlag="false"
+      :navigation="true"
       @imgAdd="imgAdd"
       @save="saveContent"/>
   </div>
@@ -30,7 +31,7 @@ import 'mavon-editor/dist/css/index.css'
     'mavon-editor': mavonEditor.mavonEditor
   }
 })
-export default class Articles extends Vue {
+export default class ArticlesEdit extends Vue {
   private text: string = ''
   private title: string = ''
 

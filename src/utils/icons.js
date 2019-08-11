@@ -11,6 +11,8 @@ export { default as AreaChartOutline } from '@ant-design/icons/lib/outline/AreaC
 export { default as TeamOutline } from '@ant-design/icons/lib/outline/TeamOutline'
 export { default as LockOutline } from '@ant-design/icons/lib/outline/LockOutline'
 export { default as MailOutline } from '@ant-design/icons/lib/outline/MailOutline'
+export { default as QuestionCircleOutline } from '@ant-design/icons/lib/outline/QuestionCircleOutline'
+export { default as ExclamationCircleOutline } from '@ant-design/icons/lib/outline/ExclamationCircleOutline'
 
 
 export { default as CheckCircleOutline } from '@ant-design/icons/lib/outline/CheckCircleOutline'
