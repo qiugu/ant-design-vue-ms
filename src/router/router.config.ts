@@ -35,13 +35,13 @@ export const asyncRouterMap = [
                         path: '/arti_edit',
                         name: 'arti_edit',
                         component: () => import(/* webpackChunkName: "edit" */ '../views/articles/ArticlesEdit.vue'),
-                        meta: { title: '编辑', permission: ['articles'] }
+                        meta: { title: '新增文章', permission: ['articles'] }
                     },
                     {
                         path: '/arti_list',
                         name: 'arti_list',
                         component: () => import(/* webpackChunkName: "read" */ '../views/articles/ArticlesList.vue'),
-                        meta: { title: '查看', permission: ['articles'] }
+                        meta: { title: '文章列表', permission: ['articles'] }
                     }
                 ]
             },
@@ -156,6 +156,6 @@ export const constRouterMap = [
     },
     {
         path: '/404',
-        component: () => import(/* webpackChunkName: "not_found" */ '../views/NotFound.vue')
+        component: () => import(/* webpackChunkName: "not_found" */ '../views/notfound/NotFound.vue')
     }
 ]

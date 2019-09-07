@@ -58,8 +58,8 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import SideMenu from '@/components/SideMenu.vue'
-import MultiTab from '@/components/MultiTab.vue'
+import SideMenu from '@/components/sidemenu/SideMenu.vue'
+import MultiTab from '@/components/multitab/MultiTab.vue'
 
 @Component({
   components: {

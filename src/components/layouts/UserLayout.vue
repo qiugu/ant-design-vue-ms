@@ -140,7 +140,7 @@ export default class UserLayout extends Vue {
   .container {
     width: 100%;
     min-height: 100%;
-    background: url('http://pvi0ecexm.bkt.clouddn.com/login-bg.png') no-repeat 100%;
+    background: url('http://www.qiugu.online/public/assets/images/sky.47293c9f.jpg') no-repeat 100%;
     background-size: cover;
     padding: 110px 0 144px;
     box-sizing: border-box;
