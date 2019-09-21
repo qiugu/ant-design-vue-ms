@@ -16,12 +16,12 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component } from 'vue-property-decorator';
 
 @Component
 export default class NotFound extends Vue {
-  private goIndex () {
-    this.$router.go(-1)
+  private goIndex() {
+    this.$router.go(-1);
   }
 }
 </script>

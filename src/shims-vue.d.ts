@@ -1,11 +1,12 @@
 declare module '*.vue' {
   import Vue from 'vue';
+
   export default Vue;
 }
 
 declare module '*.json' {
-  let value: any
-  export default value
+  let value: any;
+  export default value;
 }
 
 declare module 'vue-ls'

@@ -1,4 +1,4 @@
-import { constRouterMap, asyncRouterMap } from '@/router/router.config'
+import { constRouterMap, asyncRouterMap } from '@/router/router.config';
 
 /**
  * 过滤账户是否拥有某一个权限，并将菜单从加载列表移除
@@ -8,16 +8,16 @@ import { constRouterMap, asyncRouterMap } from '@/router/router.config'
  */
 function hasPermission(permission: any, route: any): boolean {
   if (route.meta && route.meta.permission) {
-    let flag = false
+    let flag = false;
     for (let i = 0, len = permission.length; i < len; i++) {
-      flag = route.meta.permission.includes(permission[i])
+      flag = route.meta.permission.includes(permission[i]);
       if (flag) {
-        return true
+        return true;
       }
     }
-    return false
+    return false;
   }
-  return true
+  return true;
 }
 
 /**
@@ -29,10 +29,9 @@ function hasPermission(permission: any, route: any): boolean {
 // eslint-disable-next-line
 function hasRole(roles: any, route: any): boolean {
   if (route.meta && route.meta.roles) {
-    return route.meta.roles.includes(roles.id)
-  } else {
-    return true
+    return route.meta.roles.includes(roles.id);
   }
+  return true;
 }
 
 /**
@@ -44,36 +43,36 @@ function filterAsyncRouter(routerMap: any, roles: any): any {
   const accessedRouters = routerMap.filter((route: any) => {
     if (hasPermission(roles.permissionList, route)) {
       if (route.children && route.children.length) {
-        route.children = filterAsyncRouter(route.children, roles)
+        route.children = filterAsyncRouter(route.children, roles);
       }
-      return true
+      return true;
     }
-    return false
-  })
-  return accessedRouters
+    return false;
+  });
+  return accessedRouters;
 }
 
 const permission = {
   state: {
     routers: constRouterMap,
-    addRouters: []
+    addRouters: [],
   },
   mutations: {
     SET_ROUTERS: (state: any, routers: any): void => {
-      state.addRouters = routers
-      state.routers = constRouterMap.concat(routers)
-    }
+      state.addRouters = routers;
+      state.routers = constRouterMap.concat(routers);
+    },
   },
   actions: {
     GenerateRoutes(store: any, data: any): Promise<string> {
-      return new Promise(resolve => {
-        const { roles } = data
-        const accessedRouters = filterAsyncRouter(asyncRouterMap, roles)
-        store.commit('SET_ROUTERS', accessedRouters)
-        resolve()
-      })
-    }
-  }
-}
+      return new Promise((resolve) => {
+        const { roles } = data;
+        const accessedRouters = filterAsyncRouter(asyncRouterMap, roles);
+        store.commit('SET_ROUTERS', accessedRouters);
+        resolve();
+      });
+    },
+  },
+};
 
-export default permission
+export default permission;

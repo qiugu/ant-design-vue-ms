@@ -7,13 +7,13 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
-import TodoList from '@/components/TodoList/TodoList.vue'
+import { Vue, Component } from 'vue-property-decorator';
+import TodoList from '@/components/TodoList/TodoList.vue';
 
 @Component({
   components: {
-    TodoList
-  }
+    TodoList,
+  },
 })
 export default class WorkPlace extends Vue {}
 </script>

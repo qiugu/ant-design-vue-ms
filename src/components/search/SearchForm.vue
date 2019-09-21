@@ -35,12 +35,12 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component } from 'vue-property-decorator';
 
 @Component
 export default class SearchForm extends Vue {
   private resetForm() {
-    this.form.resetFields()
+    this.form.resetFields();
   }
 }
 </script>

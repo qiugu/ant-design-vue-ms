@@ -1,91 +1,91 @@
 <script>
 export default {
   name: 'MultiTab',
-  data () {
+  data() {
     return {
       fullPathList: [],
       pages: [],
       activeKey: '',
-      newTabIndex: 0
-    }
+      newTabIndex: 0,
+    };
   },
-  created () {
-    this.pages.push(this.$route)
-    this.fullPathList.push(this.$route.fullPath)
-    this.selectedLastPath()
+  created() {
+    this.pages.push(this.$route);
+    this.fullPathList.push(this.$route.fullPath);
+    this.selectedLastPath();
   },
   methods: {
-    onEdit (targetKey, action) {
-      this[action](targetKey)
+    onEdit(targetKey, action) {
+      this[action](targetKey);
     },
-    remove (targetKey) {
+    remove(targetKey) {
       //  当前标签页的长度大于1时，才能删除标签
-      this.pages.length > 1 && (this.pages = this.pages.filter(page => page.fullPath !== targetKey))
-      this.fullPathList = this.fullPathList.filter(path => path !== targetKey)
+      this.pages.length > 1 && (this.pages = this.pages.filter(page => page.fullPath !== targetKey));
+      this.fullPathList = this.fullPathList.filter(path => path !== targetKey);
       // 判断当前标签是否关闭，若关闭则跳转到最后一个还存在的标签页
       if (!this.fullPathList.includes(this.activeKey)) {
-        this.selectedLastPath()
+        this.selectedLastPath();
       }
     },
-    selectedLastPath () {
-      this.activeKey = this.fullPathList[this.fullPathList.length - 1]
+    selectedLastPath() {
+      this.activeKey = this.fullPathList[this.fullPathList.length - 1];
     },
 
     // content menu
-    closeThat (e) {
-      this.remove(e)
+    closeThat(e) {
+      this.remove(e);
     },
-    closeLeft (e) {
-      const currentIndex = this.fullPathList.indexOf(e)
+    closeLeft(e) {
+      const currentIndex = this.fullPathList.indexOf(e);
       if (currentIndex > 0) {
         this.fullPathList.forEach((item, index) => {
           if (index < currentIndex) {
-            this.remove(item)
+            this.remove(item);
           }
-        })
+        });
       } else {
-        this.$message.info('左侧没有标签')
+        this.$message.info('左侧没有标签');
       }
     },
-    closeRight (e) {
-      const currentIndex = this.fullPathList.indexOf(e)
+    closeRight(e) {
+      const currentIndex = this.fullPathList.indexOf(e);
       if (currentIndex < (this.fullPathList.length - 1)) {
         this.fullPathList.forEach((item, index) => {
           if (index > currentIndex) {
-            this.remove(item)
+            this.remove(item);
           }
-        })
+        });
       } else {
-        this.$message.info('右侧没有标签')
+        this.$message.info('右侧没有标签');
       }
     },
-    closeAll (e) {
-      const currentIndex = this.fullPathList.indexOf(e)
+    closeAll(e) {
+      const currentIndex = this.fullPathList.indexOf(e);
       this.fullPathList.forEach((item, index) => {
         if (index !== currentIndex) {
-          this.remove(item)
+          this.remove(item);
         }
-      })
+      });
     },
-    closeMenuClick ({ key, item, domEvent }) {
-      const vkey = domEvent.target.getAttribute('data-vkey')
+    closeMenuClick({ key, item, domEvent }) {
+      const vkey = domEvent.target.getAttribute('data-vkey');
       switch (key) {
         case 'close-right':
-          this.closeRight(vkey)
-          break
+          this.closeRight(vkey);
+          break;
         case 'close-left':
-          this.closeLeft(vkey)
-          break
+          this.closeLeft(vkey);
+          break;
         case 'close-all':
-          this.closeAll(vkey)
-          break
+          this.closeAll(vkey);
+          break;
         default:
         case 'close-that':
-          this.closeThat(vkey)
-          break
+          this.closeThat(vkey);
+          break;
       }
     },
-    renderTabPaneMenu (e) {
+    renderTabPaneMenu(e) {
       return (
         <a-menu {...{ on: { click: this.closeMenuClick } }}>
           <a-menu-item key='close-that' data-vkey={e}>关闭当前标签</a-menu-item>
@@ -93,45 +93,43 @@ export default {
           <a-menu-item key='close-left' data-vkey={e}>关闭左侧</a-menu-item>
           <a-menu-item key='close-all' data-vkey={e}>关闭全部</a-menu-item>
         </a-menu>
-      )
+      );
     },
     // render
-    renderTabPane (title, keyPath) {
-      const menu = this.renderTabPaneMenu(keyPath)
+    renderTabPane(title, keyPath) {
+      const menu = this.renderTabPaneMenu(keyPath);
 
       return (
         <a-dropdown overlay={menu} trigger={['contextmenu']}>
           <span style={{ userSelect: 'none' }}>{ title }</span>
         </a-dropdown>
-      )
-    }
+      );
+    },
   },
   watch: {
     // 监听路由变化，如果跳转的路由和之前的路由不同，则添加tab，路径值也保存进fullPathList
-    $route (newVal, oldVal) {
-      this.activeKey = newVal.fullPath
+    $route(newVal, oldVal) {
+      this.activeKey = newVal.fullPath;
       // 初始登录，页面会重定向到index，触发activeKey，又跳转到新路径，于是会将index页面代入this.pages中，此处是个bug
       if (this.fullPathList.indexOf(newVal.fullPath) < 0) {
-        this.fullPathList.push(newVal.fullPath)
-        this.pages.push(newVal)
+        this.fullPathList.push(newVal.fullPath);
+        this.pages.push(newVal);
       }
     },
     // 监听当前tabs，发生变化的话则跳转相应的路由
-    activeKey (newPathKey) {
-      this.$router.push({ path: newPathKey })
-    }
+    activeKey(newPathKey) {
+      this.$router.push({ path: newPathKey });
+    },
   },
-  render () {
-    const { onEdit, $data: { pages } } = this
-    const panes = pages.map(page => {
-      return (
+  render() {
+    const { onEdit, $data: { pages } } = this;
+    const panes = pages.map(page => (
         <a-tab-pane
           style={{ height: 0 }}
           tab={this.renderTabPane(page.meta.title, page.fullPath)}
           key={page.fullPath} closable={pages.length > 1}
         >
-        </a-tab-pane>)
-    })
+        </a-tab-pane>));
 
     return (
       <div class='ant-pro-multi-tab'>
@@ -139,14 +137,16 @@ export default {
           hideAdd
           type={'editable-card'}
           v-model={this.activeKey}
-          tabBarStyle={{ background: '#FFF', margin: 0, paddingLeft: '16px', paddingTop: '1px' }}
+          tabBarStyle={{
+            background: '#FFF', margin: 0, paddingLeft: '16px', paddingTop: '1px',
+          }}
           {...{ on: { edit: onEdit } }}>
           {panes}
         </a-tabs>
       </div>
-    )
-  }
-}
+    );
+  },
+};
 </script>
 <style lang="scss" scoped>
 .ant-pro-multi-tab {

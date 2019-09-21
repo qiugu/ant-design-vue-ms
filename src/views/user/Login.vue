@@ -84,54 +84,58 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
-import { Action } from 'vuex-class'
-import { timeFix } from '@/utils/util.ts'
+import { Vue, Component } from 'vue-property-decorator';
+import { Action } from 'vuex-class';
+import { timeFix } from '@/utils/util.ts';
 
 @Component
 export default class Login extends Vue {
   @Action('Login') private Login!: (data: { username: string; password: string }) => any
+
   private loading: boolean = false
+
   public data() {
     return {
       form: this.$form.createForm(this),
       state: {
         time: 60,
-        LoginBtn: false
-      }
-    }
+        LoginBtn: false,
+      },
+    };
   }
 
   private mounted() {
     if (this.$route.query.code && !sessionStorage.getItem('ms__ACCESS_TOKEN')) {
-      this.getAuth()
+      this.getAuth();
     }
   }
+
   // 获取第三方登录的信息
   private async getAuth() {
-    this.loading = true
+    this.loading = true;
     const params = {
       code: this.$route.query.code,
       client_id: '46b85aea388080d94dd8',
-      client_secret: '793f96044a8003cbb9a879b897ba0f190804d0c9'
-    }
-    const res = await this.$http.post(this.$ctx + '/user/githubAuth', params)
+      client_secret: '793f96044a8003cbb9a879b897ba0f190804d0c9',
+    };
+    const res = await this.$http.post(`${this.$ctx}/user/githubAuth`, params);
     if (res.status === 200) {
-      this.loading = false
-      const result = res.resultData
-      Vue.ls.set('ACCESS_TOKEN', result.ACCESS_TOKEN, 60 * 60 * 1000 * 60 * 24)
-      sessionStorage.setItem('loginName', result.username)
-      this.$store.commit('SET_TOKEN', result.ACCESS_TOKEN)
-      this.$store.commit('SET_USER', result.username)
-      this.loginSuccess(result)
+      this.loading = false;
+      const result = res.resultData;
+      Vue.ls.set('ACCESS_TOKEN', result.ACCESS_TOKEN, 60 * 60 * 1000 * 60 * 24);
+      sessionStorage.setItem('loginName', result.username);
+      this.$store.commit('SET_TOKEN', result.ACCESS_TOKEN);
+      this.$store.commit('SET_USER', result.username);
+      this.loginSuccess(result);
     } else {
-      this.requestFailed(res)
-      this.loading = false
+      this.requestFailed(res);
+      this.loading = false;
     }
   }
+
   private handleSubmit(e: Event) {
-    e.preventDefault()
-    this.state.loginBtn = true
+    e.preventDefault();
+    this.state.loginBtn = true;
 
     this.form.validateFields(['username', 'password'], { force: true }, (err: any, values: any) => {
       if (!err) {
@@ -140,38 +144,42 @@ export default class Login extends Vue {
           .then((res: Ajax.AjaxResponse) => this.loginSuccess(res))
           .catch((err: any) => this.requestFailed(err))
           .finally(() => {
-            this.state.loginBtn = false
-          })
+            this.state.loginBtn = false;
+          });
       } else {
         setTimeout(() => {
-          this.state.loginBtn = false
-        }, 600)
+          this.state.loginBtn = false;
+        }, 600);
       }
-    })
+    });
   }
+
   private loginSuccess(res: Ajax.AjaxResponse) {
-    this.$router.push({ path: '/schedule' })
+    this.$router.push({ path: '/schedule' });
     // 延迟 1 秒显示欢迎信息
     setTimeout(() => {
       this.$notification.success({
         message: '欢迎',
-        description: `${timeFix()}，欢迎回来`
-      })
-    }, 1000)
+        description: `${timeFix()}，欢迎回来`,
+      });
+    }, 1000);
   }
+
   private requestFailed(err: any) {
-    this.$notification['error']({
+    this.$notification.error({
       message: '错误',
       description: ((err.response || {}).data || {}).message || err.resultMsg || '请求出现错误，请稍后再试',
-      duration: 4
-    })
+      duration: 4,
+    });
   }
+
   //  点击密码输入框聚焦事件
   private focusAnimate() {
-    this.$store.commit('SET_COVER', true)
+    this.$store.commit('SET_COVER', true);
   }
+
   private blurAnimate() {
-    this.$store.commit('SET_COVER', false)
+    this.$store.commit('SET_COVER', false);
   }
 }
 </script>
@@ -209,7 +217,7 @@ export default class Login extends Vue {
 }
 .user-layout-login {
   padding: 40px 20px 20px;
-  margin-top: -5px; 
+  margin-top: -5px;
   height: 450px;
   background: rgba(255, 255, 255, .2);
   label {

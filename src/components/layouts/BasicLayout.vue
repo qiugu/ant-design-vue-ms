@@ -57,67 +57,70 @@
   </a-layout>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
-import SideMenu from '@/components/sidemenu/SideMenu.vue'
-import MultiTab from '@/components/multitab/MultiTab.vue'
+import { Vue, Component } from 'vue-property-decorator';
+import SideMenu from '@/components/sidemenu/SideMenu.vue';
+import MultiTab from '@/components/multitab/MultiTab.vue';
 
 @Component({
   components: {
     SideMenu,
-    MultiTab
-  }
+    MultiTab,
+  },
 })
 export default class BasicLayout extends Vue {
-
   private username: string = ''
+
   public data() {
     return {
       collapsed: false,
       visible: false,
-      messageNumber: 0
-    }
+      messageNumber: 0,
+    };
   }
 
   private mounted() {
-    this.username = sessionStorage.getItem('loginName') || '游客'
+    this.username = sessionStorage.getItem('loginName') || '游客';
   }
+
   // 点击下拉菜单执行响应的方法
   private handleMenuClick(data: { key: string }) {
-    this[data.key]()
+    this[data.key]();
   }
+
   //  跳转到个人中心
-  private user () {
+  private user() {
     this.$router.push({
-      name: 'personal'
-    })
+      name: 'personal',
+    });
   }
-  private setting () {}
+
+  private setting() {}
+
   //  退出方法
-  private logout () {
+  private logout() {
     this.$confirm({
       title: '提示',
       content: '是否确认退出',
       okText: '确定',
       cancelText: '取消',
-      onOk: () => {
-        return new Promise((resolve, reject) => {
-          this.$store.dispatch('Logout')
+      onOk: () => new Promise((resolve, reject) => {
+        this.$store.dispatch('Logout')
           .then(() => {
-            window.location.reload()
-          })
-        }).catch(err => {})
-      },
-      onCancel: () => {}
-    })
+            window.location.reload();
+          });
+      }).catch((err) => {}),
+      onCancel: () => {},
+    });
   }
+
   //  查看消息通知
   private inform() {
     if (this.messageNumber === 0) {
-      this.$message.info('暂无消息通知')
+      this.$message.info('暂无消息通知');
     }
     this.$router.push({
-      name: 'message_manage'
-    })
+      name: 'message_manage',
+    });
   }
 }
 </script>
@@ -171,7 +174,7 @@ export default class BasicLayout extends Vue {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-evenly; 
+    justify-content: space-evenly;
     h2 {
       color: $font-color;
       margin: 0;

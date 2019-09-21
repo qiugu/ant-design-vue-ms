@@ -23,20 +23,23 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
-const resultEnum = ['success', 'error']
+import { Vue, Component, Prop } from 'vue-property-decorator';
+
+const resultEnum = ['success', 'error'];
 
 @Component
 export default class Result extends Vue {
   @Prop({
     default: resultEnum[0],
-    validator: (val: string): any => (values: string) => resultEnum.includes(val)
+    validator: (val: string): any => (values: string) => resultEnum.includes(val),
   }) private type!: string
+
   @Prop({ default: '' }) private title!: string
+
   @Prop({ default: '' }) private description!: string
 
-  private get localIsSuccess () {
-    return this.type === resultEnum[0]
+  private get localIsSuccess() {
+    return this.type === resultEnum[0];
   }
 }
 </script>

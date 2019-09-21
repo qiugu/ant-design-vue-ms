@@ -54,20 +54,23 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
-import VueParticles from 'vue-particles'
-Vue.use(VueParticles)
+import { Vue, Component } from 'vue-property-decorator';
+import VueParticles from 'vue-particles';
+
+Vue.use(VueParticles);
 
 @Component
 export default class UserLayout extends Vue {
   private get cover() {
-    return this.$store.getters.cover
+    return this.$store.getters.cover;
   }
+
   private mounted() {
-    document.body.classList.add('userLayout')
+    document.body.classList.add('userLayout');
   }
+
   private beforeDestroy() {
-    document.body.classList.remove('userLayout')
+    document.body.classList.remove('userLayout');
   }
 }
 </script>

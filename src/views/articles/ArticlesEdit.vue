@@ -9,9 +9,9 @@
       </a-col>
     </a-row>
     <mavon-editor
-      ref="md" 
-      v-model="text" 
-      :style="{ minHeight: '600px', zIndex: '100' }" 
+      ref="md"
+      v-model="text"
+      :style="{ minHeight: '600px', zIndex: '100' }"
       placeholder="暂时无法上传图片"
       :toolbarsFlag="false"
       :navigation="true"
@@ -22,32 +22,34 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
-import { axios } from '@/utils/request'
-import mavonEditor from 'mavon-editor'
-import 'mavon-editor/dist/css/index.css'
+import { Vue, Component } from 'vue-property-decorator';
+import mavonEditor from 'mavon-editor';
+import { axios } from '@/utils/request';
+import 'mavon-editor/dist/css/index.css';
 
 @Component({
   components: {
-    'mavon-editor': mavonEditor.mavonEditor
-  }
+    'mavon-editor': mavonEditor.mavonEditor,
+  },
 })
 export default class ArticlesEdit extends Vue {
   private text: string = ''
+
   private title: string = ''
+
   private editable: boolean = true
 
   private created() {
     if (this.$route.query.id) {
-      this.getArticleContent()
+      this.getArticleContent();
     }
   }
 
   private imgAdd(pos: any, $file: any) {
-    this.$notification['info']({
+    this.$notification.info({
       message: '暂未开启',
-      description: ''
-    })
+      description: '',
+    });
     // 第一步.将图片上传到服务器.
     // let formdata = new FormData();
     // formdata.append('image', $file);
@@ -66,6 +68,7 @@ export default class ArticlesEdit extends Vue {
     //     this.$refs['md'].$img2Url(pos, url);
     // })
   }
+
   private saveContent(value: string) {
     this.$confirm({
       title: '提示',
@@ -73,51 +76,51 @@ export default class ArticlesEdit extends Vue {
       okText: '保存',
       cancelText: '取消',
       onOk: () => {
-        this.sendContent()
+        this.sendContent();
       },
-      onCancel: () => {}
-    })
+      onCancel: () => {},
+    });
   }
 
   private async sendContent() {
     if (!this.text || !this.title) {
-      this.$notification['warning']({
+      this.$notification.warning({
         message: '文章标题和内容不能为空',
-        description: ''
-      })
-      return
+        description: '',
+      });
+      return;
     }
     const param = {
       title: this.title,
       docContent: this.text,
       username: sessionStorage.getItem('loginName'),
-      token: JSON.parse(sessionStorage.getItem('ms__ACCESS_TOKEN') || '').value
-    }
-    const res = await this.$http.post(`${this.$ctx}/articles/saveContent`, param)
+      token: JSON.parse(sessionStorage.getItem('ms__ACCESS_TOKEN') || '').value,
+    };
+    const res = await this.$http.post(`${this.$ctx}/articles/saveContent`, param);
     if (res.status === 200) {
-      this.$notification['success']({
+      this.$notification.success({
         message: res.resultMsg,
-        description: ''
-      })
+        description: '',
+      });
     } else {
-      this.$notification['success']({
+      this.$notification.success({
         message: res.resultMsg,
-        description: ''
-      })
+        description: '',
+      });
     }
-    this.text = ''
-    this.title = ''
+    this.text = '';
+    this.title = '';
   }
 
   private async getArticleContent() {
     const params = {
       token: JSON.parse(sessionStorage.getItem('ms__ACCESS_TOKEN') || '').value,
-      id: this.$route.query.id
-    }
-    const res = await this.$http.post(`${this.$ctx}/articles/getArticleById`, params)
+      id: this.$route.query.id,
+    };
+    const res = await this.$http.post(`${this.$ctx}/articles/getArticleById`, params);
     if (res.status === 200) {
-      this.text = res.resultData.doc_content
-      this.title = res.resultData.title
+      this.text = res.resultData.doc_content;
+      this.title = res.resultData.title;
     }
   }
 }
@@ -143,4 +146,3 @@ export default class ArticlesEdit extends Vue {
   padding-left: 25px;
 }
 </style>
-

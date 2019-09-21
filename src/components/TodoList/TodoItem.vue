@@ -10,35 +10,39 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import { Action } from 'vuex-class'
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Action } from 'vuex-class';
 
 @Component
 export default class TodoItem extends Vue {
-
   private editing: boolean = false
+
   @Prop() private todo: any
+
   @Action('editTodo') private editTodo!: (data: { todo: any; value: string }) => void
+
   @Action('toggleTodo') private toggleTodo!: (todo: any) => void
+
   @Action('removeTodo') private removeTodo!: (todo: any) => void
 
-  private doneEdit (e: any) {
+  private doneEdit(e: any) {
     // 获得输入框中的值和当前组件的todo对象传递给相应的mutations
-    const value = e.target.value.trim()
-    const {todo} = this
+    const value = e.target.value.trim();
+    const { todo } = this;
     if (!value) {
-      this.removeTodo(todo)
+      this.removeTodo(todo);
     } else if (this.editing) {
       this.editTodo({
         todo,
-        value
-      })
-      this.editing = false
+        value,
+      });
+      this.editing = false;
     }
   }
-  private cancelEdit (e: any) {
-    e.target.value = this.todo.text
-    this.editing = false
+
+  private cancelEdit(e: any) {
+    e.target.value = this.todo.text;
+    this.editing = false;
   }
 }
 </script>
