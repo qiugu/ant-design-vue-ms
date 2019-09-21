@@ -32,7 +32,9 @@ import {
     Card,
     Breadcrumb,
     Table,
-    Alert
+    Alert,
+    Divider,
+    Popconfirm
 } from 'ant-design-vue'
 
 const components = [
@@ -68,7 +70,9 @@ const components = [
     Card,
     Breadcrumb,
     Table,
-    Alert
+    Alert,
+    Divider,
+    Popconfirm
 ]
 
 components.forEach((component: any) => {

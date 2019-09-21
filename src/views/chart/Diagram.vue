@@ -1,22 +1,27 @@
 <template>
   <div class="charts">
-    <div ref="wuhu" class="wuhu"></div>
+    <v-charts :options="options" class="wuhu" />
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import echarts from 'echarts/lib/echarts'
+import Echarts from 'vue-echarts'
 import 'echarts/lib/component/geo'
 import 'echarts/lib/component/tooltip'
 import 'echarts/lib/chart/scatter'
 import 'echarts/lib/chart/map'
 import geoJson from '@/json/wuhu.json'
+Echarts.registerMap('wuhu', geoJson)
 
-@Component
+@Component({
+    components: {
+        'v-charts': Echarts
+    }
+})
 export default class Diagram extends Vue {
-
-  private mounted() {
+  private options: any = {}
+  private created() {
     this.loadMap()
   }
 
@@ -25,24 +30,18 @@ export default class Diagram extends Vue {
     return nomalVal;
   }
   private loadMap() {
-    echarts.registerMap('hefei', geoJson);
     const that = this
-    const option = {
+    this.options = {
         tooltip: {
             trigger: 'item',
             backgroundColor: '#fff',
-            padding: [
-                0,
-                0,
-                0,
-                0
-            ],
+            padding: [0, 0, 0, 0],
             textStyle: {
                 color: '#333333'
             }
         },
         geo: {
-            map: 'hefei',
+            map: 'wuhu',
             scaleLimit: {
                 min: 1
             },
@@ -167,8 +166,6 @@ export default class Diagram extends Vue {
             }
         ]
     }
-    const myChart = echarts.init(this.$refs.wuhu)
-    myChart.setOption(option, true);
   }
 }
 </script>

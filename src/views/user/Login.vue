@@ -1,5 +1,6 @@
 <template>
   <div class="main">
+    <a-spin :spinning="loading" tip="正在登陆">
     <a-form
       id="formLogin"
       class="user-layout-login"
@@ -9,7 +10,7 @@
     >
       <div class="header">
         <img src="~@/assets/svg/logo.svg" class="logo" alt="logo">
-        <span class="title">花里胡哨的系统</span>
+        <span class="title">前端架构管理系统</span>
       </div>
       <a-form-item>
         <a-input
@@ -78,6 +79,7 @@
         <router-link class="register" :to="{ name: 'register' }">注册账户</router-link>
       </a-form-item>
     </a-form>
+    </a-spin>
   </div>
 </template>
 
@@ -89,6 +91,7 @@ import { timeFix } from '@/utils/util.ts'
 @Component
 export default class Login extends Vue {
   @Action('Login') private Login!: (data: { username: string; password: string }) => any
+  private loading: boolean = false
   public data() {
     return {
       form: this.$form.createForm(this),
@@ -106,22 +109,24 @@ export default class Login extends Vue {
   }
   // 获取第三方登录的信息
   private async getAuth() {
+    this.loading = true
     const params = {
       code: this.$route.query.code,
       client_id: '46b85aea388080d94dd8',
       client_secret: '793f96044a8003cbb9a879b897ba0f190804d0c9'
     }
     const res = await this.$http.post(this.$ctx + '/user/githubAuth', params)
-    if (res.resultData.status === 200) {
-      this.Login({
-        username: res.resultData.data.login,
-        password: res.resultData.data.node_id
-      })
-        .then((res: Ajax.AjaxResponse) => this.loginSuccess(res))
-        .catch((err: any) => this.requestFailed(err))
-        .finally(() => {
-          this.state.loginBtn = false
-        })
+    if (res.status === 200) {
+      this.loading = false
+      const result = res.resultData
+      Vue.ls.set('ACCESS_TOKEN', result.ACCESS_TOKEN, 60 * 60 * 1000 * 60 * 24)
+      sessionStorage.setItem('loginName', result.username)
+      this.$store.commit('SET_TOKEN', result.ACCESS_TOKEN)
+      this.$store.commit('SET_USER', result.username)
+      this.loginSuccess(result)
+    } else {
+      this.requestFailed(res)
+      this.loading = false
     }
   }
   private handleSubmit(e: Event) {

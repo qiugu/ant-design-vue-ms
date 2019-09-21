@@ -1,19 +1,21 @@
 <template>
   <div class="articles">
-    <a-row type="flex" justify="space-between" class="header-toolbar">
+    <a-row type="flex" justify="space-between" align="middle" class="header-toolbar">
       <a-col :span="23">
         <a-input v-model="title" maxlength="50" placeholder="请输入文章标题" />
       </a-col>
       <a-col :span="1">
-        <!-- <a-button type="primary">保存</a-button> -->
+        <a href="#" @click="saveContent">保存</a>
       </a-col>
     </a-row>
     <mavon-editor
-      ref="md"
+      ref="md" 
       v-model="text" 
       :style="{ minHeight: '600px', zIndex: '100' }" 
       placeholder="暂时无法上传图片"
       :toolbarsFlag="false"
+      :navigation="true"
+      :editable="editable"
       @imgAdd="imgAdd"
       @save="saveContent"/>
   </div>
@@ -22,11 +24,24 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { axios } from '@/utils/request'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
-@Component
-export default class Articles extends Vue {
+@Component({
+  components: {
+    'mavon-editor': mavonEditor.mavonEditor
+  }
+})
+export default class ArticlesEdit extends Vue {
   private text: string = ''
   private title: string = ''
+  private editable: boolean = true
+
+  private created() {
+    if (this.$route.query.id) {
+      this.getArticleContent()
+    }
+  }
 
   private imgAdd(pos: any, $file: any) {
     this.$notification['info']({
@@ -63,6 +78,7 @@ export default class Articles extends Vue {
       onCancel: () => {}
     })
   }
+
   private async sendContent() {
     if (!this.text || !this.title) {
       this.$notification['warning']({
@@ -77,7 +93,7 @@ export default class Articles extends Vue {
       username: sessionStorage.getItem('loginName'),
       token: JSON.parse(sessionStorage.getItem('ms__ACCESS_TOKEN') || '').value
     }
-    const res = await this.$http.post(this.$ctx + '/articles/saveContent', param)
+    const res = await this.$http.post(`${this.$ctx}/articles/saveContent`, param)
     if (res.status === 200) {
       this.$notification['success']({
         message: res.resultMsg,
@@ -91,6 +107,18 @@ export default class Articles extends Vue {
     }
     this.text = ''
     this.title = ''
+  }
+
+  private async getArticleContent() {
+    const params = {
+      token: JSON.parse(sessionStorage.getItem('ms__ACCESS_TOKEN') || '').value,
+      id: this.$route.query.id
+    }
+    const res = await this.$http.post(`${this.$ctx}/articles/getArticleById`, params)
+    if (res.status === 200) {
+      this.text = res.resultData.doc_content
+      this.title = res.resultData.title
+    }
   }
 }
 </script>

@@ -55,6 +55,8 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import VueParticles from 'vue-particles'
+Vue.use(VueParticles)
 
 @Component
 export default class UserLayout extends Vue {
@@ -124,7 +126,7 @@ export default class UserLayout extends Vue {
   overflow: hidden;
 }
 #userLayout.user-layout-wrapper {
-  height: 100%;
+  height: 100vh;
   user-select: none;
   &.mobile {
     .container {
@@ -138,7 +140,7 @@ export default class UserLayout extends Vue {
   .container {
     width: 100%;
     min-height: 100%;
-    background: url(~@/assets/images/login-bg.png) no-repeat 100%;
+    background: url('http://www.qiugu.online/public/assets/images/sky.47293c9f.jpg') no-repeat 100%;
     background-size: cover;
     padding: 110px 0 144px;
     box-sizing: border-box;

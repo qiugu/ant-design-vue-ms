@@ -53,7 +53,7 @@ const filters: any = {
 
 @Component({
   components: {
-    [TodoItem.name]: TodoItem
+    TodoItem
   },
   filters: {
     //  过滤items的复数形式，等于1的时候不加s，其他情况都加上s

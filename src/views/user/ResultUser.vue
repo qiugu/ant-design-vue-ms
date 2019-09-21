@@ -19,7 +19,7 @@ import Result from '@/components/result'
 
 @Component({
   components: {
-    Result
+    [Result.name]: Result
   }
 })
 export default class RegisterResult extends Vue {

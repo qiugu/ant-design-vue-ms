@@ -1,14 +1,34 @@
-# 前端知识体系管理系统，记录工作中的一些常用功能或组件
+# ts-template
 
-## 计划功能实现
-* [x] 登陆功能
-* [x] 注册功能
-* [x] 第三方github登陆
-* [x] 消息管理模块
-* [x] 文章管理模块
-* [x] 地图可视化模块
-* [ ] 权限管理模块
-* [ ] 工作台模块
+## Project setup
+```
+npm install
+```
 
-## 打造属于前端的知识体系
-[前台github地址](https://github.com/qiugu/node-egg)
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your tests
+```
+npm run test
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Run your unit tests
+```
+npm run test:unit
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
