@@ -13,6 +13,11 @@ export { default as LockOutline } from '@ant-design/icons/lib/outline/LockOutlin
 export { default as MailOutline } from '@ant-design/icons/lib/outline/MailOutline'
 export { default as QuestionCircleOutline } from '@ant-design/icons/lib/outline/QuestionCircleOutline'
 export { default as ExclamationCircleOutline } from '@ant-design/icons/lib/outline/ExclamationCircleOutline'
+export { default as CloseOutline } from '@ant-design/icons/lib/outline/CloseOutline'
+export { default as MenuFoldOutline } from '@ant-design/icons/lib/outline/MenuFoldOutline'
+export { default as MenuUnfoldOutline } from '@ant-design/icons/lib/outline/MenuUnfoldOutline'
+export { default as LeftOutline } from '@ant-design/icons/lib/outline/LeftOutline'
+export { default as RightOutline } from '@ant-design/icons/lib/outline/RightOutline'
 
 
 export { default as CheckCircleOutline } from '@ant-design/icons/lib/outline/CheckCircleOutline'
