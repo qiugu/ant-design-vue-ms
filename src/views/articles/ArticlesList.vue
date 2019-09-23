@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-    <condition-screen :searchData="searchData" />
+    <condition-screen :filterData="searchData" @change="handleChange" />
     <div :style="{ marginTop: '20px' }">
       <a-table
         :rowKey="record => record.id"
@@ -33,10 +33,10 @@ import ConditionScreen from '@/components/screen/ConditionScreen.vue'
 export default class ArticlesList extends Vue {
 
   private searchData: any[] = [
-    { name: '字数', tags: [
-      {value: '500', label: '500字', type: 0},
-      {value: '1500', label: '1500字', type: 0},
-      {value: '300', label: '1500字', type: 0}
+    { name: '字数', lists: [
+      {id: 0, value: '500', label: '500字', type: 0},
+      {id: 1, value: '1500', label: '1500字', type: 0},
+      {id: 2, value: '300', label: '1500字', type: 0}
     ] }
   ]
 
@@ -98,6 +98,8 @@ export default class ArticlesList extends Vue {
   private queryArticle(record: any) {}
 
   private confirmDelete(record: any) {}
+
+  private handleChange (tags: any) {}
 }
 </script>
 <style lang="scss" scoped>
