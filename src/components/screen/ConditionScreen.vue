@@ -2,14 +2,14 @@
   <div class="condition-filter">
     <div class="filter-item" v-for="(item, index) in filterData" :key="index">
       <strong>{{ item.name }}</strong>
-      <label 
-        v-for="(tag, _index) in item.lists" 
-        :key="_index" 
-        class="condition-item" 
+      <label
+        v-for="(tag, _index) in item.lists"
+        :key="_index"
+        class="condition-item"
         :class="{ 'is-checked': isChecked(tag.id) }"
         @click="handleChange(tag)"
       >
-        <input 
+        <input
           :type="filterType"
           :value="tag.value"
           :name="tag.type">
@@ -21,30 +21,28 @@
 
 <script>
 export default {
-  data () {
+  data() {
     return {
       selectedTag: [],
-      tempSelect: []
-    }
+      tempSelect: [],
+    };
   },
   props: {
     filterData: {
       type: Array,
-      default () {
-        return []
-      }
+      default() {
+        return [];
+      },
     },
     filterType: {
-      validator (value) {
-        return ['radio', 'checkbox'].indexOf(value) !== -1
+      validator(value) {
+        return ['radio', 'checkbox'].indexOf(value) !== -1;
       },
-      default: 'radio'
-    }
+      default: 'radio',
+    },
   },
-  created () {
-    this.selectedTag = this.filterData.map(item => {
-      return item.lists[0] || {}
-    })
+  created() {
+    this.selectedTag = this.filterData.map(item => item.lists[0] || {});
   },
   methods: {
     handleChange(tag) {
@@ -60,14 +58,10 @@ export default {
       //  遍历选中的每个类型的项，判断判断每一项的值和类型是否都不等于点击的项
       //  如果是的话则将点击项加入选中的数组中
 
-      this.selectedTag.every(item => {
-        return item.type !== tag.type && item.id !== tag.id
-      }) && this.selectedTag.push(tag)
+      this.selectedTag.every(item => item.type !== tag.type && item.id !== tag.id) && this.selectedTag.push(tag);
 
       // //  在选中项的数组中过滤出类型和点击项相等，但是值不相等的项
-      const tempArr = this.selectedTag.filter((item, index) => {
-        return item.type === tag.type && item.value !== tag.value
-      })
+      const tempArr = this.selectedTag.filter((item, index) => item.type === tag.type && item.value !== tag.value);
 
       //  如果过滤的数组存在，遍历选中项数组
       //  判断过滤的数组类型是否和点击项类型相等，如果相等的话，则用点击项替代过滤数组
@@ -75,16 +69,16 @@ export default {
 
       !!tempArr[0] && this.selectedTag.forEach((item, index) => {
         if (item.type === tempArr[0].type) {
-          this.selectedTag.splice(index, 1, tag)
+          this.selectedTag.splice(index, 1, tag);
         }
-      })
-      this.$emit('change', this.selectedTag)
+      });
+      this.$emit('change', this.selectedTag);
     },
     isChecked(value) {
-      return this.selectedTag.some(item => item.id === value)
-    }
-  }
-}
+      return this.selectedTag.some(item => item.id === value);
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

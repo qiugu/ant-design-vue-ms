@@ -19,22 +19,21 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component } from 'vue-property-decorator';
 
 export default class MiniDrawer extends Vue {
-
   private drawerVisible: boolean = false
 
-  private mounted () {
+  private mounted() {
     //  初始刷新显示抽屉
-    this.drawerVisible = true
+    this.drawerVisible = true;
     setTimeout(() => {
-      this.drawerVisible = false
-    }, 3000)
+      this.drawerVisible = false;
+    }, 3000);
   }
-  
-  private showDrawer () {
-    this.drawerVisible = !this.drawerVisible
+
+  private showDrawer() {
+    this.drawerVisible = !this.drawerVisible;
   }
 }
 </script>

@@ -23,21 +23,29 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import ConditionScreen from '@/components/screen/ConditionScreen.vue'
+import ConditionScreen from '@/components/screen/ConditionScreen.vue';
 
 @Component({
   components: {
-    ConditionScreen
-  }
+    ConditionScreen,
+  },
 })
 export default class ArticlesList extends Vue {
-
   private searchData: any[] = [
-    { name: '字数', lists: [
-      {id: 0, value: '500', label: '500字', type: 0},
-      {id: 1, value: '1500', label: '1500字', type: 0},
-      {id: 2, value: '300', label: '1500字', type: 0}
-    ] }
+    {
+      name: '字数',
+      lists: [
+        {
+          id: 0, value: '500', label: '500字', type: 0,
+        },
+        {
+          id: 1, value: '1500', label: '1500字', type: 0,
+        },
+        {
+          id: 2, value: '300', label: '1500字', type: 0,
+        },
+      ],
+    },
   ]
 
   private tableData: any[] = []
@@ -99,7 +107,7 @@ export default class ArticlesList extends Vue {
 
   private confirmDelete(record: any) {}
 
-  private handleChange (tags: any) {}
+  private handleChange(tags: any) {}
 }
 </script>
 <style lang="scss" scoped>
